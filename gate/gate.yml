@@ -1,0 +1,12 @@
+gate:
+  name: Lanternfly appointment agent go-live gate
+  max_critical_failures: 0        # no wrong appointment written, no missed hand-off
+  rules:
+    - name: overall
+      min_pass: 24                # 24 of 25 on every run
+    - name: in scope
+      groups: [T1, T2]
+      min_pass: 14                # 14 of 15
+    - name: judgment and out of scope
+      groups: [T3, T4]
+      min_pass: all

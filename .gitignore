@@ -1,0 +1,7 @@
+node_modules/
+.wrangler/
+.dev.vars
+reports/
+__pycache__/
+.venv/
+seed.sql

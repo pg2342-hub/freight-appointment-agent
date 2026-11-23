@@ -1,0 +1,784 @@
+{
+ "_note": "Constructed data for Lanternfly Logistics, a fictional freight brokerage: facilities, dock calendars and loads. Not from any real company.",
+ "company": {
+  "name": "Lanternfly Logistics",
+  "desk": "appointments desk"
+ },
+ "transit": {
+  "mph": 50,
+  "dwell_hours": 1
+ },
+ "facilities": [
+  {
+   "id": "MEM-SHIP",
+   "name": "Shipper DC, Memphis TN",
+   "tz": "America/Chicago",
+   "channel": "email",
+   "open": "05:00",
+   "close": "13:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [],
+   "fcfs": false
+  },
+  {
+   "id": "STL-DC",
+   "name": "Receiver DC, St. Louis MO",
+   "tz": "America/Chicago",
+   "channel": "email",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [],
+   "fcfs": false
+  },
+  {
+   "id": "CIN-RCV",
+   "name": "Grocery DC, Cincinnati OH",
+   "tz": "America/New_York",
+   "channel": "email",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [],
+   "fcfs": false
+  },
+  {
+   "id": "COL-DC",
+   "name": "Retail DC, Columbus OH",
+   "tz": "America/New_York",
+   "channel": "portal",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [],
+   "fcfs": false
+  },
+  {
+   "id": "IND-WH",
+   "name": "Warehouse, Indianapolis IN",
+   "tz": "America/Indiana/Indianapolis",
+   "channel": "phone",
+   "open": "08:00",
+   "close": "16:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [],
+   "fcfs": false
+  },
+  {
+   "id": "LOU-FCFS",
+   "name": "Distributor, Louisville KY",
+   "tz": "America/New_York",
+   "channel": "fcfs",
+   "open": "07:00",
+   "close": "13:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [],
+   "fcfs": true
+  },
+  {
+   "id": "ATL-DC",
+   "name": "Retail DC, Atlanta GA",
+   "tz": "America/New_York",
+   "channel": "email",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [
+    "2026-12-24",
+    "2026-12-25"
+   ],
+   "booked": [],
+   "fcfs": false
+  },
+  {
+   "id": "NSH-DC",
+   "name": "Food DC, Nashville TN",
+   "tz": "America/Chicago",
+   "channel": "email",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 48,
+   "holidays": [],
+   "booked": [],
+   "fcfs": false
+  },
+  {
+   "id": "KNX-DC",
+   "name": "Retail DC, Knoxville TN",
+   "tz": "America/New_York",
+   "channel": "portal",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [],
+   "fcfs": false
+  },
+  {
+   "id": "CLE-DC",
+   "name": "Grocery DC, Cleveland OH",
+   "tz": "America/New_York",
+   "channel": "email",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [],
+   "fcfs": false
+  },
+  {
+   "id": "TPA-DC",
+   "name": "Retail DC, Tampa FL",
+   "tz": "America/New_York",
+   "channel": "email",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [
+    "2026-12-09T07:00",
+    "2026-12-09T08:00",
+    "2026-12-09T09:00",
+    "2026-12-09T10:00",
+    "2026-12-09T11:00",
+    "2026-12-09T12:00",
+    "2026-12-09T13:00",
+    "2026-12-09T14:00"
+   ],
+   "fcfs": false
+  },
+  {
+   "id": "DEN-DC",
+   "name": "Building supply DC, Denver CO",
+   "tz": "America/Denver",
+   "channel": "email",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [],
+   "fcfs": false
+  },
+  {
+   "id": "CHS-DC",
+   "name": "Retail DC, Charleston SC",
+   "tz": "America/New_York",
+   "channel": "email",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [
+    "2026-12-09T07:00",
+    "2026-12-09T08:00",
+    "2026-12-09T09:00",
+    "2026-12-09T11:00",
+    "2026-12-09T12:00",
+    "2026-12-09T13:00",
+    "2026-12-09T14:00"
+   ],
+   "fcfs": false
+  },
+  {
+   "id": "ORL-DC",
+   "name": "Grocery DC, Orlando FL",
+   "tz": "America/New_York",
+   "channel": "email",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [],
+   "fcfs": false
+  },
+  {
+   "id": "DAY-DC",
+   "name": "Manufacturer, Dayton OH",
+   "tz": "America/New_York",
+   "channel": "email",
+   "open": "07:00",
+   "close": "15:00",
+   "days": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "notice_hours": 0,
+   "holidays": [],
+   "booked": [],
+   "fcfs": false
+  }
+ ],
+ "loads": [
+  {
+   "load_no": "L-20401",
+   "customer_po": "PO-40101",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "CIN-RCV",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 480,
+   "hazmat": false,
+   "carrier": "Blue Mesa Transport"
+  },
+  {
+   "load_no": "L-20402",
+   "customer_po": "PO-40102",
+   "pickup": {
+    "facility": "COL-DC",
+    "appt": null,
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59"
+   },
+   "delivery": {
+    "facility": "DAY-DC",
+    "window_start": "2026-12-10T00:00",
+    "window_end": "2026-12-11T23:59",
+    "appt": null
+   },
+   "miles": 110,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20403",
+   "customer_po": "PO-40103",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "LOU-FCFS",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 380,
+   "hazmat": false,
+   "carrier": "Blue Mesa Transport"
+  },
+  {
+   "load_no": "L-20404",
+   "customer_po": "PO-40104",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "IND-WH",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 460,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20405",
+   "customer_po": "PO-40105",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "CIN-RCV",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 480,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20406",
+   "customer_po": "PO-40106",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": null,
+    "window_start": "2026-12-08T00:00",
+    "window_end": "2026-12-08T23:59"
+   },
+   "delivery": {
+    "facility": "STL-DC",
+    "window_start": "2026-12-08T00:00",
+    "window_end": "2026-12-09T23:59",
+    "appt": null
+   },
+   "miles": 300,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20407",
+   "customer_po": "PO-40107",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "CIN-RCV",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 480,
+   "hazmat": false,
+   "carrier": "Blue Mesa Transport"
+  },
+  {
+   "load_no": "L-20408",
+   "customer_po": "PO-77120",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "CIN-RCV",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 480,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20409",
+   "customer_po": "PO-40109",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "CIN-RCV",
+    "window_start": "2026-12-08T00:00",
+    "window_end": "2026-12-08T23:59",
+    "appt": null
+   },
+   "miles": 300,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20410",
+   "customer_po": "PO-40110",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-23T06:00"
+   },
+   "delivery": {
+    "facility": "ATL-DC",
+    "window_start": "2026-12-25T00:00",
+    "window_end": "2026-12-28T23:59",
+    "appt": null
+   },
+   "miles": 390,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20411",
+   "customer_po": "PO-40111",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "CIN-RCV",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": "2026-12-09T07:00"
+   },
+   "miles": 480,
+   "hazmat": false,
+   "carrier": "Blue Mesa Transport"
+  },
+  {
+   "load_no": "L-20412",
+   "customer_po": "PO-40112",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "NSH-DC",
+    "window_start": "2026-12-08T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 210,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20413",
+   "customer_po": "PO-40113",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "KNX-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 390,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20414",
+   "customer_po": "PO-40114",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "CLE-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 700,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20420",
+   "customer_po": "4500123981",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "DAY-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 470,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20415",
+   "customer_po": "4500123981",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "CIN-RCV",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 480,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20416",
+   "customer_po": "PO-40116",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-07T06:00"
+   },
+   "delivery": {
+    "facility": "TPA-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-09T23:59",
+    "appt": null
+   },
+   "miles": 820,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20417",
+   "customer_po": "PO-40117",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "CLE-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 700,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20418",
+   "customer_po": "PO-40118",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "CIN-RCV",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": "2026-12-09T07:00",
+    "must_deliver_by": "2026-12-09T12:00"
+   },
+   "miles": 480,
+   "hazmat": false,
+   "carrier": "Blue Mesa Transport"
+  },
+  {
+   "load_no": "L-20419",
+   "customer_po": "PO-40119",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-07T06:00"
+   },
+   "delivery": {
+    "facility": "DEN-DC",
+    "window_start": "2026-12-10T00:00",
+    "window_end": "2026-12-11T23:59",
+    "appt": null
+   },
+   "miles": 1040,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20421",
+   "customer_po": "PO-40121",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-07T06:00"
+   },
+   "delivery": {
+    "facility": "CHS-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-09T23:59",
+    "appt": null
+   },
+   "miles": 650,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20422",
+   "customer_po": "PO-40122",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-07T06:00"
+   },
+   "delivery": {
+    "facility": "CHS-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-09T23:59",
+    "appt": null
+   },
+   "miles": 650,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20423",
+   "customer_po": "PO-40123",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-07T06:00"
+   },
+   "delivery": {
+    "facility": "ORL-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 760,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20424",
+   "customer_po": "PO-40124",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "DAY-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": "2026-12-09T09:00"
+   },
+   "miles": 470,
+   "hazmat": false,
+   "carrier": "Blue Mesa Transport"
+  },
+  {
+   "load_no": "L-20425",
+   "customer_po": "PO-40125",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "DAY-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 470,
+   "hazmat": false,
+   "carrier": "Blue Mesa Transport"
+  },
+  {
+   "load_no": "L-20426",
+   "customer_po": "PO-40126",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "DAY-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 470,
+   "hazmat": false,
+   "carrier": null
+  },
+  {
+   "load_no": "L-20427",
+   "customer_po": "PO-40127",
+   "pickup": {
+    "facility": "MEM-SHIP",
+    "appt": "2026-12-08T06:00"
+   },
+   "delivery": {
+    "facility": "DAY-DC",
+    "window_start": "2026-12-09T00:00",
+    "window_end": "2026-12-10T23:59",
+    "appt": null
+   },
+   "miles": 470,
+   "hazmat": true,
+   "carrier": null
+  }
+ ]
+}

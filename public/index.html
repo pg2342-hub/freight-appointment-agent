@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freight appointment agent</title>
+<link rel="stylesheet" href="https://pranavgudise.dev/kit/demo.css">
+<style>
+  #log { display: flex; flex-direction: column; gap: .6rem; margin: 1rem 0; }
+  .msg { padding: .6rem .8rem; border: 1px solid var(--rule, #ddd); border-radius: 8px; white-space: pre-wrap; }
+  .msg .who { font-size: .8rem; opacity: .75; display: block; margin-bottom: .25rem; }
+  .msg a { font-size: .8rem; display: block; margin-top: .4rem; }
+  textarea { width: 100%; min-height: 8rem; font: inherit; padding: .6rem; box-sizing: border-box; }
+  .row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin: .5rem 0; }
+  select, button { font: inherit; padding: .45rem .7rem; }
+  .hint { font-size: .85rem; opacity: .8; }
+  .samples button { font-size: .85rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Email the appointments desk</h1>
+  <p>This is a live agent for Lanternfly Logistics, a fictional freight brokerage. Write the kind of email a shipper or carrier would send. The agent uses Claude to find the load, check the facility's dock calendar, hours, notice rules and time zone, request the appointment, and reply. Every thread gets a trace page with each model call and tool call.</p>
+  <div class="row samples"><span class="hint">Start from a sample:</span>
+    <button type="button" data-from="shipping@harborline-foods.example" data-body="Hi team,&#10;&#10;Please set a delivery appointment for PO-40101 into the Cincinnati grocery DC (CIN-RCV). Earliest available is fine.&#10;&#10;Thanks,&#10;Maria">Book a delivery</button>
+    <button type="button" data-from="shipping@harborline-foods.example" data-body="Hi,&#10;&#10;PO-40106 needs both appointments: pickup at our Memphis shipping DC and delivery to the St. Louis receiver (STL-DC). Earliest that works.&#10;&#10;Maria">Pickup and delivery</button>
+    <button type="button" data-from="dispatch@bluemesa-transport.example" data-body="Morning,&#10;&#10;Driver on PO-40111 is running about 3 hours late. New ETA to CIN-RCV is 10:00 AM Eastern on 12/9. Can you move the 7:00 appointment?&#10;&#10;Blue Mesa dispatch">Carrier running late</button>
+    <button type="button" data-from="shipping@harborline-foods.example" data-body="Hi team,&#10;&#10;Please book delivery for PO-40127 at the Dayton plant (DAY-DC). Note this one is hazmat.&#10;&#10;Maria">Hazmat load</button>
+  </div>
+  <form id="send">
+    <div class="row"><label>From <select id="from">
+      <option>shipping@harborline-foods.example</option>
+      <option>dispatch@bluemesa-transport.example</option>
+    </select></label>
+    <button type="button" id="reset">New thread</button></div>
+    <textarea id="text" maxlength="4000" required placeholder="Write an email about a PO, e.g. PO-40101 into CIN-RCV"></textarea>
+    <div class="row"><button type="submit">Send</button></div>
+  </form>
+  <div id="log" aria-live="polite"></div>
+  <p class="hint">Loads, facilities and calendars are constructed data. There is a daily spend cap, so the demo may pause for the day.</p>
+</main>
+<script>
+  const log = document.getElementById("log");
+  const text = document.getElementById("text");
+  let thread = null;
+  function add(who, body, trace) {
+    const div = document.createElement("div");
+    div.className = "msg";
+    const w = document.createElement("span"); w.className = "who"; w.textContent = who; div.append(w);
+    div.append(document.createTextNode(body));
+    if (trace) { const a = document.createElement("a"); a.href = trace; a.target = "_blank"; a.rel = "noopener"; a.textContent = "See the trace"; div.append(a); }
+    log.append(div);
+    div.scrollIntoView({ block: "nearest" });
+    return div;
+  }
+  const reset = () => { thread = null; log.replaceChildren(); };
+  document.getElementById("reset").onclick = reset;
+  for (const b of document.querySelectorAll(".samples button")) b.onclick = () => {
+    reset(); document.getElementById("from").value = b.dataset.from; text.value = b.dataset.body; text.focus();
+  };
+  document.getElementById("send").onsubmit = async (e) => {
+    e.preventDefault();
+    const message = text.value.trim();
+    if (!message) return;
+    const from = document.getElementById("from").value;
+    text.value = "";
+    add("From " + from, message);
+    const wait = add("Appointments desk", "Working on it…");
+    try {
+      const res = await fetch("/api/message", { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ conversation_id: thread, from, message }) });
+      const data = await res.json();
+      wait.remove();
+      if (!res.ok) { add("Appointments desk", data.error || "Something went wrong."); return; }
+      thread = data.conversation_id;
+      add("Appointments desk", data.reply || "(no reply)", data.trace_url);
+    } catch { wait.remove(); add("Appointments desk", "Network error. Please try again."); }
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# The go-live gate for the appointment agent. CI runs it against a preview deploy:
+#   golive run gate/golive.yml --agent https://<preview-url>/eval
+cases: cases.json
+checks: checks:checks
+agent: http://127.0.0.1:8787/eval
+agent_headers:
+  Authorization: Bearer ${EVAL_TOKEN}
+gate: gate.yml
+runs: 3
