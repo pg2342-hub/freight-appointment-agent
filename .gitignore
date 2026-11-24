@@ -5,3 +5,7 @@ reports/
 __pycache__/
 .venv/
 seed.sql
+.release.env
+.release.sql
+.secrets.json
+gate/_stage.yml

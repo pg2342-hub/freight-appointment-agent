@@ -11,3 +11,10 @@ CREATE TABLE IF NOT EXISTS turns (
   PRIMARY KEY (conversation_id, turn)
 );
 CREATE TABLE IF NOT EXISTS spend (day TEXT PRIMARY KEY, usd REAL NOT NULL);
+CREATE TABLE IF NOT EXISTS email_ids (message_id TEXT PRIMARY KEY, conversation_id TEXT NOT NULL, direction TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS hits (key TEXT NOT NULL, day TEXT NOT NULL, n INTEGER NOT NULL, PRIMARY KEY (key, day));
+-- One row per rollout stage, written by .github/workflows/release.yml.
+CREATE TABLE IF NOT EXISTS releases (
+  version TEXT NOT NULL, version_id TEXT NOT NULL, stage INTEGER NOT NULL, at TEXT NOT NULL,
+  decision TEXT NOT NULL, detail TEXT NOT NULL, run_url TEXT
+);

@@ -160,9 +160,23 @@
 .howl li{margin:0 0 10px}
 .howl b{font-weight:500}
 .lim{max-width:44em}
+.byemail{margin:12px 0 0;font-size:14px;color:var(--ink-2)}
+.byemail a{overflow-wrap:anywhere}
+#suite{margin-bottom:14px}
+.stages{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.stage{border:1px solid var(--rule);border-radius:10px;padding:12px 14px;background:#fbfaf6}
+.stage b{display:block;font:400 22px/1.2 var(--serif)}
+.stage .sd{display:block;font-size:13.5px;color:var(--ink-2);margin-top:4px}
+.stage .sv{display:inline-block;margin-top:8px;font:500 12px/1 var(--mono);padding:4px 7px;border-radius:999px;border:1px solid var(--rule)}
+.stage.go .sv{background:var(--green);color:var(--paper);border-color:var(--green)}
+.stage.nogo .sv{background:var(--ink);color:var(--paper)}
+.stage.wait{opacity:.6}
+.relmeta{grid-column:1/-1;font-size:13.5px;color:var(--ink-2);margin:10px 0 0}
+@media (max-width:640px){.stages{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:1000px){.desk{grid-template-columns:minmax(0,1fr)}.vrow.pending{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px){.meta{grid-template-columns:repeat(2,minmax(0,1fr))}.dhead,.meta,.dpad{padding-left:18px;padding-right:18px}.compose{padding:16px}}
-@media (min-width:1001px){.content .vrow{grid-template-columns:minmax(0,9.5em) minmax(0,1fr) 6.5em 5.5em;gap:16px}.content .vscore b{font-size:38px}}
+@media (min-width:1001px){.content .vrow{grid-template-columns:minmax(0,9.5em) minmax(0,1fr) 6.5em 5.5em;gap:16px}.content .vrow.pending{grid-template-columns:minmax(0,9.5em) minmax(0,1fr)}.content .vscore b{font-size:38px}}
+.stages .pend{grid-column:1/-1}
 </style></head><body>
 <!-- demo-chrome --><header class="demo-top"><a class="demo-brand" href="https://pranavgudise.dev/"><svg class="demo-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.25"/><g class="n"><path class="f" d="M15.5 8.5 L 13.4 13.4 L 8.5 15.5 L 10.6 10.6 Z"/></g><circle class="p" cx="12" cy="12" r=".7"/></svg><span>Pranav Gudise</span></a><a class="pill" href="https://github.com/pg2342-hub/freight-appointment-agent">Code on GitHub</a></header><!-- /demo-chrome -->
 <main>
@@ -183,6 +197,7 @@
       <button class="go" id="go" type="button">Send to the agent</button>
       <button class="pill newthread" id="reset" type="button">New thread</button>
     </div>
+    <p class="byemail">Or email <a class="mono" href="mailto:appointments@pranavgudise.dev">appointments@pranavgudise.dev</a> from your own inbox. The agent replies in the same thread, with a link to every step it took.</p>
     <div class="loadmsg" id="loadmsg" role="status"><i aria-hidden="true"></i><span id="loadtxt">Showing a recorded run. Sending runs the live agent.</span></div>
     <div class="exlab" id="exlab">Recorded threads</div>
     <div class="exlist" id="exlist" role="group" aria-labelledby="exlab"></div>
@@ -196,12 +211,19 @@
 
 <section id="gate">
   <h2>Go-live gate</h2>
+  <div class="seg" role="radiogroup" aria-label="Which threads" id="suite"><button type="button" role="radio" aria-checked="true" data-s="dev">25 threads written with the instructions</button><button type="button" role="radio" aria-checked="false" data-s="holdout">15 held-out threads</button></div>
   <div class="verdict" aria-labelledby="verdict-h">
-    <div class="vhead"><h3 id="verdict-h">Same 25 email threads, same gate</h3><p>Gate: <b>24 of 25 on all 3 runs, every judgment call, no critical error</b></p></div>
+    <div class="vhead"><h3 id="verdict-h"></h3><p id="gaterule"></p></div>
     <div id="vrows"></div>
     <div class="legend"><span><i class="pass"></i>Passed</span><span><i class="fail"></i>Failed</span><span><i class="crit"></i>Critical error</span><span>Each square is one thread. Select one to find it below.</span></div>
   </div>
   <p class="note" id="gatenote"></p>
+</section>
+
+<section id="rollout">
+  <h2>Staged rollout</h2>
+  <p class="note">Every push to main uploads a new version with no traffic. It gets 10% of traffic and must pass the held-out gate, then 50% and the 25-thread gate, then 100%. The gates run pinned to the new version. A failed stage puts the previous version back.</p>
+  <div class="stages" id="stages"><p class="pend">Loading the latest release.</p></div>
 </section>
 
 <section id="cases-sec">
@@ -225,7 +247,7 @@
 <section id="limits">
   <h2>Limits</h2>
   <ul class="lim">
-    <li>The 25 threads were written together with the agent's instructions, so a perfect score shows the agent follows the rules it was given, not how it handles email it has never seen. A held-out set written separately is the next test.</li>
+    <li>The 25 threads were written together with the agent's instructions, so a perfect score there shows the agent follows the rules it was given. The 15 held-out threads were written after the instructions were frozen, and the instructions were not changed for them. They are still written by the same person, so real inbox email is the harder test.</li>
     <li>The facilities, loads and their answers are simulated; there is no real TMS or dock scheduler behind it.</li>
     <li>Loads are set in December 2026, and visitors share one copy of the data, so a slot another visitor booked stays taken.</li>
   </ul>
@@ -233,7 +255,7 @@
 </div>
 
 <aside class="side" aria-label="About this build">
-  <nav aria-label="On this page"><a href="#tool">Email the desk</a><a href="#gate">Go-live gate</a><a href="#cases-sec">Every thread</a><a href="#how">How it works</a><a href="#limits">Limits</a></nav>
+  <nav aria-label="On this page"><a href="#tool">Email the desk</a><a href="#gate">Go-live gate</a><a href="#rollout">Staged rollout</a><a href="#cases-sec">Every thread</a><a href="#how">How it works</a><a href="#limits">Limits</a></nav>
   <div><h3>Data</h3><p>All synthetic. Lanternfly Logistics, its loads, 15 facilities (hours, holidays, notice rules, booked slots), the shipper, the carrier and every email are invented. Facility answers come from a simulator.</p></div>
   <div><h3>Run it yourself</h3><p>Node 22 and Python 3.9+. The scripted mode needs no API key.</p><pre>npm install && npm run db:init && npm run seed
 npm run dev
@@ -342,29 +364,61 @@ $("#go").addEventListener("click", async () => {
   finally { go.disabled = false; }
 });
 
-// the gate card
-$("#vrows").innerHTML = D.gate.map((g) => `<div class="vrow"><div class="vwho"><b>${esc(g.name)}</b><span>${esc(g.what)}</span></div>
+// the gate card, for the 25 dev threads or the 15 held-out ones
+const SUITES = {
+  dev: { title: "Same 25 email threads, same gate", rule: "24 of 25 on all 3 runs, every judgment call, no critical error" },
+  holdout: { title: "15 threads written after the instructions were frozen", rule: "14 of 15 on all 3 runs, every judgment call, no critical error" },
+};
+function gateRows(suite) {
+  const gs = D.gates[suite];
+  $("#verdict-h").textContent = SUITES[suite].title;
+  $("#gaterule").innerHTML = `Gate: <b>${SUITES[suite].rule}</b>`;
+  const rows = gs.map((g) => `<div class="vrow"><div class="vwho"><b>${esc(g.name)}</b><span>${esc(g.what)}</span></div>
 <div class="strip" role="group" aria-label="${esc(g.name)}: every thread">${g.cases.map((c, i) => `<a class="cell ${c.failed.length ? (c.critical ? "crit" : "fail") : "pass"}" href="#case-${c.id}" data-case="${c.id}" aria-label="${esc(g.name)} thread ${i + 1} ${c.failed.length ? (c.critical ? "failed with a critical error" : "failed") : "passed"}"></a>`).join("")}</div>
-<div class="vscore"><b>${g.passed}</b><span>of 25 passed<br>${g.critical} critical</span></div><span class="gate ${g.decision === "go" ? "go" : "nogo"}">${g.decision === "go" ? "GO" : "NO-GO"}</span></div>`).join("");
+<div class="vscore"><b>${g.passed}</b><span>of ${g.total} passed<br>${g.critical} critical</span></div><span class="gate ${g.decision === "go" ? "go" : "nogo"}">${g.decision === "go" ? "GO" : "NO-GO"}</span></div>`);
+  if (!gs.some((g) => g.key === "claude")) rows.unshift(`<div class="vrow pending"><div class="vwho"><b>Claude</b><span>claude-opus-5-5 in the tool loop</span></div><p class="pend">Running now. Claude's row goes here when the 3 runs finish.</p></div>`);
+  $("#vrows").innerHTML = rows.join("");
+  const cl = gs.find((g) => g.key === "claude");
+  $("#gatenote").textContent = cl
+    ? `Claude ran each of the ${cl.total} threads ${cl.runs} times against the deployed agent: ${cl.passed} of ${cl.total} on every run, ${cl.critical} critical, about $${cl.cost.toFixed(2)} in model calls for all ${cl.runs * cl.total} runs (${cl.latency.toFixed(0)} seconds per thread on average). The scripted stand-in follows the rules exactly and checks the plumbing. Always book shows what the gate stops: a wrong appointment written or a missed hand-off is critical, and one blocks go-live.`
+    : "The scripted stand-in follows the rules exactly and checks the plumbing. Always book shows what the gate stops.";
+  document.querySelectorAll(".cell").forEach((c) => c.addEventListener("click", () => {
+    seg[0].click();
+    document.querySelectorAll("#cases tr.lit").forEach((r) => r.classList.remove("lit"));
+    const row = document.getElementById("case-" + c.dataset.case); row && row.classList.add("lit");
+  }));
+}
+const suiteBtns = [...document.querySelectorAll("#suite button")];
+suiteBtns.forEach((b) => b.addEventListener("click", () => { suiteBtns.forEach((x) => x.setAttribute("aria-checked", String(x === b))); gateRows(b.dataset.s); }));
 
-const cl = D.gate[0];
-$("#gatenote").textContent = `Claude ran each of the 25 threads 3 times against the deployed agent: ${cl.passed} of 25 on every run, ${cl.critical} critical, about $${cl.cost.toFixed(2)} in model calls for all ${cl.runs * 25} runs (${cl.latency.toFixed(0)} seconds per thread on average). The scripted stand-in follows the rules exactly and checks the plumbing. Always book shows what the gate stops: a wrong appointment written or a missed hand-off is critical, and one blocks go-live.`;
 // every thread
-const byId = (g, id) => g.cases.find((c) => c.id === id);
-const res = (c) => !c.failed.length ? `<td class="v ok">Pass</td>` : `<td class="v bad ${c.critical ? "crit" : ""}">Fail<div class="why">${esc(c.failed.join(", "))}</div></td>`;
-$("#cases tbody").innerHTML = D.cases.map((c, i) => `<tr id="case-${c.id}" data-tier="${c.group}"><td class="n">${i + 1}<br>${c.group}</td><td class="tx"><b>${esc(c.title)}</b><div>${esc(c.body.replace(/^(hi|hello|morning|team)[^\n]*\n+/i, ""))}</div></td>${res(byId(D.gate[0], c.id))}${res(byId(D.gate[2], c.id))}</tr>`).join("");
-const TIERS = [["all", "All"], ["T1", "Clean"], ["T2", "Messy"], ["T3", "Judgment"], ["T4", "Out of scope"]];
-$("#seg").innerHTML = TIERS.map(([t, n]) => `<button type="button" role="radio" aria-checked="${t === "all"}" data-t="${t}">${n}&nbsp; <span>${t === "all" ? D.cases.length : D.cases.filter((c) => c.group === t).length}</span></button>`).join("");
-const seg = [...document.querySelectorAll(".seg button")];
+const byId = (suite, key, id) => { const g = D.gates[suite].find((x) => x.key === key); return g && g.cases.find((c) => c.id === id); };
+const res = (c) => !c ? `<td class="v">Not run yet</td>` : !c.failed.length ? `<td class="v ok">Pass</td>` : `<td class="v bad ${c.critical ? "crit" : ""}">Fail<div class="why">${esc(c.failed.join(", "))}</div></td>`;
+$("#cases tbody").innerHTML = D.cases.map((c) => `<tr id="case-${c.id}" data-tier="${c.group}" data-suite="${c.suite}"><td class="n">${c.suite === "holdout" ? "H" + +c.id.slice(1) : +c.id.slice(1)}<br>${c.group}</td><td class="tx"><b>${esc(c.title)}</b><div>${esc(c.body.replace(/^(hi|hello|morning|team)[^\n]*\n+/i, ""))}</div></td>${res(byId(c.suite, "claude", c.id))}${res(byId(c.suite, "scripted-naive", c.id))}</tr>`).join("");
+const TIERS = [["all", "All"], ["T1", "Clean"], ["T2", "Messy"], ["T3", "Judgment"], ["T4", "Out of scope"], ["holdout", "Held-out"]];
+const inTier = (c, t) => t === "all" || c.group === t || c.suite === t;
+$("#seg").innerHTML = TIERS.map(([t, n]) => `<button type="button" role="radio" aria-checked="${t === "all"}" data-t="${t}">${n}&nbsp; <span>${D.cases.filter((c) => inTier(c, t)).length}</span></button>`).join("");
+const seg = [...document.querySelectorAll("#seg button")];
 seg.forEach((b) => b.addEventListener("click", () => {
   seg.forEach((x) => x.setAttribute("aria-checked", String(x === b)));
-  document.querySelectorAll("#cases tbody tr").forEach((r) => (r.hidden = !(b.dataset.t === "all" || r.dataset.tier === b.dataset.t)));
+  document.querySelectorAll("#cases tbody tr").forEach((r) => (r.hidden = !inTier({ group: r.dataset.tier, suite: r.dataset.suite }, b.dataset.t)));
 }));
-document.querySelectorAll(".cell").forEach((c) => c.addEventListener("click", () => {
-  seg[0].click();
-  document.querySelectorAll("#cases tr.lit").forEach((r) => r.classList.remove("lit"));
-  const row = document.getElementById("case-" + c.dataset.case); row && row.classList.add("lit");
-}));
+gateRows("dev");
+
+// the staged rollout, live from the Worker
+const STAGES = [[0, "Uploaded", "No traffic"], [10, "10%", "Held-out gate"], [50, "50%", "25-thread gate"], [100, "100%", "All traffic"]];
+fetch("/api/releases").then((r) => r.json()).then((d) => {
+  const rows = d.stages || [];
+  if (!rows.length) { $("#stages").innerHTML = `<p class="pend">No staged release has run yet. The first one starts with the next push to main.</p>`; return; }
+  const v = rows[0].version;
+  const mine = rows.filter((r) => r.version === v);
+  const back = mine.find((r) => r.decision === "rolled back");
+  $("#stages").innerHTML = STAGES.map(([p, name, what]) => {
+    const r = mine.find((x) => x.stage === p && x.decision !== "rolled back");
+    const cls = !r ? "wait" : r.decision === "NO-GO" ? "nogo" : "go";
+    return `<div class="stage ${cls}"><b>${name}</b><span class="sd">${esc(r ? r.detail : what)}</span><span class="sv">${r ? esc(r.decision === "uploaded" ? "UPLOADED" : r.decision) : "NOT REACHED"}</span></div>`;
+  }).join("") + `<p class="relmeta">Latest release ${esc(v)}, ${esc(mine[mine.length - 1].at)} UTC.${back ? " Rolled back to the previous version." : ""} Serving now: ${esc(d.current)}. <a href="${esc(rows[0].run_url)}">See the CI run</a></p>`;
+}).catch(() => { $("#stages").innerHTML = `<p class="pend">Could not load the release history.</p>`; });
 
 showExample(0);
 </script><!-- demo-chrome --><footer class="demo-foot"><span>A working build by <a href="https://pranavgudise.dev/">Pranav Gudise</a>. Synthetic or public data only.</span><a href="https://github.com/pg2342-hub/freight-appointment-agent">github.com/pg2342-hub/freight-appointment-agent</a></footer><!-- /demo-chrome -->

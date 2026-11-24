@@ -11,11 +11,16 @@ binding = "ASSETS"
 VERSION = "v1"
 MODEL_MODE = "claude"
 DAILY_BUDGET_USD = "5"
+EMAIL_ADDRESS = "appointments@pranavgudise.dev"
+PUBLIC_URL = "https://freight-appointment-agent.pg2342.workers.dev"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "freight-appointment-agent"
 database_id = "00000000-0000-0000-0000-000000000000" # replaced with the real id at first deploy
+
+[triggers]
+crons = ["0 9 * * *"] # 2 AM Arizona: reset the demo TMS and dock calendars to the seed
 
 [observability]
 enabled = true

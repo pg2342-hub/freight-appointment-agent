@@ -26,28 +26,38 @@ jobs:
           for i in $(seq 1 60); do curl -sf localhost:8787/api/health && break; sleep 1; done
           cd gate && EVAL_TOKEN=ci-local golive run golive.yml --runs 1 && EVAL_TOKEN=ci-local golive run holdout.yml --runs 1 --out ../reports/holdout
 
-  deploy:
+  release:
+    # Staged rollout: upload a new version with no traffic, then 10% with the held-out gate pinned to it,
+    # 50% with the 25-thread gate, then 100%. A failed stage rolls back to the previous version.
     needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    concurrency: { group: release, cancel-in-progress: false }
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: npm }
-      - run: npm ci
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: npm ci && pip install "git+https://github.com/pg2342-hub/golive-gate"
       - name: D1 database, schema and seed
         run: scripts/ci_d1.sh
-      - name: Deploy the Worker
-        run: npx wrangler deploy | tee deploy.log
-      - name: Worker secrets
+      - name: Eval token
         run: |
-          printf '%s' "${{ secrets.ANTHROPIC_API_KEY }}" | npx wrangler secret put ANTHROPIC_API_KEY
-          openssl rand -hex 24 | npx wrangler secret put EVAL_TOKEN
-      - name: Health check
-        run: |
-          url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy.log | head -1)
-          echo "Deployed to $url"
-          curl -sf "$url/api/health"
+          t=$(printf '%s:eval' "$CLOUDFLARE_API_TOKEN" | sha256sum | cut -c1-48); echo "::add-mask::$t"; echo "EVAL_TOKEN=$t" >> "$GITHUB_ENV"
+      - name: Upload the new version (no traffic)
+        env: { ANTHROPIC_API_KEY: "${{ secrets.ANTHROPIC_API_KEY }}" }
+        run: scripts/release.sh upload
+      - name: Stage 1, 10 percent, held-out gate
+        run: scripts/release.sh stage 10 holdout
+      - name: Stage 2, 50 percent, 25-thread gate
+        run: scripts/release.sh stage 50 golive
+      - name: Stage 3, 100 percent
+        run: scripts/release.sh stage 100 && npx wrangler triggers deploy
+      - name: Roll back
+        if: failure()
+        run: scripts/release.sh rollback
