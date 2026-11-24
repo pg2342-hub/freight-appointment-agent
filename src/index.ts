@@ -3,7 +3,8 @@ import type { BetaMessageParam } from "@anthropic-ai/sdk/resources/beta/messages
 import seedWorld from "../seed/world.json";
 import { runAgent } from "./agent";
 import { D1Store } from "./d1store";
-import { runCase, threadText, type CaseInput } from "./eval";
+import { calendarFor } from "./calendar";
+import { proposalFrom, runCase, threadText, type CaseInput } from "./eval";
 import { ClaudeModel, ScriptedModel, type Model } from "./model";
 import { tracePage } from "./trace";
 import type { FacilityBehavior } from "./store";
@@ -13,7 +14,7 @@ export interface Env {
   DB: D1Database;
   ASSETS: Fetcher;
   VERSION: string; // which agent version this deploy is, e.g. v1
-  MODEL_MODE: "claude" | "scripted";
+  MODEL_MODE: "claude" | "scripted" | "scripted-naive";
   DAILY_BUDGET_USD: string;
   ANTHROPIC_API_KEY?: string;
   EVAL_TOKEN?: string;
@@ -47,7 +48,7 @@ async function handleEval(req: Request, env: Env) {
   if (!env.EVAL_TOKEN || req.headers.get("authorization") !== `Bearer ${env.EVAL_TOKEN}`) return json({ error: "unauthorized" }, 401);
   const { input } = (await req.json()) as { input: CaseInput };
   const makeModel = (w: World, b: FacilityBehavior): Model =>
-    env.MODEL_MODE === "scripted" ? new ScriptedModel(input.facts as never, b, w) : new ClaudeModel(requireKey(env));
+    env.MODEL_MODE.startsWith("scripted") ? new ScriptedModel(input.facts as never, b, w, env.MODEL_MODE === "scripted-naive") : new ClaudeModel(requireKey(env));
   const { output, cost_usd } = await runCase(input, WORLD, makeModel);
   if (cost_usd > 0) await addSpend(env.DB, cost_usd);
   return json({ output, cost_usd, version: env.VERSION });
@@ -81,6 +82,7 @@ async function handleMessage(req: Request, env: Env) {
 
   const t0 = Date.now();
   const store = new D1Store(env.DB, id);
+  const before = structuredClone(await store.world());
   const result = await runAgent(new ClaudeModel(requireKey(env)), store, history);
   await store.commit();
   const ms = Date.now() - t0;
@@ -96,7 +98,16 @@ async function handleMessage(req: Request, env: Env) {
     ).bind(id, turn, now, env.VERSION, text, result.reply, result.stopped, JSON.stringify(result.steps), result.cost_usd, ms),
   ]);
   await addSpend(env.DB, result.cost_usd);
-  return json({ conversation_id: id, reply: result.reply, trace_url: `/trace/${id}`, version: env.VERSION });
+  const steps = result.steps.filter((s) => s.kind === "tool").map((s: any) => ({ name: s.name, ok: s.ok, status: s.output?.status ?? null, error: s.error ?? null }));
+  return json({
+    conversation_id: id,
+    reply: result.reply,
+    result: proposalFrom(result.steps, result.reply, result.stopped),
+    calendar: calendarFor(await store.world(), result.steps, before),
+    steps,
+    trace_url: `/trace/${id}`,
+    version: env.VERSION,
+  });
 }
 
 function requireKey(env: Env) {

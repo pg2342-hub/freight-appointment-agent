@@ -67,12 +67,14 @@ export class ScriptedModel implements Model {
   readonly name = "scripted";
   private turn = 0;
 
-  constructor(private facts: Facts, private behavior: FacilityBehavior, private world: World) {}
+  constructor(private facts: Facts, private behavior: FacilityBehavior, private world: World, private naive = false) {
+    if (naive) (this as { name: string }).name = "scripted-naive";
+  }
 
   async create(_req: ModelRequest): Promise<BetaMessage> {
     this.turn += 1;
     if (this.turn > 1) return message([{ type: "text", text: "Done. (scripted stand-in)" }], "end_turn");
-    const calls = this.plan().map(([name, input], i) => ({ type: "tool_use", id: `toolu_s${i}`, name, input }));
+    const calls = (this.naive ? this.naivePlan() : this.plan()).map(([name, input], i) => ({ type: "tool_use", id: `toolu_s${i}`, name, input }));
     return message(calls, "tool_use");
   }
 
@@ -143,6 +145,9 @@ export class ScriptedModel implements Model {
       ? Date.parse(f.check_call_eta)
       : parseTime((pickupLocal ?? load.pickup.appt)!, pf.tz) + transitHours(w, load.miles) * 3600_000;
     const d = load.delivery;
+    if (f.check_call_eta)
+      calls.push(["get_open_slots", { facility_id: dfac.id, from_local: d.window_start, to_local: d.window_end, not_before: f.check_call_eta }]);
+    else calls.push(["estimate_arrival", { load_no: ln, ...(pickupLocal ? { pickup_local: pickupLocal } : {}) }]);
     const slot = this.pick(dfac.id, d.window_start!, d.window_end!, received, earliest, flags, loads.length);
     if (slot === "competing") return handoff("coordinator", "competing_loads", ln, `${loads.length} loads and too few slots at ${dfac.id}.`);
     if (!slot) return handoff("coordinator", "no_slot_in_window", ln, `No slot inside the window at ${dfac.id}.`);
@@ -151,6 +156,22 @@ export class ScriptedModel implements Model {
     this.request(calls, ln, dfac.id, slot);
     if (f.kind === "reschedule") notify.add("ae");
     return this.finish(calls, load, flags, notify);
+  }
+
+  /** "Always book": the first PO's first load, the first open slot from the window start, no hand-offs. */
+  private naivePlan(): Call[] {
+    const w = this.world;
+    const po = this.facts.emails.find((e) => e.po)?.po;
+    const load = w.loads.find((l) => l.customer_po === po || l.load_no === po);
+    if (!po || !load) return [];
+    const stop = this.facts.stop === "pickup" ? load.pickup : load.delivery;
+    const f = facility(w, stop.facility)!;
+    const start = stop.window_start ?? msToLocal(Date.parse(this.facts.received_at), f.tz);
+    const slot = openSlots(f, start, msToLocal(localToMs(start, f.tz) + 14 * 86400_000, f.tz))[0];
+    const calls: Call[] = [["find_load", { reference: po }]];
+    calls.push(["request_appointment", { load_no: load.load_no, facility_id: f.id, local_time: slot, channel: f.channel === "fcfs" ? "email" : f.channel }]);
+    if (load.carrier) calls.push(["notify", { to: "carrier", load_no: load.load_no, message: "Appointment set.", flags: [] }]);
+    return calls;
   }
 
   private request(calls: Call[], ln: string, facId: string, slot: string) {

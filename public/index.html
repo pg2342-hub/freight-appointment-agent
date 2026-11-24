@@ -1,81 +1,369 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Freight appointment agent</title>
-<link rel="stylesheet" href="https://pranavgudise.dev/kit/demo.css">
+<!doctype html><html lang="en"><head>
+<!-- demo-chrome --><meta name="theme-color" content="#f4f2ec"><link rel="icon" href="https://pranavgudise.dev/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="https://pranavgudise.dev/kit/demo.css"><!-- /demo-chrome -->
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Freight Appointment Agent</title>
+<meta name="description" content="An email agent that books freight dock appointments, with a go-live gate on 25 email threads.">
 <style>
-  #log { display: flex; flex-direction: column; gap: .6rem; margin: 1rem 0; }
-  .msg { padding: .6rem .8rem; border: 1px solid var(--rule, #ddd); border-radius: 8px; white-space: pre-wrap; }
-  .msg .who { font-size: .8rem; opacity: .75; display: block; margin-bottom: .25rem; }
-  .msg a { font-size: .8rem; display: block; margin-top: .4rem; }
-  textarea { width: 100%; min-height: 8rem; font: inherit; padding: .6rem; box-sizing: border-box; }
-  .row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin: .5rem 0; }
-  select, button { font: inherit; padding: .45rem .7rem; }
-  .hint { font-size: .85rem; opacity: .8; }
-  .samples button { font-size: .85rem; }
-</style>
-</head>
-<body>
+/* Shared demo layout, copied from the approved pilots. Keep it; add page-specific rules below it. */
+
+.head{padding:8px 0 0}
+.head h1{margin:40px 0 14px}
+.head .lead{max-width:38em}
+/* verdict: the same 25 cases under the same gate, one square per case */
+.verdict{margin:36px 0 0;border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;overflow:hidden}
+.vhead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;padding:18px 24px;border-bottom:1px solid var(--rule)}
+.vhead h2{all:unset;font:400 22px/1.2 var(--serif)}
+.vhead p{margin:0;color:var(--ink-2);font-size:15px}
+.vhead p b{color:var(--ink)}
+.vrow,.arow{display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr) 7.5em 5.5em;align-items:center;gap:20px;padding:22px 24px}
+.vrow+.vrow{border-top:1px solid var(--rule-soft)}
+.vwho b,.awho b{display:block;font:400 20px/1.2 var(--serif)}
+.vwho span,.awho span{display:block;color:var(--ink-2);font-size:14px;line-height:1.4;margin-top:4px}
+.strip{display:grid;grid-template-columns:repeat(25,minmax(0,1fr));gap:4px}
+.cell{display:block;aspect-ratio:1;border-radius:4px;border:1.5px solid transparent;transition:transform .2s var(--ease),box-shadow .2s}
+.cell.pass{background:var(--green)}
+.cell.fail{background:var(--paper);border-color:var(--ink)}
+.cell.crit{background:var(--ink)}
+.cell:hover,.cell:focus-visible,.cell.lit{transform:translateY(-3px);box-shadow:0 6px 12px -6px rgb(27 26 23/.5)}
+.vscore b{font:400 44px/1 var(--serif)}
+.vscore span{display:block;color:var(--ink-2);font-size:13px;line-height:1.35;margin-top:4px}
+.gate{justify-self:end;display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 14px;border-radius:999px;font:500 13px/1 var(--mono);letter-spacing:.06em}
+.gate.go{background:var(--green-wash);color:var(--green)}
+.gate.nogo{background:var(--ink);color:var(--paper)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 20px;padding:14px 24px;border-top:1px solid var(--rule);color:var(--ink-2);font-size:13px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:12px;height:12px;border-radius:3px;border:1.5px solid transparent}
+.legend .pass{background:var(--green)}.legend .fail{border-color:var(--ink)}.legend .crit{background:var(--ink)}
+/* page body: content and a side column */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:56px;align-items:start;margin-top:8px}
+.side{position:sticky;top:24px;margin-top:64px;display:grid;gap:22px;font-size:14px;color:var(--ink-2)}
+.side h3{margin:0 0 6px;font:500 13px/1.3 var(--sans);color:var(--ink)}
+.side p{margin:0}
+.side nav a{display:block;padding:5px 0;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule-soft)}
+.side nav a:hover{color:var(--ink)}
+.side pre{font-size:12px;margin:6px 0 0}
+.point{font-size:17px;max-width:40em;margin:0}
+.point b{font-weight:500}
+.seg{display:flex;width:fit-content;max-width:100%;flex-wrap:wrap;gap:2px;padding:3px;border:1px solid var(--rule);border-radius:999px;margin:0 0 16px;background:#fbfaf6}
+.seg button{min-height:34px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);font:500 14px/1 var(--sans);cursor:pointer}
+.seg button span{font-weight:400;opacity:.8}
+.seg button[aria-checked=true]{background:var(--ink);color:var(--paper)}
+.n{font-family:var(--mono);font-size:13px}
+.tag{font:400 12px/1 var(--mono);border:1px solid var(--rule);border-radius:999px;padding:4px 8px;white-space:nowrap}
+.tx{max-width:340px}.ch{font-size:13px;color:var(--ink-2);margin-top:4px}
+.v{white-space:nowrap;font-weight:500}
+.v.ok{color:var(--green)}
+.v.bad{white-space:normal;color:var(--ink)}
+.v.bad.crit::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--ink);margin-right:6px;vertical-align:1px}
+.why{font-weight:400;font-size:13px;color:var(--ink-2);margin-top:4px;max-width:240px}
+#cases tr.lit td{background:var(--green-wash)}
+#cases tr{scroll-margin-top:24px}
+.abl{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;overflow:hidden}
+.arow{grid-template-columns:minmax(0,13em) minmax(0,1fr) 6.5em}
+.arow+.arow{border-top:1px solid var(--rule-soft)}
+.ascore{font:400 15px/1 var(--sans);color:var(--ink-2)}
+.ascore b{font:400 30px/1 var(--serif);color:var(--ink)}
+.ascore span{display:block;font-size:13px;margin-top:4px}
+.note{color:var(--ink-2);font-size:15px;max-width:44em;margin-top:14px}
+.rule{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rule div{border:1px solid var(--rule);border-radius:16px;padding:20px 22px;background:#fbfaf6}
+.rule div:last-child{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rule h3{margin:0 0 6px;font:400 22px/1.2 var(--serif)}
+.rule p{margin:0 0 10px;font-size:15px;opacity:.85}
+.rule ul{margin:0;font-size:15px}
+.rule div:last-child li::marker{color:rgb(244 242 236/.6)}
+.sev{font:500 12px/1 var(--mono);padding:4px 8px;border-radius:999px;border:1px solid var(--rule)}
+.sev-critical{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sev-low{color:var(--ink-2)}
+@media (max-width:1000px){
+ .layout{grid-template-columns:minmax(0,1fr);gap:0}
+ .side{position:static;margin-top:48px;order:2}
+ .vrow{grid-template-columns:minmax(0,1fr) auto;gap:14px 16px}
+ .vrow .strip{grid-column:1/-1;grid-row:2}
+ .vscore{grid-row:3}.vrow .gate{grid-row:3}
+ .arow{grid-template-columns:minmax(0,1fr) auto;gap:12px 16px}
+ .arow .strip{grid-column:1/-1;grid-row:2}
+ .ascore{grid-column:2;grid-row:1}
+ .rule{grid-template-columns:1fr}
+}
+@media (max-width:640px){.vrow,.arow{padding:18px}.vhead{padding:16px 18px}.strip{gap:3px}.tx{max-width:none}}
+@media (prefers-reduced-motion:reduce){.cell{transition:none}}
+
+/* ---- page-specific rules ---- */
+.head h1{margin:24px 0 12px}
+.desk{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:20px 24px;align-items:start;margin-top:28px;scroll-margin-top:16px}
+.compose{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;padding:20px 22px}
+.compose label{display:block;font:500 15px/1.3 var(--sans);margin:0 0 10px}
+.fromrow{display:flex;align-items:center;gap:10px;margin:0 0 8px;font-size:14px;color:var(--ink-2)}
+.fromrow select{flex:1;min-width:0;font:13px/1.3 var(--mono);padding:8px 10px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
+.compose textarea{display:block;width:100%;box-sizing:border-box;min-height:190px;resize:vertical;padding:12px 14px;border:1px solid var(--rule);border-radius:12px;font:15px/1.5 var(--sans);background:#fff;color:var(--ink)}
+.act{display:flex;align-items:center;gap:10px 12px;flex-wrap:wrap;margin-top:12px}
+.go{display:inline-flex;align-items:center;min-height:46px;padding:0 24px;border-radius:999px;border:1px solid var(--green);background:var(--green);color:#fff;font:500 16px/1 var(--sans);cursor:pointer}
+.go:hover{background:var(--green-deep);border-color:var(--green-deep)}
+.go:disabled{opacity:.6;cursor:progress}
+.newthread{cursor:pointer;min-height:46px}
+.loadmsg{display:flex;align-items:flex-start;gap:8px;margin-top:12px;font-size:13.5px;line-height:1.5;color:var(--ink-2);min-height:20px}
+.loadmsg i{flex:none;width:8px;height:8px;margin-top:6px;border-radius:50%;background:var(--ink-2);opacity:.45}
+.loadmsg.busy i{animation:pulse 1.2s var(--ease) infinite}
+.loadmsg.ok i{background:var(--green);opacity:1}
+.loadmsg.err i{background:var(--ink);opacity:1;border-radius:2px}
+@keyframes pulse{50%{opacity:.1}}
+.exlab{font:500 13px/1.3 var(--sans);margin:20px 0 8px;color:var(--ink)}
+.exlist{display:flex;flex-wrap:wrap;gap:6px}
+.ex{min-height:36px;padding:0 12px;border:1px solid var(--rule);border-radius:999px;background:#fff;color:var(--ink);font:400 13.5px/1.2 var(--sans);cursor:pointer}
+.ex:hover{border-color:var(--ink);background:#fff;color:var(--ink)}
+.ex[aria-pressed=true],.ex[aria-pressed=true]:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+/* the output: the TMS update and the reply */
+.doc{border:1px solid var(--rule);border-radius:16px;background:#fff;box-shadow:0 1px 0 rgb(27 26 23/.04),0 24px 48px -32px rgb(27 26 23/.35);min-width:0;overflow:hidden}
+.doc h3{all:unset;display:block}
+.dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px 20px;padding:22px 26px 16px;border-bottom:1px solid var(--rule)}
+.dhead>div{min-width:0}
+.dhead h3{font:400 26px/1.15 var(--serif)}
+.dsub{font:12.5px/1.5 var(--mono);color:var(--ink-2);margin-top:6px;overflow-wrap:anywhere}
+.status{display:inline-flex;align-items:center;min-height:30px;padding:0 14px;border-radius:999px;font:500 12.5px/1 var(--mono);letter-spacing:.04em;border:1px solid var(--ink);white-space:nowrap}
+.st-booked{background:var(--green-wash);border-color:var(--green-wash);color:var(--green)}
+.st-handoff{background:var(--ink);color:var(--paper)}
+.st-other{border-style:dashed}
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 20px;margin:0;padding:14px 26px;border-bottom:1px solid var(--rule);background:#fbfaf6}
+.meta div{min-width:0}
+.meta dt{font-size:12.5px;color:var(--ink-2)}
+.meta dd{margin:2px 0 0;font-size:14.5px;overflow-wrap:anywhere}
+.meta dd.mono{font:13px/1.4 var(--mono)}
+.dpad{padding:16px 26px 22px}
+.ho{border:1.5px solid var(--ink);border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:14.5px}
+.ho b{font-weight:500}
+.mail{border:1px solid var(--rule);border-radius:12px;padding:12px 14px;white-space:pre-wrap;font-size:14.5px;line-height:1.55;margin:0 0 14px}
+.mail.none{color:var(--ink-2);border-style:dashed}
+.cap{font:500 13px/1.3 var(--sans);margin:14px 0 6px}
+.capsub{font-size:12.5px;color:var(--ink-2);margin:0 0 8px}
+.cal{display:block;width:100%;height:auto;font-variant-numeric:tabular-nums}
+.cal text{font:11px var(--mono);fill:var(--ink-2)}
+.cal .lbl{fill:var(--ink)}
+.calkey{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2);margin:8px 0 0}
+.calkey span{display:inline-flex;align-items:center;gap:6px}
+.calkey i{display:inline-block;width:14px;height:10px;border-radius:2px}
+.k-open{background:#efece3}.k-win{background:var(--green-wash);outline:1px solid var(--green)}.k-taken{background:var(--ink-2)}.k-appt{background:var(--green)}
+.k-arr{width:2px!important;height:12px!important;background:var(--ink);border-radius:0!important}
+.steps{list-style:none;margin:0;padding:0;font:12.5px/1.5 var(--mono)}
+.steps li{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid var(--rule-soft)}
+.steps li span{color:var(--ink-2);overflow-wrap:anywhere}
+.steps li.bad b{text-decoration:underline dotted}
+.trace{display:inline-block;margin-top:12px;font-size:14px}
+.empty{padding:28px 26px;color:var(--ink-2)}
+.vhead h3{all:unset;font:400 22px/1.2 var(--serif)}
+.vrow.pending{grid-template-columns:minmax(0,15em) minmax(0,1fr)}
+.pend{margin:0;color:var(--ink-2);font-size:14.5px;border:1px dashed var(--rule);border-radius:10px;padding:10px 12px}
+#cases td{vertical-align:top}
+#cases .tx b{display:block;font-weight:500;margin-bottom:2px}
+#cases .tx div{font-size:13px;color:var(--ink-2);white-space:pre-wrap;max-height:4.6em;overflow:hidden}
+.howl{max-width:44em;padding-left:1.2em}
+.howl li{margin:0 0 10px}
+.howl b{font-weight:500}
+.lim{max-width:44em}
+@media (max-width:1000px){.desk{grid-template-columns:minmax(0,1fr)}.vrow.pending{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){.meta{grid-template-columns:repeat(2,minmax(0,1fr))}.dhead,.meta,.dpad{padding-left:18px;padding-right:18px}.compose{padding:16px}}
+</style></head><body>
+<!-- demo-chrome --><header class="demo-top"><a class="demo-brand" href="https://pranavgudise.dev/"><svg class="demo-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.25"/><g class="n"><path class="f" d="M15.5 8.5 L 13.4 13.4 L 8.5 15.5 L 10.6 10.6 Z"/></g><circle class="p" cx="12" cy="12" r=".7"/></svg><span>Pranav Gudise</span></a><a class="pill" href="https://github.com/pg2342-hub/freight-appointment-agent">Code on GitHub</a></header><!-- /demo-chrome -->
 <main>
-  <h1>Email the appointments desk</h1>
-  <p>This is a live agent for Lanternfly Logistics, a fictional freight brokerage. Write the kind of email a shipper or carrier would send. The agent uses Claude to find the load, check the facility's dock calendar, hours, notice rules and time zone, request the appointment, and reply. Every thread gets a trace page with each model call and tool call.</p>
-  <div class="row samples"><span class="hint">Start from a sample:</span>
-    <button type="button" data-from="shipping@harborline-foods.example" data-body="Hi team,&#10;&#10;Please set a delivery appointment for PO-40101 into the Cincinnati grocery DC (CIN-RCV). Earliest available is fine.&#10;&#10;Thanks,&#10;Maria">Book a delivery</button>
-    <button type="button" data-from="shipping@harborline-foods.example" data-body="Hi,&#10;&#10;PO-40106 needs both appointments: pickup at our Memphis shipping DC and delivery to the St. Louis receiver (STL-DC). Earliest that works.&#10;&#10;Maria">Pickup and delivery</button>
-    <button type="button" data-from="dispatch@bluemesa-transport.example" data-body="Morning,&#10;&#10;Driver on PO-40111 is running about 3 hours late. New ETA to CIN-RCV is 10:00 AM Eastern on 12/9. Can you move the 7:00 appointment?&#10;&#10;Blue Mesa dispatch">Carrier running late</button>
-    <button type="button" data-from="shipping@harborline-foods.example" data-body="Hi team,&#10;&#10;Please book delivery for PO-40127 at the Dayton plant (DAY-DC). Note this one is hazmat.&#10;&#10;Maria">Hazmat load</button>
-  </div>
-  <form id="send">
-    <div class="row"><label>From <select id="from">
+<div class="head">
+<h1>Freight Appointment Agent</h1>
+<p class="lead">Email the appointments desk of a freight brokerage the way a shipper or carrier would. The agent finds the load, works out the earliest dock slot the truck can make, books it through the facility's own channel or hands the thread to a person, and replies.</p>
+</div>
+
+<section class="desk" id="tool" aria-label="Email the appointments desk">
+  <div class="compose">
+    <label for="text">Email the appointments desk</label>
+    <div class="fromrow"><span>From</span><select id="from" aria-label="From">
       <option>shipping@harborline-foods.example</option>
       <option>dispatch@bluemesa-transport.example</option>
-    </select></label>
-    <button type="button" id="reset">New thread</button></div>
-    <textarea id="text" maxlength="4000" required placeholder="Write an email about a PO, e.g. PO-40101 into CIN-RCV"></textarea>
-    <div class="row"><button type="submit">Send</button></div>
-  </form>
-  <div id="log" aria-live="polite"></div>
-  <p class="hint">Loads, facilities and calendars are constructed data. There is a daily spend cap, so the demo may pause for the day.</p>
+    </select></div>
+    <textarea id="text" spellcheck="false" maxlength="4000"></textarea>
+    <div class="act">
+      <button class="go" id="go" type="button">Send to the agent</button>
+      <button class="pill newthread" id="reset" type="button">New thread</button>
+    </div>
+    <div class="loadmsg" id="loadmsg" role="status"><i aria-hidden="true"></i><span id="loadtxt">Showing a recorded run. Sending runs the live agent.</span></div>
+    <div class="exlab" id="exlab">Recorded threads</div>
+    <div class="exlist" id="exlist" role="group" aria-labelledby="exlab"></div>
+  </div>
+
+  <article class="doc" id="doc" aria-live="polite"></article>
+</section>
+
+<div class="layout">
+<div class="content">
+
+<section id="gate">
+  <h2>Go-live gate</h2>
+  <div class="verdict" aria-labelledby="verdict-h">
+    <div class="vhead"><h3 id="verdict-h">Same 25 email threads, same gate</h3><p>Gate: <b>24 of 25 on all 3 runs, every judgment call, no critical error</b></p></div>
+    <div id="vrows"></div>
+    <div class="vrow pending"><div class="vwho"><b>Claude</b><span>claude-opus-5-5 in the tool loop</span></div><p class="pend">Not run yet. The gate runs against Claude once the agent is deployed with an API key; its row goes here.</p></div>
+    <div class="legend"><span><i class="pass"></i>Passed</span><span><i class="fail"></i>Failed</span><span><i class="crit"></i>Critical error</span><span>Each square is one thread. Select one to find it below.</span></div>
+  </div>
+  <p class="note">Both rows are scripted, not Claude. The stand-in proves the tools, the facility simulator, the eval endpoint and the gate work end to end. The always-book row shows what the gate stops: a wrong appointment written or a missed hand-off is critical, and one blocks go-live.</p>
+</section>
+
+<section id="cases-sec">
+  <h2>Every thread</h2>
+  <div class="seg" role="radiogroup" aria-label="Filter threads" id="seg"></div>
+  <div class="scroll"><table class="t" id="cases"><thead><tr><th>#</th><th>The email</th><th>Scripted stand-in</th><th>Always book</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section id="how">
+  <h2>How it works</h2>
+  <ol class="howl">
+    <li><b>Find the load.</b> Match the PO together with the facility, because one customer PO can belong to several loads. Facts split across emails are merged.</li>
+    <li><b>Decide if it is the agent's job.</b> Hazmat, address changes, complaints, rate questions and dates outside the customer window go to a coordinator or the account executive, with a note.</li>
+    <li><b>Find the earliest feasible slot.</b> The carrier's ETA, or the pickup plus transit at 50 mph and an hour at the dock, converted to the facility's time zone; inside the customer window; after the facility's notice period; around holidays and slots already taken.</li>
+    <li><b>Book through the facility's channel.</b> Email, portal or phone. A failed portal is retried once, then the request goes by email. Counter-offers, questions and "PO not found" are handled or handed off.</li>
+    <li><b>Tell people.</b> The carrier on the load, and the account executive when a holiday or notice rule moved the date or the load was rescheduled. Then the reply email.</li>
+  </ol>
+  <p class="note">The facilities are simulated. A facility refuses the wrong channel, a closed or taken slot, and anything inside its notice period, the way a real dock scheduler would, so the agent cannot book its way past a rule.</p>
+</section>
+
+<section id="limits">
+  <h2>Limits</h2>
+  <ul class="lim">
+    <li>Claude has not been run against the 25 threads yet. The page will show its row and its own replies once it is deployed.</li>
+    <li>The facilities, loads and their answers are simulated; there is no real TMS or dock scheduler behind it.</li>
+    <li>Loads are set in December 2026, and visitors share one copy of the data, so a slot another visitor booked stays taken.</li>
+  </ul>
+</section>
+</div>
+
+<aside class="side" aria-label="About this build">
+  <nav aria-label="On this page"><a href="#tool">Email the desk</a><a href="#gate">Go-live gate</a><a href="#cases-sec">Every thread</a><a href="#how">How it works</a><a href="#limits">Limits</a></nav>
+  <div><h3>Data</h3><p>All synthetic. Lanternfly Logistics, its loads, 15 facilities (hours, holidays, notice rules, booked slots), the shipper, the carrier and every email are invented. Facility answers come from a simulator.</p></div>
+  <div><h3>Run it yourself</h3><p>Node 22 and Python 3.9+. The scripted mode needs no API key.</p><pre>npm install && npm run db:init && npm run seed
+npm run dev
+cd gate && EVAL_TOKEN=local-dev-token golive run golive.yml</pre></div>
+  <div><a class="pill" href="https://github.com/pg2342-hub/freight-appointment-agent">Code on GitHub</a></div>
+</aside>
+</div>
 </main>
+
+<script src="data.js"></script>
 <script>
-  const log = document.getElementById("log");
-  const text = document.getElementById("text");
-  let thread = null;
-  function add(who, body, trace) {
-    const div = document.createElement("div");
-    div.className = "msg";
-    const w = document.createElement("span"); w.className = "who"; w.textContent = who; div.append(w);
-    div.append(document.createTextNode(body));
-    if (trace) { const a = document.createElement("a"); a.href = trace; a.target = "_blank"; a.rel = "noopener"; a.textContent = "See the trace"; div.append(a); }
-    log.append(div);
-    div.scrollIntoView({ block: "nearest" });
-    return div;
-  }
-  const reset = () => { thread = null; log.replaceChildren(); };
-  document.getElementById("reset").onclick = reset;
-  for (const b of document.querySelectorAll(".samples button")) b.onclick = () => {
-    reset(); document.getElementById("from").value = b.dataset.from; text.value = b.dataset.body; text.focus();
-  };
-  document.getElementById("send").onsubmit = async (e) => {
-    e.preventDefault();
-    const message = text.value.trim();
-    if (!message) return;
-    const from = document.getElementById("from").value;
-    text.value = "";
-    add("From " + from, message);
-    const wait = add("Appointments desk", "Working on it…");
-    try {
-      const res = await fetch("/api/message", { method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ conversation_id: thread, from, message }) });
-      const data = await res.json();
-      wait.remove();
-      if (!res.ok) { add("Appointments desk", data.error || "Something went wrong."); return; }
-      thread = data.conversation_id;
-      add("Appointments desk", data.reply || "(no reply)", data.trace_url);
-    } catch { wait.remove(); add("Appointments desk", "Network error. Please try again."); }
-  };
-</script>
-</body>
-</html>
+const D = window.DATA;
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const STATUS = { book: ["BOOKED", "st-booked"], enter_existing: ["RECORDED", "st-booked"], record_fcfs: ["NO APPOINTMENT NEEDED", "st-other"], handoff: ["HANDED OFF", "st-handoff"], none: ["NO ACTION", "st-other"] };
+const WHO = { coordinator: "the coordinator", ae: "the account executive" };
+const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const fmtRecv = (s) => `${MON[+s.slice(5, 7) - 1]} ${+s.slice(8, 10)}, ${s.slice(11, 16)} (UTC${s.slice(16)})`;
+const fmtLocal = (s) => { if (!s) return ""; const [d, t] = s.split("T"); const [y, m, day] = d.split("-"); return `${m}/${day} ${t}`; };
+let thread = null;
+
+function render(view) {
+  const r = view.result || {};
+  const [label, cls] = STATUS[r.action] || ["NO ACTION", "st-other"];
+  const appt = (r.appointments || []).at(-1);
+  const cal = view.calendar;
+  const tz = cal ? cal.tz : "";
+  let h = `<header class="dhead"><div><h3>${r.load ? "Load " + esc(r.load) : "No load matched"}</h3><div class="dsub">${esc(view.source)}</div></div><span class="status ${cls}">${label}</span></header>`;
+  h += `<dl class="meta">`;
+  h += `<div><dt>Appointment</dt><dd class="mono">${appt ? esc(appt.facility + " " + fmtLocal(appt.local)) : r.action === "record_fcfs" ? esc(r.facility) + " first come, first served" : "None"}</dd></div>`;
+  h += `<div><dt>Confirmation</dt><dd class="mono">${esc(r.confirmation || "None")}</dd></div>`;
+  h += `<div><dt>Channel tried</dt><dd class="mono">${r.attempts && r.attempts.length ? esc(r.attempts.join(", then ")) : "None"}</dd></div>`;
+  h += `<div><dt>Notified</dt><dd>${(r.notify || []).length ? esc(r.notify.map((n) => (n === "ae" ? "account executive" : n)).join(", ")) : "Nobody"}</dd></div>`;
+  h += `<div><dt>Flags for the AE</dt><dd>${(r.flags || []).length ? esc(r.flags.join(", ")) : "None"}</dd></div>`;
+  h += `<div><dt>Time zone</dt><dd class="mono">${esc(tz || "n/a")}</dd></div></dl><div class="dpad">`;
+  if (r.action === "handoff") h += `<div class="ho"><b>Handed to ${esc(WHO[r.to] || r.to)}</b> (${esc((r.reason || "").replaceAll("_", " "))}). ${esc(typeof r.log === "string" ? r.log : "")}</div>`;
+  h += `<div class="cap">Reply email</div>`;
+  h += view.live && view.reply ? `<div class="mail">${esc(view.reply)}</div>` : `<div class="mail none">The scripted stand-in writes no email. Send a thread to see the live agent's reply here.</div>`;
+  if (cal) h += `<div class="cap">Dock calendar at ${esc(cal.facility)}</div><p class="capsub">${esc(cal.name)}. Times are the facility's local time (${esc(cal.tz)}).</p>` + calendarSvg(cal);
+  h += `<div class="cap">What the agent did</div><ol class="steps">${(view.steps || []).map((s, i) => `<li class="${s.ok ? "" : "bad"}"><b>${i + 1}. ${esc(s.name)}</b><span>${s.ok ? esc(s.status || "ok") : "refused: " + esc(s.error)}</span></li>`).join("")}</ol>`;
+  if (view.trace_url) h += `<a class="trace" href="${esc(view.trace_url)}" target="_blank" rel="noopener">See the full trace: every model call and tool call</a>`;
+  $("#doc").innerHTML = h + `</div>`;
+}
+
+function calendarSvg(c) {
+  const hr = (s) => +s.slice(11, 13) + +s.slice(14, 16) / 60;
+  let h0 = +c.open.slice(0, 2), h1 = +c.close.slice(0, 2);
+  for (const t of [c.earliest, c.appointment]) if (t) { h0 = Math.min(h0, Math.floor(hr(t))); h1 = Math.max(h1, Math.ceil(hr(t)) + 1); }
+  h0 = Math.max(0, h0 - 1); h1 = Math.min(24, h1 + 1);
+  const L = 84, W = 620, RH = 22, G = 6, T = 22;
+  const x = (h) => L + ((h - h0) / (h1 - h0)) * (W - L - 8);
+  const rows = c.days.length, H = T + rows * (RH + G) + 4;
+  let s = `<svg class="cal" viewBox="0 0 ${W} ${H}" role="img" aria-label="Dock calendar at ${esc(c.facility)}: open ${c.open} to ${c.close}, appointment ${esc(fmtLocal(c.appointment))}"><defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#cfcabe" stroke-width="2"/></pattern></defs>`;
+  for (let h = h0; h <= h1; h += 2) s += `<text x="${x(h)}" y="12" text-anchor="${h + 2 > h1 ? "end" : "middle"}">${String(h).padStart(2, "0")}:00</text><line x1="${x(h)}" y1="16" x2="${x(h)}" y2="${H}" stroke="#e6e2d8"/>`;
+  c.days.forEach((d, i) => {
+    const y = T + i * (RH + G);
+    const md = d.date.slice(5).replace("-", "/");
+    s += `<text class="lbl" x="0" y="${y + 15}">${d.weekday} ${md}</text>`;
+    if (d.closed) { s += `<rect x="${x(h0)}" y="${y}" width="${x(h1) - x(h0)}" height="${RH}" fill="url(#hatch)"/><text x="${x(h0) + 6}" y="${y + 15}">closed (${d.closed})</text>`; return; }
+    s += `<rect x="${x(+c.open.slice(0, 2))}" y="${y}" width="${x(+c.close.slice(0, 2)) - x(+c.open.slice(0, 2))}" height="${RH}" fill="#efece3" rx="3"/>`;
+    if (c.window) {
+      const a = Math.max(h0, d.date === c.window.start.slice(0, 10) ? hr(c.window.start) : d.date > c.window.start.slice(0, 10) ? h0 : 99);
+      const b = Math.min(h1, d.date === c.window.end.slice(0, 10) ? hr(c.window.end) : d.date < c.window.end.slice(0, 10) ? h1 : -1);
+      if (b > a) s += `<rect x="${x(a)}" y="${y + 1}" width="${x(b) - x(a)}" height="${RH - 2}" fill="none" stroke="var(--green)" stroke-width="1" stroke-dasharray="3 2" rx="3"/>`;
+    }
+    for (const b of d.booked) s += `<rect x="${x(hr(d.date + "T" + b)) + 1}" y="${y + 4}" width="${x(1) - x(0) - 2}" height="${RH - 8}" fill="var(--ink-2)" rx="2"/>`;
+    if (c.appointment.startsWith(d.date)) { const a = hr(c.appointment); s += `<rect x="${x(a) + 1}" y="${y + 2}" width="${x(1) - x(0) - 2}" height="${RH - 4}" fill="var(--green)" rx="3"/>`; }
+    if (c.earliest && c.earliest.startsWith(d.date)) { const e = hr(c.earliest); s += `<line x1="${x(e)}" y1="${y - 3}" x2="${x(e)}" y2="${y + RH + 3}" stroke="var(--ink)" stroke-width="2"/>`; }
+  });
+  s += `</svg><div class="calkey"><span><i class="k-open"></i>Dock open</span><span><i class="k-win"></i>Customer window</span><span><i class="k-taken"></i>Already taken</span><span><i class="k-appt"></i>Appointment</span>${c.earliest ? `<span><i class="k-arr"></i>Truck's earliest arrival</span>` : ""}</div>`;
+  return s;
+}
+
+function showExample(i) {
+  const ex = D.examples[i];
+  document.querySelectorAll(".ex").forEach((b, j) => b.setAttribute("aria-pressed", String(j === i)));
+  $("#from").value = ex.thread[0].from;
+  $("#text").value = ex.thread.map((m) => m.body).join("\n\n");
+  thread = null;
+  setMsg("", "Showing a recorded run. Sending runs the live agent.");
+  render({ ...ex, source: `Recorded run, scripted stand-in. Email received ${fmtRecv(ex.received_at)}` });
+}
+
+function setMsg(cls, text) { const m = $("#loadmsg"); m.className = "loadmsg " + cls; $("#loadtxt").textContent = text; }
+
+$("#exlist").innerHTML = D.examples.map((e, i) => `<button class="ex" type="button" data-i="${i}">${esc(e.label)}</button>`).join("");
+document.querySelectorAll(".ex").forEach((b) => b.addEventListener("click", () => showExample(+b.dataset.i)));
+$("#reset").addEventListener("click", () => { thread = null; $("#text").value = ""; document.querySelectorAll(".ex").forEach((b) => b.setAttribute("aria-pressed", "false")); $("#doc").innerHTML = `<div class="empty">New thread. Write an email about a PO, for example PO-40101 into CIN-RCV.</div>`; setMsg("", "A new thread starts with your next email."); });
+
+$("#go").addEventListener("click", async () => {
+  const message = $("#text").value.trim();
+  if (!message) return;
+  const go = $("#go");
+  go.disabled = true;
+  setMsg("busy", "The agent is reading the thread and checking the facility. This takes 10 to 40 seconds.");
+  try {
+    const res = await fetch("/api/message", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ conversation_id: thread, from: $("#from").value, message }) });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) { setMsg("err", data.error || "Something went wrong. Please try again."); return; }
+    thread = data.conversation_id;
+    document.querySelectorAll(".ex").forEach((b) => b.setAttribute("aria-pressed", "false"));
+    render({ ...data, live: true, source: `Live run, ${data.version}. Reply to it below to continue the thread.` });
+    $("#text").value = "";
+    setMsg("ok", "Done. Write a reply to continue this thread, or start a new one.");
+  } catch { setMsg("err", "Could not reach the agent. Please try again."); }
+  finally { go.disabled = false; }
+});
+
+// the gate card
+$("#vrows").innerHTML = D.gate.map((g) => `<div class="vrow"><div class="vwho"><b>${esc(g.name)}</b><span>${esc(g.what)}</span></div>
+<div class="strip" role="group" aria-label="${esc(g.name)}: every thread">${g.cases.map((c, i) => `<a class="cell ${c.failed.length ? (c.critical ? "crit" : "fail") : "pass"}" href="#case-${c.id}" data-case="${c.id}" aria-label="${esc(g.name)} thread ${i + 1} ${c.failed.length ? (c.critical ? "failed with a critical error" : "failed") : "passed"}"></a>`).join("")}</div>
+<div class="vscore"><b>${g.passed}</b><span>of 25 passed<br>${g.critical} critical</span></div><span class="gate ${g.decision === "go" ? "go" : "nogo"}">${g.decision === "go" ? "GO" : "NO-GO"}</span></div>`).join("");
+
+// every thread
+const byId = (g, id) => g.cases.find((c) => c.id === id);
+const res = (c) => !c.failed.length ? `<td class="v ok">Pass</td>` : `<td class="v bad ${c.critical ? "crit" : ""}">Fail<div class="why">${esc(c.failed.join(", "))}</div></td>`;
+$("#cases tbody").innerHTML = D.cases.map((c, i) => `<tr id="case-${c.id}" data-tier="${c.group}"><td class="n">${i + 1}<br>${c.group}</td><td class="tx"><b>${esc(c.title)}</b><div>${esc(c.body.replace(/^(hi|hello|morning|team)[^\n]*\n+/i, ""))}</div></td>${res(byId(D.gate[0], c.id))}${res(byId(D.gate[1], c.id))}</tr>`).join("");
+const TIERS = [["all", "All"], ["T1", "Clean"], ["T2", "Messy"], ["T3", "Judgment"], ["T4", "Out of scope"]];
+$("#seg").innerHTML = TIERS.map(([t, n]) => `<button type="button" role="radio" aria-checked="${t === "all"}" data-t="${t}">${n}&nbsp; <span>${t === "all" ? D.cases.length : D.cases.filter((c) => c.group === t).length}</span></button>`).join("");
+const seg = [...document.querySelectorAll(".seg button")];
+seg.forEach((b) => b.addEventListener("click", () => {
+  seg.forEach((x) => x.setAttribute("aria-checked", String(x === b)));
+  document.querySelectorAll("#cases tbody tr").forEach((r) => (r.hidden = !(b.dataset.t === "all" || r.dataset.tier === b.dataset.t)));
+}));
+document.querySelectorAll(".cell").forEach((c) => c.addEventListener("click", () => {
+  seg[0].click();
+  document.querySelectorAll("#cases tr.lit").forEach((r) => r.classList.remove("lit"));
+  const row = document.getElementById("case-" + c.dataset.case); row && row.classList.add("lit");
+}));
+
+showExample(0);
+</script><!-- demo-chrome --><footer class="demo-foot"><span>A working build by <a href="https://pranavgudise.dev/">Pranav Gudise</a>. Synthetic or public data only.</span><a href="https://github.com/pg2342-hub/freight-appointment-agent">github.com/pg2342-hub/freight-appointment-agent</a></footer><!-- /demo-chrome -->
+</body></html>

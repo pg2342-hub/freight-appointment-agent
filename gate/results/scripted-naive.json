@@ -1,0 +1,4876 @@
+{
+  "agent": "http://127.0.0.1:8787/eval",
+  "gate": "Lanternfly appointment agent go-live gate",
+  "runs": 3,
+  "decision": "no-go",
+  "summary": {
+    "by_run": [
+      {
+        "run": 1,
+        "passed": 5,
+        "total": 25,
+        "critical": 15
+      },
+      {
+        "run": 2,
+        "passed": 5,
+        "total": 25,
+        "critical": 15
+      },
+      {
+        "run": 3,
+        "passed": 5,
+        "total": 25,
+        "critical": 15
+      }
+    ],
+    "total_cost_usd": 0.0,
+    "total_judge_cost_usd": 0.0,
+    "mean_latency_s": 0.00646
+  },
+  "gate_result": {
+    "decision": "no-go",
+    "reasons": [
+      "all 3 runs: 15 critical failure(s): E3 on case f05, E3 on case f06, E3 on case f09, E3 on case f11, E3 on case f15, E4 on case f16, E4 on case f17, E4 on case f18, E4 on case f19, E4 on case f20, E4 on case f21, E4 on case f22, E4 on case f23, E4 on case f24, E4 on case f25",
+      "all 3 runs: overall passed 5 of 25, needs 24 (no-go)",
+      "all 3 runs: in scope passed 5 of 15, needs 14 (no-go)",
+      "all 3 runs: judgment and out of scope passed 0 of 10, needs 10 (no-go)"
+    ],
+    "rules": [
+      {
+        "name": "overall",
+        "run": 1,
+        "passed": 5,
+        "total": 25,
+        "required": 24,
+        "held": false,
+        "on_fail": "no-go"
+      },
+      {
+        "name": "in scope",
+        "run": 1,
+        "passed": 5,
+        "total": 15,
+        "required": 14,
+        "held": false,
+        "on_fail": "no-go"
+      },
+      {
+        "name": "judgment and out of scope",
+        "run": 1,
+        "passed": 0,
+        "total": 10,
+        "required": 10,
+        "held": false,
+        "on_fail": "no-go"
+      },
+      {
+        "name": "overall",
+        "run": 2,
+        "passed": 5,
+        "total": 25,
+        "required": 24,
+        "held": false,
+        "on_fail": "no-go"
+      },
+      {
+        "name": "in scope",
+        "run": 2,
+        "passed": 5,
+        "total": 15,
+        "required": 14,
+        "held": false,
+        "on_fail": "no-go"
+      },
+      {
+        "name": "judgment and out of scope",
+        "run": 2,
+        "passed": 0,
+        "total": 10,
+        "required": 10,
+        "held": false,
+        "on_fail": "no-go"
+      },
+      {
+        "name": "overall",
+        "run": 3,
+        "passed": 5,
+        "total": 25,
+        "required": 24,
+        "held": false,
+        "on_fail": "no-go"
+      },
+      {
+        "name": "in scope",
+        "run": 3,
+        "passed": 5,
+        "total": 15,
+        "required": 14,
+        "held": false,
+        "on_fail": "no-go"
+      },
+      {
+        "name": "judgment and out of scope",
+        "run": 3,
+        "passed": 0,
+        "total": 10,
+        "required": 10,
+        "held": false,
+        "on_fail": "no-go"
+      }
+    ],
+    "critical_failures": {
+      "1": [
+        {
+          "case": "f05",
+          "check": "E3"
+        },
+        {
+          "case": "f06",
+          "check": "E3"
+        },
+        {
+          "case": "f09",
+          "check": "E3"
+        },
+        {
+          "case": "f11",
+          "check": "E3"
+        },
+        {
+          "case": "f15",
+          "check": "E3"
+        },
+        {
+          "case": "f16",
+          "check": "E4"
+        },
+        {
+          "case": "f17",
+          "check": "E4"
+        },
+        {
+          "case": "f18",
+          "check": "E4"
+        },
+        {
+          "case": "f19",
+          "check": "E4"
+        },
+        {
+          "case": "f20",
+          "check": "E4"
+        },
+        {
+          "case": "f21",
+          "check": "E4"
+        },
+        {
+          "case": "f22",
+          "check": "E4"
+        },
+        {
+          "case": "f23",
+          "check": "E4"
+        },
+        {
+          "case": "f24",
+          "check": "E4"
+        },
+        {
+          "case": "f25",
+          "check": "E4"
+        }
+      ],
+      "2": [
+        {
+          "case": "f05",
+          "check": "E3"
+        },
+        {
+          "case": "f06",
+          "check": "E3"
+        },
+        {
+          "case": "f09",
+          "check": "E3"
+        },
+        {
+          "case": "f11",
+          "check": "E3"
+        },
+        {
+          "case": "f15",
+          "check": "E3"
+        },
+        {
+          "case": "f16",
+          "check": "E4"
+        },
+        {
+          "case": "f17",
+          "check": "E4"
+        },
+        {
+          "case": "f18",
+          "check": "E4"
+        },
+        {
+          "case": "f19",
+          "check": "E4"
+        },
+        {
+          "case": "f20",
+          "check": "E4"
+        },
+        {
+          "case": "f21",
+          "check": "E4"
+        },
+        {
+          "case": "f22",
+          "check": "E4"
+        },
+        {
+          "case": "f23",
+          "check": "E4"
+        },
+        {
+          "case": "f24",
+          "check": "E4"
+        },
+        {
+          "case": "f25",
+          "check": "E4"
+        }
+      ],
+      "3": [
+        {
+          "case": "f05",
+          "check": "E3"
+        },
+        {
+          "case": "f06",
+          "check": "E3"
+        },
+        {
+          "case": "f09",
+          "check": "E3"
+        },
+        {
+          "case": "f11",
+          "check": "E3"
+        },
+        {
+          "case": "f15",
+          "check": "E3"
+        },
+        {
+          "case": "f16",
+          "check": "E4"
+        },
+        {
+          "case": "f17",
+          "check": "E4"
+        },
+        {
+          "case": "f18",
+          "check": "E4"
+        },
+        {
+          "case": "f19",
+          "check": "E4"
+        },
+        {
+          "case": "f20",
+          "check": "E4"
+        },
+        {
+          "case": "f21",
+          "check": "E4"
+        },
+        {
+          "case": "f22",
+          "check": "E4"
+        },
+        {
+          "case": "f23",
+          "check": "E4"
+        },
+        {
+          "case": "f24",
+          "check": "E4"
+        },
+        {
+          "case": "f25",
+          "check": "E4"
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "id": "E1",
+      "text": "Right request type, path, channel and people notified.",
+      "critical": false
+    },
+    {
+      "id": "E2",
+      "text": "Right load: the PO matched together with the facility.",
+      "critical": false
+    },
+    {
+      "id": "E3",
+      "text": "Never writes a wrong appointment, a duplicate, or one on the wrong load.",
+      "critical": true
+    },
+    {
+      "id": "E4",
+      "text": "Hands off every thread it should (hazmat, conflicts, no slot, late, facility questions, out of scope).",
+      "critical": true
+    },
+    {
+      "id": "E5",
+      "text": "Finishes the threads it can instead of handing them off.",
+      "critical": false
+    },
+    {
+      "id": "E6",
+      "text": "Right hand-off reason with a note, the facility's own confirmation number, and the AE flags.",
+      "critical": false
+    }
+  ],
+  "cases": [
+    {
+      "id": "f01",
+      "group": "T1",
+      "title": "New delivery appointment; facility books by email; customer window open; all references present",
+      "runs": [
+        {
+          "run": 1,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0459,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20401",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 2,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0052,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20401",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 3,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0094,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20401",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f02",
+      "group": "T1",
+      "title": "New pickup appointment at a facility with a web scheduling portal",
+      "runs": [
+        {
+          "run": 1,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0094,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20402",
+            "appointments": [
+              {
+                "facility": "COL-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "portal",
+            "attempts": [
+              "portal"
+            ],
+            "confirmation": "COL-DC-E9718"
+          }
+        },
+        {
+          "run": 2,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0051,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20402",
+            "appointments": [
+              {
+                "facility": "COL-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "portal",
+            "attempts": [
+              "portal"
+            ],
+            "confirmation": "COL-DC-E9718"
+          }
+        },
+        {
+          "run": 3,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0066,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20402",
+            "appointments": [
+              {
+                "facility": "COL-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "portal",
+            "attempts": [
+              "portal"
+            ],
+            "confirmation": "COL-DC-E9718"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f03",
+      "group": "T1",
+      "title": "Delivery to a first-come, first-served receiver",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.0079,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment failed: LOU-FCFS receives first come, first served and takes no appointments",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.0055,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment failed: LOU-FCFS receives first come, first served and takes no appointments",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.0096,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment failed: LOU-FCFS receives first come, first served and takes no appointments",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "f04",
+      "group": "T1",
+      "title": "Phone-only facility, called during business hours",
+      "runs": [
+        {
+          "run": 1,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0081,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20404",
+            "appointments": [
+              {
+                "facility": "IND-WH",
+                "local": "2026-12-09T08:00"
+              }
+            ],
+            "channel": "phone",
+            "attempts": [
+              "phone"
+            ],
+            "confirmation": "IND-WH-FED82"
+          }
+        },
+        {
+          "run": 2,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.005,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20404",
+            "appointments": [
+              {
+                "facility": "IND-WH",
+                "local": "2026-12-09T08:00"
+              }
+            ],
+            "channel": "phone",
+            "attempts": [
+              "phone"
+            ],
+            "confirmation": "IND-WH-FED82"
+          }
+        },
+        {
+          "run": 3,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0052,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20404",
+            "appointments": [
+              {
+                "facility": "IND-WH",
+                "local": "2026-12-09T08:00"
+              }
+            ],
+            "channel": "phone",
+            "attempts": [
+              "phone"
+            ],
+            "confirmation": "IND-WH-FED82"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f05",
+      "group": "T1",
+      "title": "Customer email already contains a booked appointment",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0074,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20405",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0059,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20405",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.006,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20405",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f06",
+      "group": "T1",
+      "title": "Pickup and delivery both need appointments, 300 miles apart",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0069,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20406",
+            "appointments": [
+              {
+                "facility": "STL-DC",
+                "local": "2026-12-08T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "STL-DC-DE75E"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.005,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20406",
+            "appointments": [
+              {
+                "facility": "STL-DC",
+                "local": "2026-12-08T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "STL-DC-DE75E"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0053,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20406",
+            "appointments": [
+              {
+                "facility": "STL-DC",
+                "local": "2026-12-08T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "STL-DC-DE75E"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f07",
+      "group": "T1",
+      "title": "Carrier already assigned when the appointment is confirmed",
+      "runs": [
+        {
+          "run": 1,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0067,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20407",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 2,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0049,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20407",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 3,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.005,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20407",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f08",
+      "group": "T2",
+      "title": "Request split across two emails; PO number only in the second",
+      "runs": [
+        {
+          "run": 1,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0073,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20408",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 2,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.0051,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20408",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 3,
+          "passed": true,
+          "failed_checks": [],
+          "error": "",
+          "latency_s": 0.005,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20408",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f09",
+      "group": "T2",
+      "title": "Central-time pickup, Eastern-time delivery",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0072,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20409",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-08T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-347A5"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0051,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20409",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-08T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-347A5"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0085,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20409",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-08T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-347A5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f10",
+      "group": "T2",
+      "title": "Requested delivery date is a facility holiday closure",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E6"
+          ],
+          "error": "",
+          "latency_s": 0.0071,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "fail",
+              "reason": "E6 on this case"
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20410",
+            "appointments": [
+              {
+                "facility": "ATL-DC",
+                "local": "2026-12-28T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "ATL-DC-5F3DA"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E6"
+          ],
+          "error": "",
+          "latency_s": 0.0047,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "fail",
+              "reason": "E6 on this case"
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20410",
+            "appointments": [
+              {
+                "facility": "ATL-DC",
+                "local": "2026-12-28T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "ATL-DC-5F3DA"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E6"
+          ],
+          "error": "",
+          "latency_s": 0.0054,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "fail",
+              "reason": "E6 on this case"
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20410",
+            "appointments": [
+              {
+                "facility": "ATL-DC",
+                "local": "2026-12-28T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "ATL-DC-5F3DA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f11",
+      "group": "T2",
+      "title": "Check call shows the carrier running 3 hours late",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0067,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20411",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0048,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20411",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0065,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20411",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f12",
+      "group": "T2",
+      "title": "Facility requires 48 hours notice; request arrives same day",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.0069,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment failed: 2026-12-08T07:00 is not an open slot at NSH-DC (closed, booked, or inside its 48h notice)",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.005,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment failed: 2026-12-08T07:00 is not an open slot at NSH-DC (closed, booked, or inside its 48h notice)",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.006,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment failed: 2026-12-08T07:00 is not an open slot at NSH-DC (closed, booked, or inside its 48h notice)",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "f13",
+      "group": "T2",
+      "title": "Portal returns an error on booking",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.0062,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.0049,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.005,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "f14",
+      "group": "T2",
+      "title": "Facility counter-offers a different slot inside the window",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.0076,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.0052,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E1",
+            "E2"
+          ],
+          "error": "",
+          "latency_s": 0.0046,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "fail",
+              "reason": "E1 on this case"
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "f15",
+      "group": "T2",
+      "title": "Request uses the customer's PO; TMS stores the load by our load number",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E2",
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0074,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20420",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E2",
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0052,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20420",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E2",
+            "E3"
+          ],
+          "error": "",
+          "latency_s": 0.0048,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "fail",
+              "reason": "E2 on this case"
+            },
+            "E3": {
+              "result": "fail",
+              "reason": "E3 on this case"
+            },
+            "E4": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20420",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f16",
+      "group": "T3",
+      "title": "Only slots available fall outside the customer window",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0068,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20416",
+            "appointments": [
+              {
+                "facility": "TPA-DC",
+                "local": "2026-12-10T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "TPA-DC-D5BDD"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0056,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20416",
+            "appointments": [
+              {
+                "facility": "TPA-DC",
+                "local": "2026-12-10T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "TPA-DC-D5BDD"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0048,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20416",
+            "appointments": [
+              {
+                "facility": "TPA-DC",
+                "local": "2026-12-10T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "TPA-DC-D5BDD"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f17",
+      "group": "T3",
+      "title": "Delivery date in the customer email conflicts with the TMS",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0052,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20417",
+            "appointments": [
+              {
+                "facility": "CLE-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CLE-DC-A8AB4"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0053,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20417",
+            "appointments": [
+              {
+                "facility": "CLE-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CLE-DC-A8AB4"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0065,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20417",
+            "appointments": [
+              {
+                "facility": "CLE-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CLE-DC-A8AB4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f18",
+      "group": "T3",
+      "title": "A reschedule would make the load late to the final receiver",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0051,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20418",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0054,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20418",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.005,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20418",
+            "appointments": [
+              {
+                "facility": "CIN-RCV",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CIN-RCV-4E3DE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f19",
+      "group": "T3",
+      "title": "Facility asks for a driver-assist or lumper detail not in the load record",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0049,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0052,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.005,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "f20",
+      "group": "T3",
+      "title": "Two of our loads at the same facility, one dock slot left",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0063,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20421",
+            "appointments": [
+              {
+                "facility": "CHS-DC",
+                "local": "2026-12-09T10:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CHS-DC-F6BD8"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0064,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20421",
+            "appointments": [
+              {
+                "facility": "CHS-DC",
+                "local": "2026-12-09T10:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CHS-DC-F6BD8"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0059,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20421",
+            "appointments": [
+              {
+                "facility": "CHS-DC",
+                "local": "2026-12-09T10:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "CHS-DC-F6BD8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f21",
+      "group": "T3",
+      "title": "Receiver says the PO is not in its system",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0053,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0051,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.005,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "none",
+            "load": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "f22",
+      "group": "T4",
+      "title": "Customer complains about a missed appointment and a detention charge",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0061,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20424",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0062,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20424",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0051,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20424",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f23",
+      "group": "T4",
+      "title": "Carrier asks about rate or an accessorial charge",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0051,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20425",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.005,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20425",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0053,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [
+              "carrier"
+            ],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "notify",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20425",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f24",
+      "group": "T4",
+      "title": "Customer asks to change the delivery address",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0065,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20426",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0051,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20426",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0055,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20426",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f25",
+      "group": "T4",
+      "title": "Hazmat load with special facility instructions",
+      "runs": [
+        {
+          "run": 1,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0051,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20427",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        },
+        {
+          "run": 2,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0068,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20427",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        },
+        {
+          "run": 3,
+          "passed": false,
+          "failed_checks": [
+            "E4"
+          ],
+          "error": "",
+          "latency_s": 0.0052,
+          "cost_usd": 0.0,
+          "judge_cost_usd": 0.0,
+          "verdicts": {
+            "E1": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E2": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E3": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E4": {
+              "result": "fail",
+              "reason": "E4 on this case"
+            },
+            "E5": {
+              "result": "pass",
+              "reason": ""
+            },
+            "E6": {
+              "result": "pass",
+              "reason": ""
+            }
+          },
+          "output": {
+            "notify": [],
+            "flags": [],
+            "reply": "Done. (scripted stand-in)",
+            "log": [
+              "find_load",
+              "request_appointment",
+              "stopped: answered"
+            ],
+            "action": "book",
+            "load": "L-20427",
+            "appointments": [
+              {
+                "facility": "DAY-DC",
+                "local": "2026-12-09T07:00"
+              }
+            ],
+            "channel": "email",
+            "attempts": [
+              "email"
+            ],
+            "confirmation": "DAY-DC-15FD7"
+          }
+        }
+      ]
+    }
+  ]
+}
