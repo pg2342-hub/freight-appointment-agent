@@ -12,6 +12,8 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: npm }
       - run: npm ci
+      - name: Find the D1 database
+        run: scripts/ci_d1.sh
       - name: Tables
         run: |
           q() { npx wrangler d1 execute freight-appointment-agent --remote --json --command "$1" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.stringify(JSON.parse(s)[0].results)))'; }
@@ -20,6 +22,7 @@ jobs:
           q "SELECT conversation_id, turn, created_at, stopped, substr(reply,1,300) AS reply FROM turns ORDER BY created_at DESC LIMIT 5"
           q "SELECT key, day, n FROM hits ORDER BY day DESC LIMIT 10"
       - name: Worker logs, last hour
+        if: always()
         run: |
           now=$(date +%s000); from=$((now - 3600000))
           curl -s -X POST -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "content-type: application/json" \
