@@ -1,5 +1,7 @@
 # freight-appointment-agent
 
+[![CI](https://github.com/pg2342-hub/freight-appointment-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/pg2342-hub/freight-appointment-agent/actions/workflows/ci.yml)
+
 An email agent that books freight dock appointments, running live: real tool calls, a trace for every email thread, a go-live gate in CI and a staged rollout.
 
 Lanternfly Logistics is a fictional freight brokerage. Its loads, 15 facilities (Central, Eastern and Mountain time, dock hours, holidays, notice rules, booking channels, booked slots) and the facilities' answers are constructed data in `seed/world.json` and a facility simulator in `src/store.ts`.
