@@ -30,6 +30,11 @@ jobs:
           echo "AGENT_URL=https://freight-appointment-agent.$sub.workers.dev/eval" >> "$GITHUB_ENV"
       - name: Run the gate
         run: cd gate && golive run golive.yml --agent "$AGENT_URL" --runs "${{ inputs.runs }}" --out ../reports/claude
+      - name: Print the results
+        if: always()
+        run: |
+          cat reports/claude/report.md
+          echo "RESULTS_JSON_BEGIN"; python -c "import json;print(json.dumps(json.load(open('reports/claude/results.json'))))"; echo "RESULTS_JSON_END"
       - uses: actions/upload-artifact@v4
         if: always()
         with: { name: gate-report-claude, path: reports/claude }
