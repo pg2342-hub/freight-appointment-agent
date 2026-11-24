@@ -1,0 +1,2710 @@
+{
+ "agent": "https://freight-appointment-agent.pg2342.workers.dev/eval",
+ "gate": "Lanternfly appointment agent held-out gate",
+ "runs": 3,
+ "decision": "go",
+ "summary": {
+  "by_run": [
+   {
+    "run": 1,
+    "passed": 15,
+    "total": 15,
+    "critical": 0
+   },
+   {
+    "run": 2,
+    "passed": 15,
+    "total": 15,
+    "critical": 0
+   },
+   {
+    "run": 3,
+    "passed": 15,
+    "total": 15,
+    "critical": 0
+   }
+  ],
+  "total_cost_usd": 1.49756,
+  "total_judge_cost_usd": 0.0,
+  "mean_latency_s": 10.089426
+ },
+ "gate_result": {
+  "decision": "go",
+  "reasons": [
+   "every rule held on all 3 run(s), no critical failures"
+  ],
+  "rules": [
+   {
+    "name": "overall",
+    "run": 1,
+    "passed": 15,
+    "total": 15,
+    "required": 14,
+    "held": true,
+    "on_fail": "no-go"
+   },
+   {
+    "name": "in scope",
+    "run": 1,
+    "passed": 9,
+    "total": 9,
+    "required": 8,
+    "held": true,
+    "on_fail": "no-go"
+   },
+   {
+    "name": "judgment and out of scope",
+    "run": 1,
+    "passed": 6,
+    "total": 6,
+    "required": 6,
+    "held": true,
+    "on_fail": "no-go"
+   },
+   {
+    "name": "overall",
+    "run": 2,
+    "passed": 15,
+    "total": 15,
+    "required": 14,
+    "held": true,
+    "on_fail": "no-go"
+   },
+   {
+    "name": "in scope",
+    "run": 2,
+    "passed": 9,
+    "total": 9,
+    "required": 8,
+    "held": true,
+    "on_fail": "no-go"
+   },
+   {
+    "name": "judgment and out of scope",
+    "run": 2,
+    "passed": 6,
+    "total": 6,
+    "required": 6,
+    "held": true,
+    "on_fail": "no-go"
+   },
+   {
+    "name": "overall",
+    "run": 3,
+    "passed": 15,
+    "total": 15,
+    "required": 14,
+    "held": true,
+    "on_fail": "no-go"
+   },
+   {
+    "name": "in scope",
+    "run": 3,
+    "passed": 9,
+    "total": 9,
+    "required": 8,
+    "held": true,
+    "on_fail": "no-go"
+   },
+   {
+    "name": "judgment and out of scope",
+    "run": 3,
+    "passed": 6,
+    "total": 6,
+    "required": 6,
+    "held": true,
+    "on_fail": "no-go"
+   }
+  ],
+  "critical_failures": {}
+ },
+ "checks": [
+  {
+   "id": "E1",
+   "text": "Right request type, path, channel and people notified.",
+   "critical": false
+  },
+  {
+   "id": "E2",
+   "text": "Right load: the PO matched together with the facility.",
+   "critical": false
+  },
+  {
+   "id": "E3",
+   "text": "Never writes a wrong appointment, a duplicate, or one on the wrong load.",
+   "critical": true
+  },
+  {
+   "id": "E4",
+   "text": "Hands off every thread it should (hazmat, conflicts, no slot, late, facility questions, out of scope).",
+   "critical": true
+  },
+  {
+   "id": "E5",
+   "text": "Finishes the threads it can instead of handing them off.",
+   "critical": false
+  },
+  {
+   "id": "E6",
+   "text": "Right hand-off reason with a note, the facility's own confirmation number, and the AE flags.",
+   "critical": false
+  }
+ ],
+ "cases": [
+  {
+   "id": "h01",
+   "group": "T1",
+   "title": "Carrier quotes our load number, not the PO",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 14.8103,
+     "cost_usd": 0.057894,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "carrier"
+      ],
+      "flags": [],
+      "reply": "Hi J.,\n\nThe delivery for L-20430 / PO-50130 is booked:\n\n- Facility: Grocery DC, Cleveland OH\n- Appointment: Wed, Dec 9, 2026 at 07:00 Eastern\n- Confirmation: CLE-DC-A8AB4\n\nThe customer's delivery window opens Dec 9, so this is the earliest time we could book. The dock receives 07:00\u201315:00 Eastern, Monday to Friday.\n\nOur system still shows the Memphis pickup as Dec 8 at 06:00 Central, but you said the driver loaded this morning. Please send the actual load-out time so we can update our records. The Cleveland appointment stays the same either way.\n\nThanks,\nAppointments Desk | Lanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20430",
+      "appointments": [
+       {
+        "facility": "CLE-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "CLE-DC-A8AB4"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 15.4613,
+     "cost_usd": 0.060314,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "carrier"
+      ],
+      "flags": [],
+      "reply": "J. Ortiz,\n\nThe Cleveland delivery for L-20430 (PO-50130) is booked:\n\n- Facility: Grocery DC, Cleveland OH (CLE-DC)\n- Appointment: Wed 12/9/2026, 07:00 Eastern (America/New_York)\n- Confirmation: CLE-DC-A8AB4\n\nThis is the earliest slot available. The customer won't take delivery before 12/9, so the driver can't be delivered any sooner even though he's already loaded. The dock receives Monday to Friday, 07:00\u201315:00 ET.\n\nOne thing to check: our system shows the Memphis pickup appointment as 12/8 at 06:00 Central, not this morning. If the driver really loaded today, please send me the actual pickup time so I can fix our records. The Cleveland appointment stays the same either way.\n\nThanks,\nAppointments Desk | Lanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20430",
+      "appointments": [
+       {
+        "facility": "CLE-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "CLE-DC-A8AB4"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 15.9043,
+     "cost_usd": 0.060422,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "carrier"
+      ],
+      "flags": [],
+      "reply": "Hi J.,\n\nThe Cleveland delivery for L-20430 (PO-50130) is booked:\n\n- **Facility:** Grocery DC, Cleveland OH\n- **Appointment:** Wednesday, Dec 9, 2026 at 07:00 Eastern Time\n- **Confirmation:** CLE-DC-A8AB4\n\nThe receiver is open 07:00\u201315:00 Eastern, Monday to Friday. The customer won't take delivery before Dec 9, so 07:00 that day is the earliest appointment available, even if the driver gets there early.\n\nAlso, our system has the Memphis pickup appointment as Dec 8 at 06:00 Central, not this morning. Can you confirm what time the driver actually loaded so we can update our records?\n\nThanks,\nAppointments Desk, Lanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20430",
+      "appointments": [
+       {
+        "facility": "CLE-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "CLE-DC-A8AB4"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h02",
+   "group": "T2",
+   "title": "Forwarded chain; the earlier PO was cancelled and replaced",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 11.4512,
+     "cost_usd": 0.03635,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi,\n\nPO-50131 is booked into Orlando under our load L-20431:\n\n- Facility: Grocery DC, Orlando FL (ORL-DC)\n- Delivery appointment: Wednesday, Dec 9, 2026, 07:00 Eastern time (America/New_York)\n- Confirmation number: ORL-DC-C4848\n\nThis is the earliest the truck can make it. It picks up in Memphis on Dec 8 at 06:00 Central time and can reach Orlando by midnight Eastern on Dec 9. The 07:00 slot is when the dock opens that day, and it falls within your delivery window.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20431",
+      "appointments": [
+       {
+        "facility": "ORL-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "ORL-DC-C4848"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 17.0607,
+     "cost_usd": 0.038762,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi,\n\nPO-50131 is booked into the Orlando DC for the earliest time available:\n\n- Load: L-20431 (PO-50131)\n- Facility: Grocery DC, Orlando FL (ORL-DC)\n- Delivery appointment: Wednesday, December 9, 2026 at 07:00 Eastern Time\n- Confirmation: ORL-DC-C4848\n\nThe truck picks up in Memphis on December 8 at 06:00 Central Time, and 07:00 on December 9 is the DC's first open slot after it can arrive. No carrier is on the load yet, so we'll send these details to the carrier once one is assigned.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20431",
+      "appointments": [
+       {
+        "facility": "ORL-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "ORL-DC-C4848"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 15.0927,
+     "cost_usd": 0.038678,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi,\n\nI've booked the delivery for PO-50131 at the earliest time available.\n\n- **Load:** L-20431 (PO-50131)\n- **Facility:** Grocery DC, Orlando FL (ORL-DC)\n- **Delivery appointment:** Wednesday, Dec 9, 2026 at 07:00 Eastern Time (America/New_York)\n- **Confirmation #:** ORL-DC-C4848\n\nThe load picks up in Memphis on Dec 8 at 06:00 Central. The truck can reach Orlando just after midnight on Dec 9, and 07:00 is when the dock opens that day. No carrier is assigned to this load yet. We'll send them the appointment details once one is.\n\nThanks,\nAppointments Desk\nLanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20431",
+      "appointments": [
+       {
+        "facility": "ORL-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "ORL-DC-C4848"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h03",
+   "group": "T2",
+   "title": "Signature full of other numbers",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 16.3266,
+     "cost_usd": 0.034934,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nThe delivery for PO-50132 at the Dayton plant is booked. This is our load L-20432.\n\n- Facility: Manufacturer, Dayton OH\n- Appointment: Wednesday, December 9, 2026 at 07:00 Eastern Time (America/New_York)\n- Confirmation number: DAY-DC-15FD7\n\nThis is the first open slot after the truck can arrive. The pickup in Memphis is set for December 8 at 06:00 Central. No carrier is assigned to this load yet, and we'll send the carrier these details once one is.\n\nBest regards,\nAppointments Desk\nLanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20432",
+      "appointments": [
+       {
+        "facility": "DAY-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "DAY-DC-15FD7"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 9.4845,
+     "cost_usd": 0.03801,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nThe delivery for PO-50132 (our load L-20432) is booked at the manufacturer in Dayton, OH (DAY-DC):\n\n- **Appointment:** Wednesday, December 9, 2026, 07:00 Eastern Time (America/New_York)\n- **Confirmation #:** DAY-DC-15FD7\n\nThis is the first open slot after the truck can get there from its pickup in Memphis on December 8 at 06:00 Central Time. It's within your delivery window of December 9\u201310.\n\nWe haven't assigned a carrier to this load yet. Once we do, we'll pass these appointment details on to them.\n\nBest regards,\nAppointments Desk\nLanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20432",
+      "appointments": [
+       {
+        "facility": "DAY-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "DAY-DC-15FD7"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 9.0655,
+     "cost_usd": 0.036042,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nDelivery for PO-50132 (our load L-20432) is booked at the Dayton plant (Manufacturer, Dayton OH):\n\n- Appointment: Wednesday, December 9, 2026, 07:00 Eastern Time (America/New_York)\n- Confirmation: DAY-DC-15FD7\n\nThis is the earliest the truck can make it. It picks up in Memphis on December 8 at 06:00 Central Time, and the first open slot after it can arrive is when the dock opens at 07:00 the next morning. That's inside your December 9\u201310 delivery window. We haven't assigned a carrier to this load yet, so we'll send them the appointment details once we do.\n\nBest regards,\nAppointments Desk\nLanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20432",
+      "appointments": [
+       {
+        "facility": "DAY-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "DAY-DC-15FD7"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h04",
+   "group": "T2",
+   "title": "Pickup at a phone-only warehouse",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 9.7691,
+     "cost_usd": 0.028886,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nI called the warehouse and booked the pickup for PO-50133.\n\n- Load: L-20433, PO-50133\n- Facility: Warehouse, Indianapolis IN (IND-WH)\n- Pickup appointment: Tue 12/8/2026 at 08:00 Eastern Time (America/Indiana/Indianapolis)\n- Confirmation #: IND-WH-CE4D8\n\n08:00 was the first open slot on 12/8. No carrier is assigned to this load yet, so we'll give them these details once one is booked.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20433",
+      "appointments": [
+       {
+        "facility": "IND-WH",
+        "local": "2026-12-08T08:00"
+       }
+      ],
+      "channel": "phone",
+      "attempts": [
+       "phone"
+      ],
+      "confirmation": "IND-WH-CE4D8"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 10.4685,
+     "cost_usd": 0.029462,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nI called the warehouse and booked the pickup for tomorrow.\n\n- Load: L-20433 (PO-50133)\n- Facility: Warehouse, Indianapolis IN (IND-WH)\n- Pickup appointment: Tuesday 12/8/2026 at 08:00 Eastern Time (Indianapolis local)\n- Confirmation: IND-WH-CE4D8\n\nThis was the earliest open slot on 12/8. The load doesn't have a carrier yet, so we'll pass this time to them once one is assigned. The delivery appointment at DAY-DC isn't booked yet.\n\nThanks,\nAppointments Desk, Lanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20433",
+      "appointments": [
+       {
+        "facility": "IND-WH",
+        "local": "2026-12-08T08:00"
+       }
+      ],
+      "channel": "phone",
+      "attempts": [
+       "phone"
+      ],
+      "confirmation": "IND-WH-CE4D8"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 10.3364,
+     "cost_usd": 0.029154,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nYour pickup is booked. I called the warehouse to set it up.\n\n- Load: L-20433 (PO-50133)\n- Facility: Warehouse, Indianapolis IN (IND-WH)\n- Pickup: Tuesday 12/8/2026 at 08:00 Eastern Time (Indianapolis local)\n- Confirmation: IND-WH-CE4D8\n\nThis was the earliest open slot that day. We haven't assigned a carrier to this load yet. Once we do, we'll send them the appointment.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20433",
+      "appointments": [
+       {
+        "facility": "IND-WH",
+        "local": "2026-12-08T08:00"
+       }
+      ],
+      "channel": "phone",
+      "attempts": [
+       "phone"
+      ],
+      "confirmation": "IND-WH-CE4D8"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h05",
+   "group": "T1",
+   "title": "Receiver is first come, first served; carrier on the load",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 9.7679,
+     "cost_usd": 0.03573,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "carrier"
+      ],
+      "flags": [],
+      "reply": "Hi Blue Mesa,\n\nThere's no appointment time for load L-20434 (PO-50134) because the Louisville, KY distributor (LOU-FCFS) receives first come, first served. I've marked the stop that way in our system.\n\nTo plan the drive:\n- **Pickup:** MEM-SHIP, Tue Dec 8 at 06:00 Central.\n- **Delivery days:** Wed Dec 9 or Thu Dec 10. The customer's delivery window starts Dec 9, so please don't deliver Dec 8.\n- **Receiving hours:** 07:00\u201313:00 Eastern on weekdays.\n- **Timing:** The earliest the truck could get there is about 16:00 Eastern on Dec 8, after they close. Arriving when they open at 07:00 Eastern on Wed Dec 9 works well.\n\nI've also sent these details to Blue Mesa through our carrier update.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "record_fcfs",
+       "estimate_arrival",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "record_fcfs",
+      "load": "L-20434",
+      "facility": "LOU-FCFS"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 7.3895,
+     "cost_usd": 0.024254,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "carrier"
+      ],
+      "flags": [],
+      "reply": "Hi Blue Mesa,\n\nYou don't have a set appointment time at Louisville for load L-20434 / PO-50134. The Louisville KY distributor receives first come, first served, so this stop doesn't take appointments. I've marked it that way on the load.\n\n- Receiving hours: 07:00\u201313:00 Eastern, Monday through Friday\n- Delivery window: December 9\u201310. Your driver can arrive any time during receiving hours on either day.\n- Pickup: still set for December 8 at 06:00 at the Memphis shipper\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "record_fcfs",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "record_fcfs",
+      "load": "L-20434",
+      "facility": "LOU-FCFS"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 9.5617,
+     "cost_usd": 0.031658,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "carrier"
+      ],
+      "flags": [],
+      "reply": "Hi Blue Mesa,\n\nThe Louisville distributor doesn't take appointments for this load. It receives first come, first served.\n\n- Load: L-20434 / PO-50134\n- Facility: Distributor, Louisville KY\n- Receiving hours: 07:00\u201313:00 Eastern Time, Monday\u2013Friday\n- Delivery window: December 9\u201310. Your driver can arrive any time during receiving hours on either day.\n\nThe pickup in Memphis is still set for December 8 at 06:00.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "record_fcfs",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "record_fcfs",
+      "load": "L-20434",
+      "facility": "LOU-FCFS"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h06",
+   "group": "T2",
+   "title": "Customer booked it already, time written as 1pm",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 6.7759,
+     "cost_usd": 0.022094,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "I've added the appointment you booked to load L-20435 (PO-50135):\n\n- Facility: Grocery DC, Cincinnati OH\n- Delivery: Thursday, 12/10/2026 at 1:00 PM Eastern\n- Confirmation: CIN-77310\n\nWe didn't book a second appointment. There's no carrier on this load yet, so whoever we assign will get these details with the load.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "record_existing_appointment",
+       "stopped: answered"
+      ],
+      "action": "enter_existing",
+      "load": "L-20435",
+      "confirmation": "CIN-77310",
+      "appointments": [
+       {
+        "facility": "CIN-RCV",
+        "local": "2026-12-10T13:00"
+       }
+      ]
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 6.5283,
+     "cost_usd": 0.02227,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nThanks for sending this. I've added your appointment to the load without booking a second one:\n\n- Load L-20435 / PO-50135\n- Grocery DC, Cincinnati OH (CIN-RCV)\n- Delivery: Thursday 12/10/2026 at 1:00 PM Eastern\n- Confirmation # CIN-77310\n\nNo carrier is on this load yet. Whoever we assign will see this appointment on the load.\n\nThanks,\nAppointments Desk\nLanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "record_existing_appointment",
+       "stopped: answered"
+      ],
+      "action": "enter_existing",
+      "load": "L-20435",
+      "confirmation": "CIN-77310",
+      "appointments": [
+       {
+        "facility": "CIN-RCV",
+        "local": "2026-12-10T13:00"
+       }
+      ]
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 6.211,
+     "cost_usd": 0.022602,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nI've added your appointment to the load. We didn't book a second one.\n\n- Load L-20435 / PO-50135\n- Delivery to Grocery DC, Cincinnati OH (CIN-RCV)\n- Thursday, December 10, 2026, at 1:00 PM Eastern Time\n- Confirmation # CIN-77310\n\nNo carrier is on this load yet. The appointment will be on the load for the carrier and driver once one is assigned.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "record_existing_appointment",
+       "get_facility",
+       "stopped: answered"
+      ],
+      "action": "enter_existing",
+      "load": "L-20435",
+      "confirmation": "CIN-77310",
+      "appointments": [
+       {
+        "facility": "CIN-RCV",
+        "local": "2026-12-10T13:00"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "h07",
+   "group": "T2",
+   "title": "Asks for today at a DC that needs 48 hours notice",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 11.2464,
+     "cost_usd": 0.06162,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "ae"
+      ],
+      "flags": [
+       "notice"
+      ],
+      "reply": "Hi Ken,\n\nWe couldn't get PO-50136 in this afternoon. The Nashville food DC needs 48 hours' notice for appointments, so nothing was open before Thursday morning. I booked the earliest slot it had:\n\n- Load: L-20436 / PO-50136\n- Facility: Food DC, Nashville TN\n- Appointment: Thursday, December 10, 2026, 10:00 CST (Central Time)\n- Confirmation: NSH-DC-257C8\n\nThe truck will need to hold until then. I've also let your account executive know.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20436",
+      "appointments": [
+       {
+        "facility": "NSH-DC",
+        "local": "2026-12-10T10:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "NSH-DC-257C8"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 12.2629,
+     "cost_usd": 0.049486,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "ae"
+      ],
+      "flags": [
+       "notice"
+      ],
+      "reply": "Hi Ken,\n\nWe couldn't get PO-50136 into the Nashville DC this afternoon. The Food DC in Nashville, TN needs 48 hours' notice for appointments, so the earliest open slot was Thursday.\n\n- Load: L-20436 / PO-50136\n- Facility: Food DC, Nashville TN\n- Delivery appointment: Thursday, Dec 10, 2026 at 10:00 CST (Central Time)\n- Confirmation: NSH-DC-257C8\n\nThis date is inside your delivery window. Your account executive knows the notice rule pushed the date back. We don't have a carrier on the load yet, so please make sure the truck is planned for the Thursday appointment.\n\nThanks,\nAppointments Desk, Lanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20436",
+      "appointments": [
+       {
+        "facility": "NSH-DC",
+        "local": "2026-12-10T10:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "NSH-DC-257C8"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 9.9887,
+     "cost_usd": 0.04679,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "ae"
+      ],
+      "flags": [
+       "notice"
+      ],
+      "reply": "Hi Ken,\n\nWe couldn't get PO-50136 in this afternoon. The Nashville Food DC needs 48 hours' notice for appointments, so its earliest opening was Thursday morning. I've booked that slot:\n\n- Load: L-20436 / PO-50136\n- Facility: Food DC, Nashville TN\n- Delivery appointment: Thursday, December 10, 2026, 10:00 AM Central (CST)\n- Confirmation: NSH-DC-257C8\n\nI've also told your account executive about the date change.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20436",
+      "appointments": [
+       {
+        "facility": "NSH-DC",
+        "local": "2026-12-10T10:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "NSH-DC-257C8"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h08",
+   "group": "T2",
+   "title": "Christmas week delivery to a DC closed for the holiday",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 11.182,
+     "cost_usd": 0.047826,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "ae"
+      ],
+      "flags": [
+       "holiday"
+      ],
+      "reply": "I booked the delivery for 12/28, the last day of your window. The Atlanta DC is closed for the holidays on 12/24 and 12/25, and it's also closed on 12/26\u201312/27 because it only receives Monday to Friday.\n\nLoad L-20437 / PO-50137\nFacility: Retail DC, Atlanta GA (ATL-DC)\nDelivery appointment: Monday, 12/28/2026 at 07:00 Eastern Time\nConfirmation: ATL-DC-5F3DA\n\nThere's no carrier on the load yet. We'll pass the appointment to the carrier once one is assigned. Your account executive also knows about the holiday closure.\n\nMerry Christmas,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20437",
+      "appointments": [
+       {
+        "facility": "ATL-DC",
+        "local": "2026-12-28T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "ATL-DC-5F3DA"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 10.7126,
+     "cost_usd": 0.043542,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "ae"
+      ],
+      "flags": [
+       "holiday"
+      ],
+      "reply": "Hi Ken,\n\nMerry Christmas to you too. I've booked the delivery for PO-50137 (our load L-20437) at the Retail DC in Atlanta (ATL-DC):\n\n- **Appointment:** Monday, 12/28/2026 at 07:00 Eastern Time\n- **Confirmation #:** ATL-DC-5F3DA\n\nThis is the earliest time we could get in your 12/24\u201312/28 window. The DC is closed 12/24 and 12/25 for the holidays and doesn't receive on the weekend of 12/26\u201312/27, so 12/28 is the first day it's open. I've let your account executive know.\n\nNo carrier is assigned to this load yet. Once one is, we'll pass the appointment along to them.\n\nThanks,\nAppointments Desk\nLanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20437",
+      "appointments": [
+       {
+        "facility": "ATL-DC",
+        "local": "2026-12-28T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "ATL-DC-5F3DA"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 10.7095,
+     "cost_usd": 0.046734,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [
+       "ae"
+      ],
+      "flags": [
+       "holiday"
+      ],
+      "reply": "Hi Ken,\n\nMerry Christmas to you too. The delivery for PO-50137 (our load L-20437) is booked at Retail DC, Atlanta (ATL-DC) for **Monday, 12/28/2026 at 07:00 Eastern Time**. The confirmation number is **ATL-DC-5F3DA**.\n\nThis was the earliest slot in your window. The DC is closed 12/24 and 12/25 for the holidays and doesn't receive on weekends, so 12/28 was the first open day. We'll update the carrier once one is assigned to the load.\n\nThanks,\nAppointments Desk, Lanternfly Logistics",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "notify",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20437",
+      "appointments": [
+       {
+        "facility": "ATL-DC",
+        "local": "2026-12-28T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "ATL-DC-5F3DA"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h09",
+   "group": "T3",
+   "title": "Customer wants a date after the window in our system",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.2338,
+     "cost_usd": 0.019491,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nYou asked for Monday, December 14 for PO-50138 (our load L-20438) into Cleveland (CLE-DC). Our delivery window for this load is December 9 through December 10, so the 14th falls outside it. Because of that, I haven't booked anything at CLE-DC.\n\nI've sent this to your account executive. They'll confirm the new date with you and change the delivery window if needed. Once that's done, we'll book the Cleveland appointment and send you the confirmation.\n\nPickup at MEM-SHIP is still booked for December 8 at 06:00 local time. Please let your account executive know if that should change too.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": "Harborline (Ken) wants PO-50138 delivered to CLE-DC on Mon 2026-12-14, but the TMS customer window is 12/09 00:00\u201312/10 23:59. Pickup at MEM-SHIP is booked for 12/08 06:00. Please confirm with the customer and update the window if they want the 14th. Nothing has been booked at CLE-DC.",
+      "action": "handoff",
+      "to": "ae",
+      "reason": "date_conflict",
+      "load": "L-20438"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.6017,
+     "cost_usd": 0.018335,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nI haven't booked the delivery for PO-50138 (our load L-20438) into Cleveland (CLE-DC) yet. Our system shows this delivery is due December 9\u201310, so Monday, December 14 falls outside that window.\n\nI've passed this to your account executive, who will confirm with you whether the delivery date should move to the 14th. Once the date is settled, we'll book the appointment and send you the confirmation.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": "Harborline Foods (Ken) wants PO-50138 / L-20438 delivered to CLE-DC on Mon 2026-12-14, but the TMS delivery window is 2026-12-09 00:00 to 2026-12-10 23:59 (pickup MEM-SHIP 12/08 06:00). Please confirm with the customer whether the window should move to the 14th or the delivery stays on 12/09\u201312/10. Nothing has been booked.",
+      "action": "handoff",
+      "to": "ae",
+      "reason": "date_conflict",
+      "load": "L-20438"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.2042,
+     "cost_usd": 0.018959,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nI haven't booked anything for PO-50138 (our load L-20438) into Cleveland (CLE-DC) yet. Our records show this load picking up in Memphis on Tuesday, December 8 at 6:00 AM, with delivery due on December 9 or 10. Monday the 14th falls outside those dates.\n\nI've passed this to your account executive. They'll confirm with you whether to move the delivery to the 14th or keep it on the 9th or 10th. Once that's settled, we'll book the appointment and send you the time and confirmation number.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": "Harborline (Ken) asks to deliver PO-50138 (L-20438) to CLE-DC on Mon 2026-12-14, but the TMS customer window is 12/9 00:00\u201312/10 23:59 (pickup MEM-SHIP 12/8 06:00). Please confirm with the customer whether the window should move to the 14th or the delivery should stay in the current window. No appointment has been booked.",
+      "action": "handoff",
+      "to": "ae",
+      "reason": "date_conflict",
+      "load": "L-20438"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h10",
+   "group": "T3",
+   "title": "Late truck would miss the receiver's cutoff",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.866,
+     "cost_usd": 0.043937,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "I've passed L-20439 / PO-50139 to our coordinator. I didn't push the 08:00 appointment.\n\nYour new ETA is 12:30 ET today, 12/9, at the Grocery DC in Cincinnati (CIN-RCV). That's later than this load's 11:00 ET must-deliver-by time, so the coordinator will work with the receiver and the customer on a new delivery time.\n\nFor now, keep the driver headed to Cincinnati. The coordinator will contact you with the new appointment and confirmation number. If the ETA changes again, please tell us right away.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": "Blue Mesa had a flat near Louisville. Their new ETA to CIN-RCV (Grocery DC, Cincinnati) is 12:30 ET on 12/9, which is after the 11:00 ET must-deliver-by, so we can't simply move the 08:00 ET appointment. Please work with the receiver and customer on a late delivery or a new date. The customer window runs through 12/10 23:59.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "late_to_receiver",
+      "load": "L-20439"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.5894,
+     "cost_usd": 0.02815,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "I'm sorry to hear about the flat. I hope the driver is OK.\n\nI can't move this appointment myself. Load L-20439 (PO-50139) is set to deliver to Grocery DC, Cincinnati OH, today, 12/9, at 08:00 Eastern Time. It must be delivered by 11:00 ET today, and your new ETA of 12:30 ET is after that cutoff.\n\nI've passed this to our coordinator. They'll work with the receiver and the customer to decide whether a later delivery today can be accepted. We'll send you the new appointment once it's set. Until then, please have the driver keep heading to the DC and let us know if the ETA changes.\n\nLanternfly Logistics \u2013 Appointments Desk",
+      "log": "Blue Mesa had a flat near Louisville and gives an ETA of 12:30 ET today (12/9) at CIN-RCV. That is after the load's must-deliver-by of 11:00 ET, and the current appointment is 08:00 ET. Please decide with the receiver and customer whether a later delivery today is acceptable before anyone rebooks.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "late_to_receiver",
+      "load": "L-20439"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.875,
+     "cost_usd": 0.02735,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "I haven't moved the appointment yet. Load L-20439 (PO-50139) is due at Grocery DC, Cincinnati OH, and is currently booked for 2026-12-09 at 08:00 Eastern. Your new ETA of 12:30 Eastern is after the latest delivery time on this load, which is 11:00 Eastern today. That means I can't rebook it myself.\n\nI've passed this to our coordinator, who will work with the receiver and the customer to decide whether a later delivery can be accepted and when. We'll get back to you with the new appointment once that's settled. Until then, please keep the driver heading to the DC and send us any change to the ETA.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": "Blue Mesa had a flat near Louisville and now gives a 12:30 ET ETA to CIN-RCV on 2026-12-09. That is after the load's 11:00 ET must-deliver-by, so the current 08:00 ET appointment needs to move. Please decide with the receiver/customer whether a later delivery is acceptable before rebooking.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "late_to_receiver",
+      "load": "L-20439"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h11",
+   "group": "T4",
+   "title": "Customer wants to add a stop to the load",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.1159,
+     "cost_usd": 0.018563,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nLoad L-20440 (PO-50140) picks up at MEM-SHIP and delivers to our Dayton facility, DAY-DC. Adding a pickup at your Springfield warehouse changes the load itself, so the appointments desk can't make that change. I've passed your request to your account executive. They'll decide whether the stop can be added and will follow up with you on the rate and timing.\n\nPlease note there's no delivery appointment booked at DAY-DC yet. We'll set one once the stops are settled.\n\nThanks,\nAppointments Desk\nLanternfly Logistics",
+      "log": "Ken at Harborline Foods wants to add a stop on L-20440 (PO-50140, MEM-SHIP to DAY-DC): pick up 4 more pallets at their Springfield warehouse and keep the same delivery appointment. Please decide whether to add the stop and work out the rate and timing. No carrier is assigned yet, and the DAY-DC delivery has no appointment booked.",
+      "action": "handoff",
+      "to": "ae",
+      "reason": "changes_load",
+      "load": "L-20440"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.6591,
+     "cost_usd": 0.018939,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "I'm handing this to our account executive.\n\nHi Ken,\n\nThanks for your note on PO-50140 (our load L-20440, Memphis to the Dayton DC). Adding a pickup at your Springfield warehouse would change the load itself, so I can't add it from the appointments desk. I've passed your request to your account executive. They'll look at adding the stop and updating the load, and they'll be in touch with you.\n\nThe Dayton delivery appointment isn't booked yet. Once the stop question is settled, we'll schedule it and send you the confirmation.\n\nThanks,\nAppointments Desk\nLanternfly Logistics",
+      "log": "Harborline Foods (Ken) wants to add a stop at their Springfield warehouse to pick up 4 more pallets on PO-50140 (MEM-SHIP pickup 12/8 06:00 to DAY-DC, delivery not yet booked, no carrier assigned) and keep the same delivery appointment. Please decide whether to add the stop and update the load and rate. The Dayton delivery can be booked once that's settled.",
+      "action": "handoff",
+      "to": "ae",
+      "reason": "changes_load",
+      "load": "L-20440"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.6092,
+     "cost_usd": 0.018803,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nAdding a pickup at your Springfield warehouse changes the load itself, so I've passed your request to your account executive. They'll decide on the extra stop and the rate, and they'll get back to you. This is for load L-20440, PO-50140, picking up in Memphis and delivering to the Dayton DC.\n\nOne thing to know: we haven't booked a delivery appointment at Dayton for this load yet. Once the stops are settled, we'll book it and send you the details.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": "Harborline Foods (Ken) wants to add a pickup stop at their Springfield warehouse for 4 more pallets on L-20440 / PO-50140 (MEM-SHIP to DAY-DC), keeping the same delivery appointment. Please decide whether to add the stop and re-rate the load. There is no carrier yet, and the DAY-DC delivery appointment has not been booked.",
+      "action": "handoff",
+      "to": "ae",
+      "reason": "changes_load",
+      "load": "L-20440"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h12",
+   "group": "T4",
+   "title": "Carrier asks to be paid back for a lumper",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 7.0122,
+     "cost_usd": 0.021083,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "I've passed your lumper reimbursement question to our coordinator. The appointments desk only books appointments, so we can't handle reimbursements. Your load is L-20441 (PO-50141), delivering at our Dayton facility (DAY-DC). The coordinator will follow up with you about the $180 and the receipt.\n\nOur records show this load picking up in Memphis on Dec 8 and delivering at Dayton on Dec 9. The coordinator may ask you to confirm the date and load number on the receipt.\n\nLanternfly Logistics Appointments Desk",
+      "log": "Blue Mesa says their driver paid a $180 lumper at Dayton (DAY-DC) on PO-50141 this morning (12/7) and is asking how to get reimbursed; they say the receipt is attached. The TMS shows pickup at MEM-SHIP on 12/8 06:00 and delivery at DAY-DC on 12/9 10:00, so please check the date or load before you approve the reimbursement.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "out_of_scope",
+      "load": "L-20441"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.2468,
+     "cost_usd": 0.022979,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Blue Mesa dispatch,\n\nThanks for sending the receipt. The appointments desk doesn't handle lumper reimbursements, so I've passed this to our coordinator, who will follow up with you about the $180.\n\nOne thing to check: PO-50141 is our load L-20441. Our records show that load picking up in Memphis on 12/8, with delivery in Dayton (DAY-DC) on 12/9 at 10:00. If the lumper was paid at Dayton this morning (12/7), it may have been for a different load. Please confirm the PO on the receipt so the coordinator can match it to the right load.\n\nLanternfly Logistics Appointments Desk",
+      "log": "Blue Mesa dispatch is asking how to get reimbursed for a $180 lumper they say was paid at Dayton (DAY-DC) on PO-50141 this morning (12/7), and they attached a receipt. In the TMS, pickup at MEM-SHIP is 12/8 06:00 and the DAY-DC delivery is 12/9 10:00, so please confirm the load and date before you handle the reimbursement.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "out_of_scope",
+      "load": "L-20441"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 7.7382,
+     "cost_usd": 0.022595,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Blue Mesa dispatch,\n\nThanks for sending the receipt. I've passed your lumper reimbursement request for load L-20441 / PO-50141 ($180 at Dayton) to our coordinator. They'll tell you how reimbursement works and follow up with you. The appointments desk only handles appointment scheduling, so it can't process reimbursements.\n\nOne thing to check: our system shows this load picking up in Memphis on Dec 8 and delivering to Dayton on Dec 9. That doesn't match a lumper paid at Dayton this morning. Please make sure the receipt is for this load, or let us know if the dates in our system are wrong.\n\nLanternfly Logistics \u2013 Appointments Desk",
+      "log": "Blue Mesa says their driver paid a $180 lumper at Dayton on PO-50141 this morning (Dec 7), sent a receipt, and is asking how to get reimbursed. Please handle the reimbursement, and also check the dates: the TMS shows L-20441 picking up at MEM-SHIP on Dec 8 06:00 and delivering at DAY-DC on Dec 9 10:00, so a lumper paid at Dayton today doesn't line up.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "out_of_scope",
+      "load": "L-20441"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h13",
+   "group": "T3",
+   "title": "Hazmat load, and the email never says so",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.9478,
+     "cost_usd": 0.016947,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "I've passed your request to deliver PO-50142 (load L-20442) at our Dayton facility (DAY-DC) to our coordinator. No appointment has been booked yet.\n\nOur system marks this load as hazardous materials, and our desk doesn't book those. The coordinator has the load details and your delivery window of December 9\u201310 and will follow up with you on the appointment.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": "Harborline Foods (Ken) wants the earliest delivery appointment at Dayton (DAY-DC) for PO-50142 / L-20442. The load is flagged hazmat, so I booked nothing. Pickup is MEM-SHIP 2026-12-08 06:00, the customer window is 12/9 00:00 to 12/10 23:59, and no carrier is assigned yet. Please handle the booking.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "hazmat",
+      "load": "L-20442"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 9.1902,
+     "cost_usd": 0.018659,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "I've passed your request to book delivery for PO-50142 (our load L-20442) at our Dayton facility (DAY-DC) to our coordinator. The load is marked hazmat in our system, and the coordinator books hazmat appointments.\n\nThe delivery window we have on file is December 9\u201310. No appointment has been booked yet. The coordinator will contact you with the appointment time and confirmation number once it's set.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": "Harborline Foods (Ken) wants the earliest delivery appointment at DAY-DC (Dayton) for PO-50142 / L-20442. The load is flagged hazmat, so I have not booked anything. Pickup is MEM-SHIP 2026-12-08 06:00, the customer window is 12/9 00:00\u201312/10 23:59, and no carrier is assigned yet. Please decide how to book it.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "hazmat",
+      "load": "L-20442"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.3728,
+     "cost_usd": 0.018375,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "I haven't booked the delivery for PO-50142 (load L-20442) at our Dayton facility. This load is marked as hazmat in our system, and our team policy says a scheduling coordinator books all hazmat appointments.\n\nI've passed your request for the earliest delivery appointment to our coordinator, along with your delivery window of December 9\u201310. They'll book it with Dayton and send you the confirmation.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": "Harborline Foods (Ken) wants the earliest delivery appointment for PO-50142, load L-20442, at DAY-DC (Dayton). The window is 2026-12-09 00:00 to 2026-12-10 23:59 local, pickup at MEM-SHIP is 2026-12-08 06:00, and no carrier is assigned yet. The load is flagged hazmat, so nothing has been booked. Please handle the delivery appointment.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "hazmat",
+      "load": "L-20442"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h14",
+   "group": "T2",
+   "title": "One PO on two loads; the email names the city",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 9.095,
+     "cost_usd": 0.040322,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nYour Cleveland delivery for PO 4500777001 is booked:\n\n- Load: L-20444, PO 4500777001\n- Facility: Grocery DC, Cleveland OH (CLE-DC)\n- Appointment: Wednesday, December 9, 2026 at 07:00 Eastern Time\n- Confirmation number: CLE-DC-A8AB4\n\nThis PO also covers a second load going to Cincinnati (L-20443). That delivery is still unbooked and I haven't scheduled it. If you need that one too, just let us know.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20444",
+      "appointments": [
+       {
+        "facility": "CLE-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "CLE-DC-A8AB4"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.17,
+     "cost_usd": 0.034718,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nThe delivery appointment for PO 4500777001 is booked:\n\n- Load: L-20444 (pickup in Memphis, delivery to Cleveland)\n- Facility: Grocery DC, Cleveland OH\n- Appointment: Wednesday, Dec 9, 2026 at 07:00 Eastern Time\n- Confirmation: CLE-DC-A8AB4\n\nThis PO is on two loads. The other one, L-20443, goes to Cincinnati, and I didn't book anything for it.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20444",
+      "appointments": [
+       {
+        "facility": "CLE-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "CLE-DC-A8AB4"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 8.7856,
+     "cost_usd": 0.037618,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nThe Cleveland delivery for PO 4500777001 is booked.\n\n- Load: L-20444, PO 4500777001\n- Facility: Grocery DC, Cleveland OH\n- Appointment: Wednesday, Dec 9, 2026 at 07:00 Eastern Time\n- Confirmation: CLE-DC-A8AB4\n\nThis is the earliest open slot after the truck can arrive from its Dec 8 06:00 pickup in Memphis, and it's inside your delivery window. We haven't assigned a carrier to this load yet. When we do, we'll send them these appointment details.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": [
+       "find_load",
+       "get_facility",
+       "estimate_arrival",
+       "get_open_slots",
+       "request_appointment",
+       "stopped: answered"
+      ],
+      "action": "book",
+      "load": "L-20444",
+      "appointments": [
+       {
+        "facility": "CLE-DC",
+        "local": "2026-12-09T07:00"
+       }
+      ],
+      "channel": "email",
+      "attempts": [
+       "email"
+      ],
+      "confirmation": "CLE-DC-A8AB4"
+     }
+    }
+   ]
+  },
+  {
+   "id": "h15",
+   "group": "T3",
+   "title": "Receiver is full on the only day in the window",
+   "runs": [
+    {
+     "run": 1,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 11.1684,
+     "cost_usd": 0.035742,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "I couldn't book this delivery, so I've passed it to our coordinator.\n\nHi Ken,\n\nFor load L-20445 (PO-50144) going to the Retail DC in Tampa (TPA-DC), I couldn't get the 12/9 appointment. The truck can arrive in time, but Tampa has no open dock slots on 12/9, and that is the only day in your delivery window.\n\nOur coordinator is taking this over. They'll work with the Tampa dock to find space on 12/9, and if that doesn't work, they'll contact you about other options. You'll hear from them directly.\n\nThanks,\nAppointments Desk, Lanternfly Logistics",
+      "log": "L-20445 / PO-50144: the customer window at TPA-DC is 12/9 only (00:00\u201323:59 ET), and the truck can arrive from 12/8 01:00 ET, but TPA-DC has no open slots on 12/9. Decide whether to work the dock for a slot on 12/9 or go back to the customer about a different date.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "no_slot_in_window",
+      "load": "L-20445"
+     }
+    },
+    {
+     "run": 2,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 11.5342,
+     "cost_usd": 0.036586,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "Hi Ken,\n\nI couldn't book PO-50144 (our load L-20445) at the Retail DC in Tampa (TPA-DC) on 12/9. The truck can get there in time, but the DC has no open dock slots that day. Our order has 12/9 as the only delivery day, so I didn't book an earlier date.\n\nI've passed this to our scheduling coordinator to get a 12/9 slot from the DC. We'll send you the appointment and confirmation number once it's booked.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": "L-20445 (PO-50144) has to deliver to TPA-DC on 12/9 only (window 12/9 00:00\u201323:59 ET). The truck can be there from 12/8 01:00 ET, but TPA-DC shows no open slots on 12/9. Please work with the DC to get a slot on 12/9, or with the AE if the date has to move.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "no_slot_in_window",
+      "load": "L-20445"
+     }
+    },
+    {
+     "run": 3,
+     "passed": true,
+     "failed_checks": [],
+     "error": "",
+     "latency_s": 11.4415,
+     "cost_usd": 0.035898,
+     "judge_cost_usd": 0.0,
+     "verdicts": {
+      "E1": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E2": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E3": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E4": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E5": {
+       "result": "pass",
+       "reason": ""
+      },
+      "E6": {
+       "result": "pass",
+       "reason": ""
+      }
+     },
+     "output": {
+      "notify": [],
+      "flags": [],
+      "reply": "I couldn't book a delivery appointment for you yet, so I've passed this to our scheduling coordinator.\n\nLoad L-20445 / PO-50144 delivers to the Retail DC in Tampa (TPA-DC). The truck can get there in time for 12/9, but the DC has no open dock slots that day, and 12/9 is the only date your order allows.\n\nThe coordinator will work with the DC to get a slot on 12/9. If that isn't possible, they'll contact you to agree on next steps. We'll send the appointment time and confirmation number once it's booked.\n\nThanks,\nLanternfly Logistics Appointments Desk",
+      "log": "L-20445 (PO-50144) has to deliver to TPA-DC on 12/9 only (window 12/9 00:00\u201323:59 ET). The truck can be there by 12/8 01:00 ET, but TPA-DC shows no open slots on 12/9. Please work with the dock for a 12/9 slot, or with the customer if 12/9 can't happen.",
+      "action": "handoff",
+      "to": "coordinator",
+      "reason": "no_slot_in_window",
+      "load": "L-20445"
+     }
+    }
+   ]
+  }
+ ]
+}
