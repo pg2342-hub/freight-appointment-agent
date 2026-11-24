@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { buildReply, newText, skipReason, threadKeys } from "../src/email";
+import { buildReply, newText, plainText, skipReason, threadKeys } from "../src/email";
 
 test("threadKeys: In-Reply-To first, then References newest first, no repeats", () => {
   assert.deepEqual(threadKeys("<b@x>", "<a@x> <b@x>"), ["<b@x>", "<a@x>"]);
@@ -33,4 +33,9 @@ test("buildReply threads the reply and encodes the body", () => {
   assert.match(raw, /^References: <m1@example.com> <m2@example.com>\r$/m);
   const b64 = raw.split("\r\n\r\n")[1].replace(/\s/g, "");
   assert.equal(Buffer.from(b64, "base64").toString("utf8"), "Booked for 7 AM — conf DAY-DC-1");
+});
+
+test("plainText strips markdown the agent may write", () => {
+  assert.equal(plainText("- **Appointment:** Wed 12/9, 07:00\n## Next\nUse `DAY-DC`, *please*."), "- Appointment: Wed 12/9, 07:00\nNext\nUse DAY-DC, please.");
+  assert.equal(plainText("2 * 3 = 6"), "2 * 3 = 6");
 });

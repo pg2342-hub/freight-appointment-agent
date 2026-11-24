@@ -78,3 +78,13 @@ export function buildReply(p: ReplyParts): string {
     "",
   ].join("\r\n");
 }
+
+/** Email clients show markdown literally, so drop bold, italics, headings and code ticks from the agent's reply. */
+export function plainText(s: string): string {
+  return s
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/__(.+?)__/g, "$1")
+    .replace(/(^|[\s(])\*(\S[^*\n]*?)\*(?=[\s).,;:!?]|$)/gm, "$1$2")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/`([^`\n]+)`/g, "$1");
+}

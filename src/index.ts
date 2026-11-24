@@ -8,7 +8,7 @@ import { D1Store } from "./d1store";
 import { calendarFor } from "./calendar";
 import { proposalFrom, runCase, threadText, type CaseInput } from "./eval";
 import { ClaudeModel, ScriptedModel, type Model } from "./model";
-import { buildReply, newText, skipReason, threadKeys } from "./email";
+import { buildReply, newText, plainText, skipReason, threadKeys } from "./email";
 import { tracePage } from "./trace";
 import type { FacilityBehavior } from "./store";
 import type { World } from "./world";
@@ -184,7 +184,7 @@ async function handleEmail(message: ForwardableEmailMessage, env: Env) {
       replyBody = `Thanks for your email. The appointment desk could not take it just now. ${r.error}`;
     } else {
       convId = r.id;
-      replyBody = r.result.reply;
+      replyBody = plainText(r.result.reply);
     }
   }
   const base = (env.PUBLIC_URL || "").replace(/\/$/, "");
