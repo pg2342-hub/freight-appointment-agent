@@ -36,7 +36,15 @@ upload)
   NEW_ID=$(echo "$out" | grep -oE 'Worker Version ID: [0-9a-f-]+' | awk '{print $4}')
   sub=$(curl -sf -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).result.subdomain))')
   # Page-only changes skip the model gates (they cost API credit); anything that can change the agent runs them.
-  base=$(git rev-parse HEAD^ 2>/dev/null || echo "")
+  # Compare against the commit of the version serving now (its upload tag), not just the last commit, so a
+  # push of several commits is judged as a whole. If that commit cannot be found, run the gates.
+  base_tag=""
+  if [ -n "$OLD_ID" ]; then
+    base_tag=$(npx wrangler versions view "$OLD_ID" --json 2>/dev/null | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{const v=JSON.parse(s);console.log((v.annotations||{})["workers/tag"]||"")}catch{console.log("")}})' || true)
+  fi
+  git fetch -q --unshallow 2>/dev/null || true # CI checks out a shallow clone; the serving commit may be older
+  base=$( [ -n "$base_tag" ] && git rev-parse --verify --quiet "${base_tag}^{commit}" || echo "")
+  echo "comparing with the serving version's commit: ${base:-not found, so the gates run}"
   changed=$( [ -n "$base" ] && git diff --name-only "$base" HEAD || echo "src/")
   if echo "$changed" | grep -qvE '^(public/|README\.md|scripts/build_page\.ts|gate/results/)'; then GATED=yes; else GATED=no; fi
   printf 'LABEL=%s\nOLD_ID=%s\nNEW_ID=%s\nURL=%s\nGATED=%s\n' "$LABEL" "$OLD_ID" "$NEW_ID" "https://$NAME.$sub.workers.dev" "$GATED" > "$STATE"
