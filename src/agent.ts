@@ -34,7 +34,7 @@ export type AgentResult = {
 
 export async function runAgent(model: Model, store: Store, history: BetaMessageParam[]): Promise<AgentResult> {
   const world = await store.world();
-  const prompt = systemPrompt(world, new Date(store.now()).toISOString().slice(0, 16) + "Z");
+  const prompt = systemPrompt(world);
   const messages = [...history];
   const steps: TraceStep[] = [];
   let cost = 0;

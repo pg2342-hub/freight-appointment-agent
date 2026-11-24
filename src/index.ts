@@ -128,7 +128,7 @@ async function converse(env: Env, t: Turn): Promise<Conversed> {
   }
   if (history.length > 40) return { error: "This conversation is too long. Please start a new one.", status: 400 };
   const userText = history.length
-    ? `--- Reply from ${sender}\n\n${text}`
+    ? `--- Reply from ${sender}, received ${new Date().toISOString().slice(0, 16)}Z\n\n${text}`
     : threadText([{ from: sender, body: text }], new Date().toISOString().slice(0, 16) + "Z");
   history.push({ role: "user", content: userText });
 
