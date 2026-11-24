@@ -396,3 +396,8 @@ a.row:hover { background: var(--sunk); }
 @media (max-width: 960px) { .queue a { grid-template-columns: minmax(0, 1fr); } }
 .drawer__panel > * { min-width: 0; }
 .field select, .field textarea { width: 100%; min-width: 0; }
+.mail__head > span { min-width: 0; overflow-wrap: anywhere; }
+@media (min-width: 961px) and (max-width: 1360px) {
+  .inbox { grid-template-columns: 300px minmax(0, 1fr); }
+  .detail__body { grid-template-columns: minmax(0, 1fr) minmax(280px, 330px); }
+}

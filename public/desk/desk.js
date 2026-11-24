@@ -380,7 +380,7 @@
     const q = $("#q");
     if (q) q.addEventListener("input", () => { S.q = q.value; const pos = q.selectionStart; render(); const n = $("#q"); n.focus(); n.setSelectionRange(pos, pos); });
     const cur = $(".thr[aria-current]");
-    if (cur && !isVisible(cur)) cur.scrollIntoView({ block: "center" });
+    if (cur && !isVisible(cur)) { const box = $("#list-scroll"); box.scrollTop += cur.getBoundingClientRect().top - box.getBoundingClientRect().top - box.clientHeight / 2 + cur.offsetHeight / 2; }
     if (!id || D.threads.some((t) => t.id === id)) return;
     try {
       const th = S.liveCache.get(id) ?? (await getJSON(`/api/desk/thread/${encodeURIComponent(id)}`));
