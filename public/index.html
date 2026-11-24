@@ -48,16 +48,6 @@
 .seg button{min-height:34px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);font:500 14px/1 var(--sans);cursor:pointer}
 .seg button span{font-weight:400;opacity:.8}
 .seg button[aria-checked=true]{background:var(--ink);color:var(--paper)}
-.n{font-family:var(--mono);font-size:13px}
-.tag{font:400 12px/1 var(--mono);border:1px solid var(--rule);border-radius:999px;padding:4px 8px;white-space:nowrap}
-.tx{max-width:340px}.ch{font-size:13px;color:var(--ink-2);margin-top:4px}
-.v{white-space:nowrap;font-weight:500}
-.v.ok{color:var(--green)}
-.v.bad{white-space:normal;color:var(--ink)}
-.v.bad.crit::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--ink);margin-right:6px;vertical-align:1px}
-.why{font-weight:400;font-size:13px;color:var(--ink-2);margin-top:4px;max-width:240px}
-#cases tr.lit td{background:var(--green-wash)}
-#cases tr{scroll-margin-top:24px}
 .abl{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;overflow:hidden}
 .arow{grid-template-columns:minmax(0,13em) minmax(0,1fr) 6.5em}
 .arow+.arow{border-top:1px solid var(--rule-soft)}
@@ -86,76 +76,24 @@
  .ascore{grid-column:2;grid-row:1}
  .rule{grid-template-columns:1fr}
 }
-@media (max-width:640px){.vrow,.arow{padding:18px}.vhead{padding:16px 18px}.strip{gap:3px}.tx{max-width:none}}
+@media (max-width:640px){.vrow,.arow{padding:18px}.vhead{padding:16px 18px}.strip{gap:3px}}
 @media (prefers-reduced-motion:reduce){.cell{transition:none}}
 
 /* ---- page-specific rules ---- */
+.live{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:22px 0 0;font-size:15px}
+.livedot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px var(--green-wash)}
+.live .cta{margin-left:6px;text-decoration:none}
+.live .byemail{margin:0}
+.shot{display:block;margin-top:18px;border:1px solid var(--rule);border-radius:16px;overflow:hidden;background:#fbfaf6;box-shadow:0 24px 48px -32px rgb(27 26 23/.35)}
+.shot img{display:block;width:100%;height:auto}
+.shot:hover{border-color:var(--ink-2)}
+#gate .verdict{margin-top:0}
 .head h1{margin:24px 0 12px}
-.desk{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:20px 24px;align-items:start;margin-top:28px;scroll-margin-top:16px}
-.compose{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;padding:20px 22px}
-.compose label{display:block;font:500 15px/1.3 var(--sans);margin:0 0 10px}
-.fromrow{display:flex;align-items:center;gap:10px;margin:0 0 8px;font-size:14px;color:var(--ink-2)}
-.fromrow select{flex:1;min-width:0;font:13px/1.3 var(--mono);padding:8px 10px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink)}
-.compose textarea{display:block;width:100%;box-sizing:border-box;min-height:190px;resize:vertical;padding:12px 14px;border:1px solid var(--rule);border-radius:12px;font:15px/1.5 var(--sans);background:#fff;color:var(--ink)}
-.act{display:flex;align-items:center;gap:10px 12px;flex-wrap:wrap;margin-top:12px}
-.go{display:inline-flex;align-items:center;min-height:46px;padding:0 24px;border-radius:999px;border:1px solid var(--green);background:var(--green);color:#fff;font:500 16px/1 var(--sans);cursor:pointer}
-.go:hover{background:var(--green-deep);border-color:var(--green-deep)}
-.go:disabled{opacity:.6;cursor:progress}
-.newthread{cursor:pointer;min-height:46px}
-.loadmsg{display:flex;align-items:flex-start;gap:8px;margin-top:12px;font-size:13.5px;line-height:1.5;color:var(--ink-2);min-height:20px}
-.loadmsg i{flex:none;width:8px;height:8px;margin-top:6px;border-radius:50%;background:var(--ink-2);opacity:.45}
-.loadmsg.busy i{animation:pulse 1.2s var(--ease) infinite}
-.loadmsg.ok i{background:var(--green);opacity:1}
-.loadmsg.err i{background:var(--ink);opacity:1;border-radius:2px}
-@keyframes pulse{50%{opacity:.1}}
-.exlab{font:500 13px/1.3 var(--sans);margin:20px 0 8px;color:var(--ink)}
-.exlist{display:flex;flex-wrap:wrap;gap:6px}
-.ex{min-height:36px;padding:0 12px;border:1px solid var(--rule);border-radius:999px;background:#fff;color:var(--ink);font:400 13.5px/1.2 var(--sans);cursor:pointer}
-.ex:hover{border-color:var(--ink);background:#fff;color:var(--ink)}
-.ex[aria-pressed=true],.ex[aria-pressed=true]:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-/* the output: the TMS update and the reply */
-.doc{border:1px solid var(--rule);border-radius:16px;background:#fff;box-shadow:0 1px 0 rgb(27 26 23/.04),0 24px 48px -32px rgb(27 26 23/.35);min-width:0;overflow:hidden}
-.doc h3{all:unset;display:block}
-.dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px 20px;padding:22px 26px 16px;border-bottom:1px solid var(--rule)}
-.dhead>div{min-width:0}
-.dhead h3{font:400 26px/1.15 var(--serif)}
-.dsub{font:12.5px/1.5 var(--mono);color:var(--ink-2);margin-top:6px;overflow-wrap:anywhere}
-.status{display:inline-flex;align-items:center;min-height:30px;padding:0 14px;border-radius:999px;font:500 12.5px/1 var(--mono);letter-spacing:.04em;border:1px solid var(--ink);white-space:nowrap}
-.st-booked{background:var(--green-wash);border-color:var(--green-wash);color:var(--green)}
-.st-handoff{background:var(--ink);color:var(--paper)}
-.st-other{border-style:dashed}
-.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 20px;margin:0;padding:14px 26px;border-bottom:1px solid var(--rule);background:#fbfaf6}
-.meta div{min-width:0}
-.meta dt{font-size:12.5px;color:var(--ink-2)}
-.meta dd{margin:2px 0 0;font-size:14.5px;overflow-wrap:anywhere}
-.meta dd.mono{font:13px/1.4 var(--mono)}
-.dpad{padding:16px 26px 22px}
-.ho{border:1.5px solid var(--ink);border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:14.5px}
-.ho b{font-weight:500}
-.mail{border:1px solid var(--rule);border-radius:12px;padding:12px 14px;white-space:pre-wrap;font-size:14.5px;line-height:1.55;margin:0 0 14px}
-.mail.none{color:var(--ink-2);border-style:dashed}
-.cap{font:500 13px/1.3 var(--sans);margin:14px 0 6px}
-.capsub{font-size:12.5px;color:var(--ink-2);margin:0 0 8px}
-.cal{display:block;width:100%;height:auto;font-variant-numeric:tabular-nums}
-.cal text{font:11px var(--mono);fill:var(--ink-2)}
-.cal .lbl{fill:var(--ink)}
-.calkey{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2);margin:8px 0 0}
-.calkey span{display:inline-flex;align-items:center;gap:6px}
-.calkey i{display:inline-block;width:14px;height:10px;border-radius:2px}
-.k-open{background:#efece3}.k-win{background:var(--green-wash);outline:1px solid var(--green)}.k-taken{background:var(--ink-2)}.k-appt{background:var(--green)}
-.k-arr{width:2px!important;height:12px!important;background:var(--ink);border-radius:0!important}
-.steps{list-style:none;margin:0;padding:0;font:12.5px/1.5 var(--mono)}
-.steps li{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid var(--rule-soft)}
-.steps li span{color:var(--ink-2);overflow-wrap:anywhere}
-.steps li.bad b{text-decoration:underline dotted}
-.trace{display:inline-block;margin-top:12px;font-size:14px}
-.empty{padding:28px 26px;color:var(--ink-2)}
+.cta{display:inline-flex;align-items:center;min-height:46px;padding:0 24px;border-radius:999px;border:1px solid var(--green);background:var(--green);color:#fff;font:500 16px/1 var(--sans);cursor:pointer}
+.cta:hover{background:var(--green-deep);border-color:var(--green-deep)}
 .vhead h3{all:unset;font:400 22px/1.2 var(--serif)}
 .vrow.pending{grid-template-columns:minmax(0,15em) minmax(0,1fr)}
 .pend{margin:0;color:var(--ink-2);font-size:14.5px;border:1px dashed var(--rule);border-radius:10px;padding:10px 12px}
-#cases td{vertical-align:top}
-#cases .tx b{display:block;font-weight:500;margin-bottom:2px}
-#cases .tx div{font-size:13px;color:var(--ink-2);white-space:pre-wrap;max-height:4.6em;overflow:hidden}
 .howl{max-width:44em;padding-left:1.2em}
 .howl li{margin:0 0 10px}
 .howl b{font-weight:500}
@@ -173,8 +111,7 @@
 .stage.wait{opacity:.6}
 .relmeta{grid-column:1/-1;font-size:13.5px;color:var(--ink-2);margin:10px 0 0}
 @media (max-width:640px){.stages{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:1000px){.desk{grid-template-columns:minmax(0,1fr)}.vrow.pending{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:640px){.meta{grid-template-columns:repeat(2,minmax(0,1fr))}.dhead,.meta,.dpad{padding-left:18px;padding-right:18px}.compose{padding:16px}}
+@media (max-width:1000px){.vrow.pending{grid-template-columns:minmax(0,1fr)}}
 @media (min-width:1001px){.content .vrow{grid-template-columns:minmax(0,9.5em) minmax(0,1fr) 6.5em 5.5em;gap:16px}.content .vrow.pending{grid-template-columns:minmax(0,9.5em) minmax(0,1fr)}.content .vscore b{font-size:38px}}
 .stages .pend{grid-column:1/-1}
 </style></head><body>
@@ -185,29 +122,18 @@
 <p class="lead">Email the appointments desk of a freight brokerage the way a shipper or carrier would. The agent finds the load, works out the earliest dock slot the truck can make, books it through the facility's own channel or hands the thread to a person, and replies.</p>
 </div>
 
-<section class="desk" id="tool" aria-label="Email the appointments desk">
-  <div class="compose">
-    <label for="text">Email the appointments desk</label>
-    <div class="fromrow"><span>From</span><select id="from" aria-label="From">
-      <option>shipping@harborline-foods.example</option>
-      <option>dispatch@bluemesa-transport.example</option>
-    </select></div>
-    <textarea id="text" spellcheck="false" maxlength="4000"></textarea>
-    <div class="act">
-      <button class="go" id="go" type="button">Send to the agent</button>
-      <button class="pill newthread" id="reset" type="button">New thread</button>
-    </div>
-    <p class="byemail">Or email <a class="mono" href="mailto:appointments@pranavgudise.dev">appointments@pranavgudise.dev</a> from your own inbox. The agent replies in the same thread, with a link to every step it took.</p>
-    <div class="loadmsg" id="loadmsg" role="status"><i aria-hidden="true"></i><span id="loadtxt">Showing a recorded run. Sending runs the live agent.</span></div>
-    <div class="exlab" id="exlab">Recorded threads</div>
-    <div class="exlist" id="exlist" role="group" aria-labelledby="exlab"></div>
-  </div>
-
-  <article class="doc" id="doc" aria-live="polite"></article>
-</section>
+<div class="live" id="live" aria-live="polite">
+  <span class="livedot" aria-hidden="true"></span><span id="livetxt">Live on Cloudflare</span>
+  <a class="cta" href="desk/">Open the desk console</a>
+  <span class="byemail">or email <a class="mono" href="mailto:appointments@pranavgudise.dev">appointments@pranavgudise.dev</a> from your own inbox</span>
+</div>
 
 <div class="layout">
 <div class="content">
+
+
+
+
 
 <section id="gate">
   <h2>Go-live gate</h2>
@@ -215,21 +141,22 @@
   <div class="verdict" aria-labelledby="verdict-h">
     <div class="vhead"><h3 id="verdict-h"></h3><p id="gaterule"></p></div>
     <div id="vrows"></div>
-    <div class="legend"><span><i class="pass"></i>Passed</span><span><i class="fail"></i>Failed</span><span><i class="crit"></i>Critical error</span><span>Each square is one thread. Select one to find it below.</span></div>
+    <div class="legend"><span><i class="pass"></i>Passed</span><span><i class="fail"></i>Failed</span><span><i class="crit"></i>Critical error</span><span>Each square is one thread. Select one to open it in the console.</span></div>
   </div>
   <p class="note" id="gatenote"></p>
+</section>
+
+<section id="console">
+  <h2>The desk console</h2>
+  <p class="note">What an appointments team would keep open: every thread with Claude's reply and each step it took, the hand-off queue with the agent's notes, dock calendars, live spend against the $5 daily cap, and the release history. Recorded threads show all three graded runs; threads you send go to the live agent.</p>
+  <a class="shot" href="desk/#/inbox/f13"><img src="desk-preview.jpg" width="1440" height="900" alt="The desk console: a thread where the facility's portal fails twice and Claude books by email instead, with its reply, its steps and the graded runs." loading="lazy"></a>
+  <p class="note"><a href="desk/">Open the console</a> · <a href="desk/#/handoffs">Hand-off queue</a> · <a href="desk/#/docks">Dock calendars</a></p>
 </section>
 
 <section id="rollout">
   <h2>Staged rollout</h2>
   <p class="note">Every push to main uploads a new version with no traffic. It gets 10% of traffic and must pass the held-out gate, then 50% and the 25-thread gate, then 100%. The gates run pinned to the new version. A failed stage puts the previous version back.</p>
   <div class="stages" id="stages"><p class="pend">Loading the latest release.</p></div>
-</section>
-
-<section id="cases-sec">
-  <h2>Every thread</h2>
-  <div class="seg" role="radiogroup" aria-label="Filter threads" id="seg"></div>
-  <div class="scroll"><table class="t" id="cases"><thead><tr><th>#</th><th>The email</th><th>Claude</th><th>Always book</th></tr></thead><tbody></tbody></table></div>
 </section>
 
 <section id="how">
@@ -255,7 +182,7 @@
 </div>
 
 <aside class="side" aria-label="About this build">
-  <nav aria-label="On this page"><a href="#tool">Email the desk</a><a href="#gate">Go-live gate</a><a href="#rollout">Staged rollout</a><a href="#cases-sec">Every thread</a><a href="#how">How it works</a><a href="#limits">Limits</a></nav>
+  <nav aria-label="On this page"><a href="#gate">Go-live gate</a><a href="#console">Desk console</a><a href="#rollout">Staged rollout</a><a href="#how">How it works</a><a href="#limits">Limits</a></nav>
   <div><h3>Data</h3><p>All synthetic. Lanternfly Logistics, its loads, 15 facilities (hours, holidays, notice rules, booked slots), the shipper, the carrier and every email are invented. Facility answers come from a simulator.</p></div>
   <div><h3>Run it yourself</h3><p>Node 22 and Python 3.9+. The scripted mode needs no API key.</p><pre>npm install && npm run db:init && npm run seed
 npm run dev
@@ -270,100 +197,6 @@ cd gate && EVAL_TOKEN=local-dev-token golive run golive.yml</pre></div>
 const D = window.DATA;
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-const STATUS = { book: ["BOOKED", "st-booked"], enter_existing: ["RECORDED", "st-booked"], record_fcfs: ["NO APPOINTMENT NEEDED", "st-other"], handoff: ["HANDED OFF", "st-handoff"], none: ["NO ACTION", "st-other"] };
-const WHO = { coordinator: "the coordinator", ae: "the account executive" };
-const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const fmtRecv = (s) => `${MON[+s.slice(5, 7) - 1]} ${+s.slice(8, 10)}, ${s.slice(11, 16)} (UTC${s.slice(16)})`;
-const fmtLocal = (s) => { if (!s) return ""; const [d, t] = s.split("T"); const [y, m, day] = d.split("-"); return `${m}/${day} ${t}`; };
-let thread = null;
-
-function render(view) {
-  const r = view.result || {};
-  const [label, cls] = STATUS[r.action] || ["NO ACTION", "st-other"];
-  const appt = (r.appointments || []).at(-1);
-  const cal = view.calendar;
-  const tz = cal ? cal.tz : "";
-  let h = `<header class="dhead"><div><h3>${r.load ? "Load " + esc(r.load) : "No load matched"}</h3><div class="dsub">${esc(view.source)}</div></div><span class="status ${cls}">${label}</span></header>`;
-  h += `<dl class="meta">`;
-  h += `<div><dt>Appointment</dt><dd class="mono">${appt ? esc(appt.facility + " " + fmtLocal(appt.local)) : r.action === "record_fcfs" ? esc(r.facility) + " first come, first served" : "None"}</dd></div>`;
-  h += `<div><dt>Confirmation</dt><dd class="mono">${esc(r.confirmation || "None")}</dd></div>`;
-  h += `<div><dt>Channel tried</dt><dd class="mono">${r.attempts && r.attempts.length ? esc(r.attempts.join(", then ")) : "None"}</dd></div>`;
-  h += `<div><dt>Notified</dt><dd>${(r.notify || []).length ? esc(r.notify.map((n) => (n === "ae" ? "account executive" : n)).join(", ")) : "Nobody"}</dd></div>`;
-  h += `<div><dt>Flags for the AE</dt><dd>${(r.flags || []).length ? esc(r.flags.join(", ")) : "None"}</dd></div>`;
-  h += `<div><dt>Time zone</dt><dd class="mono">${esc(tz || "n/a")}</dd></div></dl><div class="dpad">`;
-  if (r.action === "handoff") h += `<div class="ho"><b>Handed to ${esc(WHO[r.to] || r.to)}</b> (${esc((r.reason || "").replaceAll("_", " "))}). ${esc(typeof r.log === "string" ? r.log : "")}</div>`;
-  h += `<div class="cap">Reply email</div>`;
-  h += view.live && view.reply ? `<div class="mail">${esc(view.reply)}</div>` : `<div class="mail none">The scripted stand-in writes no email. Send a thread to see the live agent's reply here.</div>`;
-  if (cal) h += `<div class="cap">Dock calendar at ${esc(cal.facility)}</div><p class="capsub">${esc(cal.name)}. Times are the facility's local time (${esc(cal.tz)}).</p>` + calendarSvg(cal);
-  h += `<div class="cap">What the agent did</div><ol class="steps">${(view.steps || []).map((s, i) => `<li class="${s.ok ? "" : "bad"}"><b>${i + 1}. ${esc(s.name)}</b><span>${s.ok ? esc(s.status || "ok") : "refused: " + esc(s.error)}</span></li>`).join("")}</ol>`;
-  if (view.trace_url) h += `<a class="trace" href="${esc(view.trace_url)}" target="_blank" rel="noopener">See the full trace: every model call and tool call</a>`;
-  $("#doc").innerHTML = h + `</div>`;
-}
-
-function calendarSvg(c) {
-  const hr = (s) => +s.slice(11, 13) + +s.slice(14, 16) / 60;
-  let h0 = +c.open.slice(0, 2), h1 = +c.close.slice(0, 2);
-  for (const t of [c.earliest, c.appointment]) if (t) { h0 = Math.min(h0, Math.floor(hr(t))); h1 = Math.max(h1, Math.ceil(hr(t)) + 1); }
-  h0 = Math.max(0, h0 - 1); h1 = Math.min(24, h1 + 1);
-  const L = 84, W = 620, RH = 22, G = 6, T = 22;
-  const x = (h) => L + ((h - h0) / (h1 - h0)) * (W - L - 8);
-  const rows = c.days.length, H = T + rows * (RH + G) + 4;
-  let s = `<svg class="cal" viewBox="0 0 ${W} ${H}" role="img" aria-label="Dock calendar at ${esc(c.facility)}: open ${c.open} to ${c.close}, appointment ${esc(fmtLocal(c.appointment))}"><defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#cfcabe" stroke-width="2"/></pattern></defs>`;
-  for (let h = h0; h <= h1; h += 2) s += `<text x="${x(h)}" y="12" text-anchor="${h + 2 > h1 ? "end" : "middle"}">${String(h).padStart(2, "0")}:00</text><line x1="${x(h)}" y1="16" x2="${x(h)}" y2="${H}" stroke="#e6e2d8"/>`;
-  c.days.forEach((d, i) => {
-    const y = T + i * (RH + G);
-    const md = d.date.slice(5).replace("-", "/");
-    s += `<text class="lbl" x="0" y="${y + 15}">${d.weekday} ${md}</text>`;
-    if (d.closed) { s += `<rect x="${x(h0)}" y="${y}" width="${x(h1) - x(h0)}" height="${RH}" fill="url(#hatch)"/><text x="${x(h0) + 6}" y="${y + 15}">closed (${d.closed})</text>`; return; }
-    s += `<rect x="${x(+c.open.slice(0, 2))}" y="${y}" width="${x(+c.close.slice(0, 2)) - x(+c.open.slice(0, 2))}" height="${RH}" fill="#efece3" rx="3"/>`;
-    if (c.window) {
-      const a = Math.max(h0, d.date === c.window.start.slice(0, 10) ? hr(c.window.start) : d.date > c.window.start.slice(0, 10) ? h0 : 99);
-      const b = Math.min(h1, d.date === c.window.end.slice(0, 10) ? hr(c.window.end) : d.date < c.window.end.slice(0, 10) ? h1 : -1);
-      if (b > a) s += `<rect x="${x(a)}" y="${y + 1}" width="${x(b) - x(a)}" height="${RH - 2}" fill="none" stroke="var(--green)" stroke-width="1" stroke-dasharray="3 2" rx="3"/>`;
-    }
-    for (const b of d.booked) s += `<rect x="${x(hr(d.date + "T" + b)) + 1}" y="${y + 4}" width="${x(1) - x(0) - 2}" height="${RH - 8}" fill="var(--ink-2)" rx="2"/>`;
-    if (c.appointment.startsWith(d.date)) { const a = hr(c.appointment); s += `<rect x="${x(a) + 1}" y="${y + 2}" width="${x(1) - x(0) - 2}" height="${RH - 4}" fill="var(--green)" rx="3"/>`; }
-    if (c.earliest && c.earliest.startsWith(d.date)) { const e = hr(c.earliest); s += `<line x1="${x(e)}" y1="${y - 3}" x2="${x(e)}" y2="${y + RH + 3}" stroke="var(--ink)" stroke-width="2"/>`; }
-  });
-  s += `</svg><div class="calkey"><span><i class="k-open"></i>Dock open</span><span><i class="k-win"></i>Customer window</span><span><i class="k-taken"></i>Already taken</span><span><i class="k-appt"></i>Appointment</span>${c.earliest ? `<span><i class="k-arr"></i>Truck's earliest arrival</span>` : ""}</div>`;
-  return s;
-}
-
-function showExample(i) {
-  const ex = D.examples[i];
-  document.querySelectorAll(".ex").forEach((b, j) => b.setAttribute("aria-pressed", String(j === i)));
-  $("#from").value = ex.thread[0].from;
-  $("#text").value = ex.thread.map((m) => m.body).join("\n\n");
-  thread = null;
-  setMsg("", "Showing a recorded run. Sending runs the live agent.");
-  render({ ...ex, source: `Recorded run, scripted stand-in. Email received ${fmtRecv(ex.received_at)}` });
-}
-
-function setMsg(cls, text) { const m = $("#loadmsg"); m.className = "loadmsg " + cls; $("#loadtxt").textContent = text; }
-
-$("#exlist").innerHTML = D.examples.map((e, i) => `<button class="ex" type="button" data-i="${i}">${esc(e.label)}</button>`).join("");
-document.querySelectorAll(".ex").forEach((b) => b.addEventListener("click", () => showExample(+b.dataset.i)));
-$("#reset").addEventListener("click", () => { thread = null; $("#text").value = ""; document.querySelectorAll(".ex").forEach((b) => b.setAttribute("aria-pressed", "false")); $("#doc").innerHTML = `<div class="empty">New thread. Write an email about a PO, for example PO-40101 into CIN-RCV.</div>`; setMsg("", "A new thread starts with your next email."); });
-
-$("#go").addEventListener("click", async () => {
-  const message = $("#text").value.trim();
-  if (!message) return;
-  const go = $("#go");
-  go.disabled = true;
-  setMsg("busy", "The agent is reading the thread and checking the facility. This takes 10 to 40 seconds.");
-  try {
-    const res = await fetch("/api/message", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ conversation_id: thread, from: $("#from").value, message }) });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) { setMsg("err", data.error || "Something went wrong. Please try again."); return; }
-    thread = data.conversation_id;
-    document.querySelectorAll(".ex").forEach((b) => b.setAttribute("aria-pressed", "false"));
-    render({ ...data, live: true, source: `Live run, ${data.version}. Reply to it below to continue the thread.` });
-    $("#text").value = "";
-    setMsg("ok", "Done. Write a reply to continue this thread, or start a new one.");
-  } catch { setMsg("err", "Could not reach the agent. Please try again."); }
-  finally { go.disabled = false; }
-});
-
 // the gate card, for the 25 dev threads or the 15 held-out ones
 const SUITES = {
   dev: { title: "Same 25 email threads, same gate", rule: "24 of 25 on all 3 runs, every judgment call, no critical error" },
@@ -374,7 +207,7 @@ function gateRows(suite) {
   $("#verdict-h").textContent = SUITES[suite].title;
   $("#gaterule").innerHTML = `Gate: <b>${SUITES[suite].rule}</b>`;
   const rows = gs.map((g) => `<div class="vrow"><div class="vwho"><b>${esc(g.name)}</b><span>${esc(g.what)}</span></div>
-<div class="strip" role="group" aria-label="${esc(g.name)}: every thread">${g.cases.map((c, i) => `<a class="cell ${c.failed.length ? (c.critical ? "crit" : "fail") : "pass"}" href="#case-${c.id}" data-case="${c.id}" aria-label="${esc(g.name)} thread ${i + 1} ${c.failed.length ? (c.critical ? "failed with a critical error" : "failed") : "passed"}"></a>`).join("")}</div>
+<div class="strip" role="group" aria-label="${esc(g.name)}: every thread">${g.cases.map((c, i) => `<a class="cell ${c.failed.length ? (c.critical ? "crit" : "fail") : "pass"}" href="desk/#/inbox/${c.id}" data-case="${c.id}" aria-label="${esc(g.name)} thread ${i + 1} ${c.failed.length ? (c.critical ? "failed with a critical error" : "failed") : "passed"}"></a>`).join("")}</div>
 <div class="vscore"><b>${g.passed}</b><span>of ${g.total} passed<br>${g.critical} critical</span></div><span class="gate ${g.decision === "go" ? "go" : "nogo"}">${g.decision === "go" ? "GO" : "NO-GO"}</span></div>`);
   if (!gs.some((g) => g.key === "claude")) rows.unshift(`<div class="vrow pending"><div class="vwho"><b>Claude</b><span>claude-opus-5-5 in the tool loop</span></div><p class="pend">Running now. Claude's row goes here when the 3 runs finish.</p></div>`);
   $("#vrows").innerHTML = rows.join("");
@@ -382,27 +215,10 @@ function gateRows(suite) {
   $("#gatenote").textContent = cl
     ? `Claude ran each of the ${cl.total} threads ${cl.runs} times against the deployed agent: ${cl.passed} of ${cl.total} on every run, ${cl.critical} critical, about $${cl.cost.toFixed(2)} in model calls for all ${cl.runs * cl.total} runs (${cl.latency.toFixed(0)} seconds per thread on average). The scripted stand-in follows the rules exactly and checks the plumbing. Always book shows what the gate stops: a wrong appointment written or a missed hand-off is critical, and one blocks go-live.`
     : "The scripted stand-in follows the rules exactly and checks the plumbing. Always book shows what the gate stops.";
-  document.querySelectorAll(".cell").forEach((c) => c.addEventListener("click", () => {
-    seg[0].click();
-    document.querySelectorAll("#cases tr.lit").forEach((r) => r.classList.remove("lit"));
-    const row = document.getElementById("case-" + c.dataset.case); row && row.classList.add("lit");
-  }));
 }
 const suiteBtns = [...document.querySelectorAll("#suite button")];
 suiteBtns.forEach((b) => b.addEventListener("click", () => { suiteBtns.forEach((x) => x.setAttribute("aria-checked", String(x === b))); gateRows(b.dataset.s); }));
 
-// every thread
-const byId = (suite, key, id) => { const g = D.gates[suite].find((x) => x.key === key); return g && g.cases.find((c) => c.id === id); };
-const res = (c) => !c ? `<td class="v">Not run yet</td>` : !c.failed.length ? `<td class="v ok">Pass</td>` : `<td class="v bad ${c.critical ? "crit" : ""}">Fail<div class="why">${esc(c.failed.join(", "))}</div></td>`;
-$("#cases tbody").innerHTML = D.cases.map((c) => `<tr id="case-${c.id}" data-tier="${c.group}" data-suite="${c.suite}"><td class="n">${c.suite === "holdout" ? "H" + +c.id.slice(1) : +c.id.slice(1)}<br>${c.group}</td><td class="tx"><b>${esc(c.title)}</b><div>${esc(c.body.replace(/^(hi|hello|morning|team)[^\n]*\n+/i, ""))}</div></td>${res(byId(c.suite, "claude", c.id))}${res(byId(c.suite, "scripted-naive", c.id))}</tr>`).join("");
-const TIERS = [["all", "All"], ["T1", "Clean"], ["T2", "Messy"], ["T3", "Judgment"], ["T4", "Out of scope"], ["holdout", "Held-out"]];
-const inTier = (c, t) => t === "all" || c.group === t || c.suite === t;
-$("#seg").innerHTML = TIERS.map(([t, n]) => `<button type="button" role="radio" aria-checked="${t === "all"}" data-t="${t}">${n}&nbsp; <span>${D.cases.filter((c) => inTier(c, t)).length}</span></button>`).join("");
-const seg = [...document.querySelectorAll("#seg button")];
-seg.forEach((b) => b.addEventListener("click", () => {
-  seg.forEach((x) => x.setAttribute("aria-checked", String(x === b)));
-  document.querySelectorAll("#cases tbody tr").forEach((r) => (r.hidden = !inTier({ group: r.dataset.tier, suite: r.dataset.suite }, b.dataset.t)));
-}));
 gateRows("dev");
 
 // the staged rollout, live from the Worker
@@ -413,6 +229,8 @@ fetch("/api/releases").then((r) => r.json()).then((d) => {
   const v = rows[0].version;
   const mine = rows.filter((r) => r.version === v);
   const back = mine.find((r) => r.decision === "rolled back");
+  const cur = rows.find((r) => r.version === d.current && r.stage === 100);
+  $("#livetxt").textContent = `Live on Cloudflare: ${d.current}${cur ? " serving all traffic" : ""}, Claude Opus 5.5`;
   $("#stages").innerHTML = STAGES.map(([p, name, what]) => {
     const r = mine.find((x) => x.stage === p && x.decision !== "rolled back");
     const cls = !r ? "wait" : r.decision === "NO-GO" ? "nogo" : "go";
@@ -420,6 +238,5 @@ fetch("/api/releases").then((r) => r.json()).then((d) => {
   }).join("") + `<p class="relmeta">Latest release ${esc(v)}, ${esc(mine[mine.length - 1].at)} UTC.${back ? " Rolled back to the previous version." : ""} Serving now: ${esc(d.current)}. <a href="${esc(rows[0].run_url)}">See the CI run</a></p>`;
 }).catch(() => { $("#stages").innerHTML = `<p class="pend">Could not load the release history.</p>`; });
 
-showExample(0);
 </script><!-- demo-chrome --><footer class="demo-foot"><span>A working build by <a href="https://pranavgudise.dev/">Pranav Gudise</a>. Synthetic or public data only.</span><a href="https://github.com/pg2342-hub/freight-appointment-agent">github.com/pg2342-hub/freight-appointment-agent</a></footer><!-- /demo-chrome -->
 </body></html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Appointment desk · Lanternfly Logistics</title>
+<meta name="description" content="The operations console for an email agent that books freight dock appointments: every thread it handled, what it handed to a person, dock calendars, spend and releases.">
+<meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23151513'/%3E%3Cpath d='M12 9h8M13 9v-2h6v2M11 11h10l-1 13H12z' fill='none' stroke='%23fbfbfa' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M16 15c1.6 1.6 1.6 3.4 0 5-1.6-1.6-1.6-3.4 0-5z' fill='%23f26b2a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif&display=swap">
+<link rel="stylesheet" href="desk.css">
+<script>try{const t=localStorage.getItem("desk.theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+  <aside class="nav" id="nav" aria-label="Desk navigation">
+    <div class="nav__brand">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" class="mark__bg"/><path d="M12 9h8M13 9V7h6v2M11 11h10l-1 13h-8z" class="mark__line"/><path d="M16 15c1.6 1.6 1.6 3.4 0 5-1.6-1.6-1.6-3.4 0-5z" class="mark__flame"/></svg>
+      <span>Lanternfly</span>
+      <button class="iconbtn nav__close" type="button" data-close-nav aria-label="Close menu"><svg><use href="#i-x"/></svg></button>
+    </div>
+    <nav class="nav__links">
+      <a href="#/overview" data-route="overview"><svg><use href="#i-grid"/></svg>Overview</a>
+      <a href="#/inbox" data-route="inbox"><svg><use href="#i-inbox"/></svg>Inbox<span class="count mono" id="n-inbox"></span></a>
+      <a href="#/handoffs" data-route="handoffs"><svg><use href="#i-handoff"/></svg>Hand-offs<span class="count count--hot mono" id="n-handoffs"></span></a>
+      <a href="#/docks" data-route="docks"><svg><use href="#i-calendar"/></svg>Dock calendars</a>
+      <a href="#/releases" data-route="releases"><svg><use href="#i-release"/></svg>Releases</a>
+    </nav>
+    <div class="nav__section">
+      <p class="nav__label">About this desk</p>
+      <p class="nav__note">Claude answers <a class="mono" href="mailto:appointments@pranavgudise.dev">appointments@<wbr>pranavgudise.dev</a>. Loads, facilities and senders are made up; the agent's work is real.</p>
+      <a class="nav__ext" href="../">Case study<svg><use href="#i-arrow"/></svg></a>
+      <a class="nav__ext" href="https://github.com/pg2342-hub/freight-appointment-agent">Code on GitHub<svg><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="status" id="status" aria-live="polite">
+      <div class="status__row"><span class="mono status__k">Agent</span><span class="mono" id="st-version">loading</span></div>
+      <div class="status__row"><span class="status__model">Claude Opus 5.5</span><span class="pill pill--live" id="st-serving">Live</span></div>
+      <div class="status__spend">
+        <div class="status__row"><span>Live spend today</span><span class="mono" id="st-spend">$0.00 of $5</span></div>
+        <div class="meter" role="meter" aria-label="Live spend today against the daily cap" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="st-meter"><span></span></div>
+      </div>
+    </div>
+  </aside>
+  <div class="scrim" data-close-nav></div>
+
+  <div class="frame">
+    <header class="top">
+      <button class="iconbtn top__menu" type="button" id="open-nav" aria-label="Open menu" aria-controls="nav"><svg><use href="#i-menu"/></svg></button>
+      <div class="ws">
+        <span class="ws__avatar mono" aria-hidden="true">LL</span>
+        <span class="ws__name">Lanternfly Logistics</span>
+        <span class="ws__sep" aria-hidden="true">/</span>
+        <span class="ws__sub">Appointment desk</span>
+      </div>
+      <div class="top__end">
+        <button class="iconbtn" type="button" id="theme" aria-label="Switch to dark theme"><svg><use href="#i-moon"/></svg></button>
+        <button class="btn btn--ink" type="button" id="compose-open"><svg><use href="#i-mail"/></svg><span>Email the desk</span></button>
+      </div>
+    </header>
+    <main id="main" tabindex="-1"></main>
+  </div>
+</div>
+
+<div class="drawer" id="compose" role="dialog" aria-modal="true" aria-labelledby="compose-h" hidden>
+  <div class="drawer__scrim" data-close-compose></div>
+  <form class="drawer__panel" id="compose-form">
+    <div class="drawer__head">
+      <h2 id="compose-h">Email the desk</h2>
+      <button class="iconbtn" type="button" data-close-compose aria-label="Close"><svg><use href="#i-x"/></svg></button>
+    </div>
+    <p class="drawer__lead">Write the way a shipper or carrier would. The live agent reads it, works the load and replies here; the thread joins your inbox. You can also email <a class="mono" href="mailto:appointments@pranavgudise.dev">appointments@pranavgudise.dev</a> from your own inbox.</p>
+    <label class="field"><span>From</span>
+      <select name="from" id="compose-from"></select>
+    </label>
+    <label class="field"><span>Message</span>
+      <textarea name="message" id="compose-msg" rows="9" required></textarea>
+    </label>
+    <div class="drawer__examples" id="compose-examples" aria-label="Start from an example"></div>
+    <p class="drawer__error" id="compose-error" role="alert" hidden></p>
+    <div class="drawer__foot">
+      <span class="mono drawer__hint">About 10 s · from today's $5 cap</span>
+      <button class="btn btn--ink" type="submit" id="compose-send"><span>Send to the agent</span><svg><use href="#i-send"/></svg></button>
+    </div>
+  </form>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+    <symbol id="i-handoff" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M17 8h5M19.5 5.5 22 8l-2.5 2.5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h3M8 18h3M15 14h1"/></symbol>
+    <symbol id="i-release" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="12" r="3"/><path d="M6 9v6M9 6h3a3 3 0 0 1 3 3v0"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-retry" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  </defs>
+</svg>
+<script src="data.js"></script>
+<script src="desk.js"></script>
+</body>
+</html>

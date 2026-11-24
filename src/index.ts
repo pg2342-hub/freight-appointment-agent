@@ -10,6 +10,7 @@ import { proposalFrom, runCase, threadText, type CaseInput } from "./eval";
 import { ClaudeModel, ScriptedModel, type Model } from "./model";
 import { buildReply, newText, plainText, skipReason, threadKeys } from "./email";
 import { tracePage } from "./trace";
+import { deskLive, deskThread } from "./desk";
 import type { FacilityBehavior } from "./store";
 import type { World } from "./world";
 
@@ -40,6 +41,8 @@ export default {
         return await tracePage(env.DB, decodeURIComponent(url.pathname.slice("/trace/".length)));
       }
       if (req.method === "GET" && url.pathname === "/api/releases") return await releases(env);
+      if (req.method === "GET" && url.pathname === "/api/desk/live") return await deskLive(env.DB, env.VERSION, Number(env.DAILY_BUDGET_USD || "5"));
+      if (req.method === "GET" && url.pathname.startsWith("/api/desk/thread/")) return await deskThread(env.DB, url.pathname.slice("/api/desk/thread/".length));
       if (req.method === "GET" && url.pathname === "/api/health") return json({ ok: true, version: env.VERSION, model: env.MODEL_MODE });
       return env.ASSETS.fetch(req);
     } catch (e) {
@@ -75,9 +78,12 @@ async function handleEval(req: Request, env: Env) {
   const { input } = (await req.json()) as { input: CaseInput };
   const makeModel = (w: World, b: FacilityBehavior): Model =>
     env.MODEL_MODE.startsWith("scripted") ? new ScriptedModel(input.facts as never, b, w, env.MODEL_MODE === "scripted-naive") : new ClaudeModel(requireKey(env));
-  const { output, cost_usd } = await runCase(input, WORLD, makeModel);
+  const { output, cost_usd, steps } = await runCase(input, WORLD, makeModel);
   if (cost_usd > 0) await addSpend(env.DB, cost_usd, "eval:");
-  return json({ output, cost_usd, version: env.VERSION });
+  // The grader reads only the proposal's own fields; the tool calls ride along so the recorded results show every step.
+  const toolSteps = steps.filter((s) => s.kind === "tool").map(({ name, input, ok, output, error, ms }: any) => ({ kind: "tool", name, input, ok, output, error, ms }));
+  const modelSteps = steps.filter((s) => s.kind === "model").map(({ served_by, ms, cost_usd }: any) => ({ kind: "model", served_by, ms, cost_usd }));
+  return json({ output: { ...output, steps: [...toolSteps, ...modelSteps] }, cost_usd, version: env.VERSION });
 }
 
 async function handleMessage(req: Request, env: Env) {
@@ -189,7 +195,7 @@ async function handleEmail(message: ForwardableEmailMessage, env: Env) {
   }
   const base = (env.PUBLIC_URL || "").replace(/\/$/, "");
   const footer = `\n\n--\nLanternfly Logistics appointment desk. This is a demo: an AI agent answers, and the loads, facilities and appointments are made up.${
-    convId && base ? `\nEvery step it took on this thread: ${base}/trace/${convId}` : ""
+    convId && base ? `\nThis thread in the desk console: ${base}/desk/#/inbox/${convId}\nEvery step it took: ${base}/trace/${convId}` : ""
   }`;
   const domain = self.split("@")[1] ?? "inbound.invalid";
   const replyId = `<${crypto.randomUUID()}@${domain}>`;
