@@ -88,6 +88,15 @@
 .shot img{display:block;width:100%;height:auto}
 .shot:hover{border-color:var(--ink-2)}
 #gate .verdict{margin-top:0}
+#why .point{color:var(--ink)}
+#why .point+.point{margin-top:14px}
+.why{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 36px;margin:30px 0 0;padding-top:26px;border-top:1px solid var(--rule)}
+.why h3{margin:0 0 8px;font:400 22px/1.2 var(--serif);text-wrap:balance}
+.why p{margin:0;color:var(--ink-2);font-size:15px;line-height:1.6}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 28px;margin:30px 0 0;padding-top:20px;border-top:1px solid var(--rule)}
+.facts dt{font:500 12px/1.3 var(--mono);letter-spacing:.04em;color:var(--ink-2);margin-bottom:4px}
+.facts dd{margin:0;font-size:14px;line-height:1.5}
+@media (max-width:760px){.why,.facts{grid-template-columns:minmax(0,1fr)}}
 .head h1{margin:24px 0 12px}
 .cta{display:inline-flex;align-items:center;min-height:46px;padding:0 24px;border-radius:999px;border:1px solid var(--green);background:var(--green);color:#fff;font:500 16px/1 var(--sans);cursor:pointer}
 .cta:hover{background:var(--green-deep);border-color:var(--green-deep)}
@@ -146,6 +155,23 @@
   <p class="note" id="gatenote"></p>
 </section>
 
+<section id="why">
+  <h2>Why build this</h2>
+  <p class="point">Booking a dock appointment is a small job a freight brokerage does many times a day, and most of it is checking. Each email has to be tied to the right load, the truck's arrival worked out in the dock's own time zone, the facility's hours, holidays and notice rules respected, and the request sent through whichever channel that dock uses. A wrong booking costs more than a slow one: the truck arrives for a slot that was never confirmed.</p>
+  <p class="point">I wanted to see how much of that desk an agent can run on its own, and to make it prove that before it gets any traffic.</p>
+  <div class="why">
+    <div><h3>The rules live in the tools.</h3><p>The agent cannot book its way past a rule. A facility refuses the wrong channel, a closed or taken slot, and anything inside its notice period, so a bad request fails loudly instead of landing on the calendar.</p></div>
+    <div><h3>A wrong appointment is worse than a hand-off.</h3><p>The gate treats writing a wrong appointment, or missing a thread it should have handed off, as critical. One critical failure on any run blocks go-live.</p></div>
+    <div><h3>Know what isn't the desk's job.</h3><p>Hazmat, address changes, rate questions, complaints and dates outside the customer window go to a coordinator or the account executive, with a note saying what the agent already found.</p></div>
+    <div><h3>Every version earns its traffic.</h3><p>A new version starts with none. It gets 10% after passing threads it was never tuned on, 50% after the full gate, then 100%. A failed stage puts the previous version back.</p></div>
+  </div>
+  <dl class="facts">
+    <div><dt>Built</dt><dd>November 2026, solo: design, build, evals and rollout</dd></div>
+    <div><dt>Runs on</dt><dd>Claude Opus 5.5, Cloudflare Workers, D1, Email Routing</dd></div>
+    <div><dt>Graded with</dt><dd><a href="https://github.com/pg2342-hub/golive-gate">golive-gate</a>, six checks per thread, three runs each</dd></div>
+  </dl>
+</section>
+
 <section id="console">
   <h2>The desk console</h2>
   <p class="note">What an appointments team would keep open: every thread with Claude's reply and each step it took, the hand-off queue with the agent's notes, dock calendars, live spend against the $5 daily cap, and the release history. Recorded threads show all three graded runs; threads you send go to the live agent.</p>
@@ -182,7 +208,7 @@
 </div>
 
 <aside class="side" aria-label="About this build">
-  <nav aria-label="On this page"><a href="#gate">Go-live gate</a><a href="#console">Desk console</a><a href="#rollout">Staged rollout</a><a href="#how">How it works</a><a href="#limits">Limits</a></nav>
+  <nav aria-label="On this page"><a href="#gate">Go-live gate</a><a href="#why">Why build this</a><a href="#console">Desk console</a><a href="#rollout">Staged rollout</a><a href="#how">How it works</a><a href="#limits">Limits</a></nav>
   <div><h3>Data</h3><p>All synthetic. Lanternfly Logistics, its loads, 15 facilities (hours, holidays, notice rules, booked slots), the shipper, the carrier and every email are invented. Facility answers come from a simulator.</p></div>
   <div><h3>Run it yourself</h3><p>Node 22 and Python 3.9+. The scripted mode needs no API key.</p><pre>npm install && npm run db:init && npm run seed
 npm run dev
