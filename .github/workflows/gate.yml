@@ -1,11 +1,14 @@
 name: Go-live gate (Claude)
-# Runs the 25 email threads against the deployed agent with Claude. Costs API credit, so it runs on demand.
+# Runs the 25 dev threads (suite golive) or the 15 held-out threads (suite holdout) against the deployed agent with Claude. Costs API credit, so it runs on demand.
 on:
   workflow_dispatch:
     inputs:
       runs:
         description: Runs per thread
         default: "3"
+      suite:
+        description: "golive (25 dev threads) or holdout (15 held-out threads)"
+        default: golive
 
 jobs:
   gate:
@@ -29,7 +32,7 @@ jobs:
           sub=$(curl -sf -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).result.subdomain))')
           echo "AGENT_URL=https://freight-appointment-agent.$sub.workers.dev/eval" >> "$GITHUB_ENV"
       - name: Run the gate
-        run: cd gate && golive run golive.yml --agent "$AGENT_URL" --runs "${{ inputs.runs }}" --out ../reports/claude
+        run: cd gate && golive run "${{ inputs.suite }}.yml" --agent "$AGENT_URL" --runs "${{ inputs.runs }}" --out ../reports/claude
       - name: Print the results
         if: always()
         run: |

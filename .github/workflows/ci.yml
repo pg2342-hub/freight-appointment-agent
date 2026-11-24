@@ -24,7 +24,7 @@ jobs:
           printf 'EVAL_TOKEN=ci-local\nMODEL_MODE=scripted\n' > .dev.vars
           npx wrangler dev --port 8787 > wrangler.log 2>&1 &
           for i in $(seq 1 60); do curl -sf localhost:8787/api/health && break; sleep 1; done
-          cd gate && EVAL_TOKEN=ci-local golive run golive.yml --runs 1
+          cd gate && EVAL_TOKEN=ci-local golive run golive.yml --runs 1 && EVAL_TOKEN=ci-local golive run holdout.yml --runs 1 --out ../reports/holdout
 
   deploy:
     needs: test

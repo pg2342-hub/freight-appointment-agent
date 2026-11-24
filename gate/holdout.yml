@@ -1,0 +1,9 @@
+# Held-out go-live gate: 15 email threads written after the instructions were frozen.
+# The prompt was not changed for these. Run: golive run holdout.yml --agent https://<url>/eval
+cases: holdout.json
+checks: checks:checks
+agent: http://127.0.0.1:8787/eval
+agent_headers:
+  Authorization: Bearer ${EVAL_TOKEN}
+gate: holdout_gate.yml
+runs: 3

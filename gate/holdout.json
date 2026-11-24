@@ -1,0 +1,554 @@
+{
+ "cases": [
+  {
+   "id": "h01",
+   "group": "T1",
+   "title": "Carrier quotes our load number, not the PO",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "dispatch@bluemesa-transport.example",
+      "body": "need delivery appt cleveland for L-20430 asap. driver loaded out of memphis this am\n\nthx\nJ. Ortiz | Blue Mesa"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "L-20430",
+       "facility": "CLE-DC"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "book",
+    "load": "L-20430",
+    "appointments": [
+     {
+      "facility": "CLE-DC",
+      "local": "2026-12-09T07:00"
+     }
+    ],
+    "channel": "email",
+    "notify": [
+     "carrier"
+    ],
+    "flags": []
+   }
+  },
+  {
+   "id": "h02",
+   "group": "T2",
+   "title": "Forwarded chain; the earlier PO was cancelled and replaced",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "traffic@harborline-foods.example",
+      "body": "Hi team, can you get PO-50131 delivered into Orlando (ORL-DC)? Earliest is fine.\n\n---------- Forwarded message ---------\nFrom: Dana Price\nSubject: RE: Orlando order\n\nPO-49920 is cancelled. Please re-issue under PO-50131, same product, same DC.\n\n---------- Earlier ----------\nPlease ship PO-49920 to the Orlando grocery DC."
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50131",
+       "facility": "ORL-DC"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "book",
+    "load": "L-20431",
+    "appointments": [
+     {
+      "facility": "ORL-DC",
+      "local": "2026-12-09T07:00"
+     }
+    ],
+    "channel": "email",
+    "notify": [],
+    "flags": []
+   }
+  },
+  {
+   "id": "h03",
+   "group": "T2",
+   "title": "Signature full of other numbers",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "traffic@harborline-foods.example",
+      "body": "Please schedule delivery for PO-50132 at the Dayton plant.\n\nBest,\nKen Albright\nTransportation Coordinator, Harborline Foods\nRef# 4500991 | Dock 12 | Ext 4417\nOffice 901-555-0142 | Cell 901-555-0199"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50132",
+       "facility": "DAY-DC"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "book",
+    "load": "L-20432",
+    "appointments": [
+     {
+      "facility": "DAY-DC",
+      "local": "2026-12-09T07:00"
+     }
+    ],
+    "channel": "email",
+    "notify": [],
+    "flags": []
+   }
+  },
+  {
+   "id": "h04",
+   "group": "T2",
+   "title": "Pickup at a phone-only warehouse",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "traffic@harborline-foods.example",
+      "body": "Hey, we need a pickup time set for PO-50133 at the Indy warehouse for tomorrow (12/8). They don't do email, you'll have to call.\n\nKen"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "pickup",
+     "emails": [
+      {
+       "po": "PO-50133",
+       "facility": "IND-WH"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "book",
+    "load": "L-20433",
+    "appointments": [
+     {
+      "facility": "IND-WH",
+      "local": "2026-12-08T08:00"
+     }
+    ],
+    "channel": "phone",
+    "notify": [],
+    "flags": []
+   }
+  },
+  {
+   "id": "h05",
+   "group": "T1",
+   "title": "Receiver is first come, first served; carrier on the load",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "dispatch@bluemesa-transport.example",
+      "body": "Hi, what time is our appt at the Louisville distributor for PO-50134? Driver wants to plan.\n\nBlue Mesa dispatch"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50134",
+       "facility": "LOU-FCFS"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "record_fcfs",
+    "load": "L-20434",
+    "facility": "LOU-FCFS",
+    "notify": [
+     "carrier"
+    ]
+   }
+  },
+  {
+   "id": "h06",
+   "group": "T2",
+   "title": "Customer booked it already, time written as 1pm",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "traffic@harborline-foods.example",
+      "body": "FYI, the receiver called us and we locked in PO-50135 at Cincinnati for Thurs 12/10 at 1pm. Conf # CIN-77310. Just make sure it's on the load so the driver knows.\n\nKen"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50135",
+       "facility": "CIN-RCV",
+       "existing_appt": "2026-12-10T13:00",
+       "confirmation": "CIN-77310"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "enter_existing",
+    "load": "L-20435",
+    "appointments": [
+     {
+      "facility": "CIN-RCV",
+      "local": "2026-12-10T13:00"
+     }
+    ],
+    "notify": []
+   }
+  },
+  {
+   "id": "h07",
+   "group": "T2",
+   "title": "Asks for today at a DC that needs 48 hours notice",
+   "input": {
+    "received_at": "2026-12-08T10:00-06:00",
+    "thread": [
+     {
+      "from": "traffic@harborline-foods.example",
+      "body": "Can we get PO-50136 into the Nashville food DC this afternoon? Truck will be close by noon.\n\nThanks, Ken"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-08T10:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50136",
+       "facility": "NSH-DC"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "book",
+    "load": "L-20436",
+    "appointments": [
+     {
+      "facility": "NSH-DC",
+      "local": "2026-12-10T10:00"
+     }
+    ],
+    "channel": "email",
+    "notify": [
+     "ae"
+    ],
+    "flags": [
+     "notice"
+    ]
+   }
+  },
+  {
+   "id": "h08",
+   "group": "T2",
+   "title": "Christmas week delivery to a DC closed for the holiday",
+   "input": {
+    "received_at": "2026-12-21T08:00-06:00",
+    "thread": [
+     {
+      "from": "traffic@harborline-foods.example",
+      "body": "Merry almost Christmas! PO-50137 needs to deliver to Atlanta (ATL-DC), window is 12/24 to 12/28. Whatever you can get.\n\nKen"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-21T08:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50137",
+       "facility": "ATL-DC"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "book",
+    "load": "L-20437",
+    "appointments": [
+     {
+      "facility": "ATL-DC",
+      "local": "2026-12-28T07:00"
+     }
+    ],
+    "channel": "email",
+    "notify": [
+     "ae"
+    ],
+    "flags": [
+     "holiday"
+    ]
+   }
+  },
+  {
+   "id": "h09",
+   "group": "T3",
+   "title": "Customer wants a date after the window in our system",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "traffic@harborline-foods.example",
+      "body": "Please set PO-50138 into Cleveland for Monday the 14th, the store isn't ready for it before then.\n\nKen"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50138",
+       "facility": "CLE-DC",
+       "requested_date": "2026-12-14"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "handoff",
+    "to": "ae",
+    "reason": "date_conflict",
+    "load": "L-20438"
+   }
+  },
+  {
+   "id": "h10",
+   "group": "T3",
+   "title": "Late truck would miss the receiver's cutoff",
+   "input": {
+    "received_at": "2026-12-09T06:00-05:00",
+    "thread": [
+     {
+      "from": "dispatch@bluemesa-transport.example",
+      "body": "Bad news on PO-50139, driver had a flat outside Louisville. Best ETA to the Cincinnati DC is 12:30 their time. Can you push the 8am?\n\nBlue Mesa dispatch"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-09T06:00-05:00",
+     "intent": "appointment",
+     "kind": "reschedule",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50139",
+       "facility": "CIN-RCV"
+      }
+     ],
+     "check_call_eta": "2026-12-09T12:30-05:00"
+    }
+   },
+   "expected": {
+    "action": "handoff",
+    "to": "coordinator",
+    "reason": "late_to_receiver",
+    "load": "L-20439"
+   }
+  },
+  {
+   "id": "h11",
+   "group": "T4",
+   "title": "Customer wants to add a stop to the load",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "traffic@harborline-foods.example",
+      "body": "On PO-50140 to Dayton, can the driver also swing by our Springfield warehouse to grab 4 more pallets on the way? Same delivery appt.\n\nKen"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "address_change",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50140",
+       "facility": "DAY-DC"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "handoff",
+    "to": "ae",
+    "reason": "changes_load",
+    "load": "L-20440"
+   }
+  },
+  {
+   "id": "h12",
+   "group": "T4",
+   "title": "Carrier asks to be paid back for a lumper",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "dispatch@bluemesa-transport.example",
+      "body": "Hi, driver paid a $180 lumper at Dayton on PO-50141 this morning, receipt attached. How do we get reimbursed?\n\nBlue Mesa dispatch"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "rate_question",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50141",
+       "facility": "DAY-DC"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "handoff",
+    "to": "coordinator",
+    "reason": "out_of_scope",
+    "load": "L-20441"
+   }
+  },
+  {
+   "id": "h13",
+   "group": "T3",
+   "title": "Hazmat load, and the email never says so",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "traffic@harborline-foods.example",
+      "body": "Please book delivery for PO-50142 at the Dayton plant, earliest available.\n\nKen"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50142",
+       "facility": "DAY-DC"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "handoff",
+    "to": "coordinator",
+    "reason": "hazmat",
+    "load": "L-20442"
+   }
+  },
+  {
+   "id": "h14",
+   "group": "T2",
+   "title": "One PO on two loads; the email names the city",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "traffic@harborline-foods.example",
+      "body": "Need the delivery appointment for PO 4500777001 going to Cleveland.\n\nThanks,\nKen"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "4500777001",
+       "facility": "CLE-DC"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "book",
+    "load": "L-20444",
+    "appointments": [
+     {
+      "facility": "CLE-DC",
+      "local": "2026-12-09T07:00"
+     }
+    ],
+    "channel": "email",
+    "notify": [],
+    "flags": []
+   }
+  },
+  {
+   "id": "h15",
+   "group": "T3",
+   "title": "Receiver is full on the only day in the window",
+   "input": {
+    "received_at": "2026-12-07T08:00-06:00",
+    "thread": [
+     {
+      "from": "traffic@harborline-foods.example",
+      "body": "PO-50144 has to deliver to Tampa (TPA-DC) on 12/9, no later. Please book.\n\nKen"
+     }
+    ],
+    "facts": {
+     "received_at": "2026-12-07T08:00-06:00",
+     "intent": "appointment",
+     "kind": "new",
+     "stop": "delivery",
+     "emails": [
+      {
+       "po": "PO-50144",
+       "facility": "TPA-DC"
+      }
+     ]
+    }
+   },
+   "expected": {
+    "action": "handoff",
+    "to": "coordinator",
+    "reason": "no_slot_in_window",
+    "load": "L-20445"
+   }
+  }
+ ]
+}
