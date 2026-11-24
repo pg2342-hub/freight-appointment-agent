@@ -11,6 +11,7 @@ import type { World } from "../src/world";
 
 const W = world as unknown as World;
 const SETUPS = [
+  { key: "claude", name: "Claude", what: "claude-opus-5-5 in the tool loop, deployed on Cloudflare" },
   { key: "scripted", name: "Scripted stand-in", what: "Follows the appointment rules exactly; checks the plumbing" },
   { key: "scripted-naive", name: "Always book", what: "Books the first open slot for the first PO; never hands off" },
 ];
@@ -24,6 +25,8 @@ const gate = SETUPS.map((s) => {
     runs: r.runs,
     passed: Math.min(...r.summary.by_run.map((x: any) => x.passed)),
     critical: Math.max(...r.summary.by_run.map((x: any) => x.critical)),
+    cost: r.summary.total_cost_usd,
+    latency: r.summary.mean_latency_s,
     cases: r.cases.map((c: any) => {
       const failed = [...new Set(c.runs.flatMap((x: any) => x.failed_checks))] as string[];
       return { id: c.id, group: c.group, title: c.title, failed, critical: failed.some((f) => crit.has(f)) };

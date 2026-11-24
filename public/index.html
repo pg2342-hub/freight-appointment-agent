@@ -2,7 +2,7 @@
 <!-- demo-chrome --><meta name="theme-color" content="#f4f2ec"><link rel="icon" href="https://pranavgudise.dev/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="https://pranavgudise.dev/kit/demo.css"><!-- /demo-chrome -->
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Freight Appointment Agent</title>
-<meta name="description" content="An email agent that books freight dock appointments, with a go-live gate on 25 email threads.">
+<meta name="description" content="An email agent that books freight dock appointments; Claude passes the go-live gate on 25 email threads, 3 runs each.">
 <style>
 /* Shared demo layout, copied from the approved pilots. Keep it; add page-specific rules below it. */
 
@@ -162,6 +162,7 @@
 .lim{max-width:44em}
 @media (max-width:1000px){.desk{grid-template-columns:minmax(0,1fr)}.vrow.pending{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px){.meta{grid-template-columns:repeat(2,minmax(0,1fr))}.dhead,.meta,.dpad{padding-left:18px;padding-right:18px}.compose{padding:16px}}
+@media (min-width:1001px){.content .vrow{grid-template-columns:minmax(0,9.5em) minmax(0,1fr) 6.5em 5.5em;gap:16px}.content .vscore b{font-size:38px}}
 </style></head><body>
 <!-- demo-chrome --><header class="demo-top"><a class="demo-brand" href="https://pranavgudise.dev/"><svg class="demo-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.25"/><g class="n"><path class="f" d="M15.5 8.5 L 13.4 13.4 L 8.5 15.5 L 10.6 10.6 Z"/></g><circle class="p" cx="12" cy="12" r=".7"/></svg><span>Pranav Gudise</span></a><a class="pill" href="https://github.com/pg2342-hub/freight-appointment-agent">Code on GitHub</a></header><!-- /demo-chrome -->
 <main>
@@ -198,16 +199,15 @@
   <div class="verdict" aria-labelledby="verdict-h">
     <div class="vhead"><h3 id="verdict-h">Same 25 email threads, same gate</h3><p>Gate: <b>24 of 25 on all 3 runs, every judgment call, no critical error</b></p></div>
     <div id="vrows"></div>
-    <div class="vrow pending"><div class="vwho"><b>Claude</b><span>claude-opus-5-5 in the tool loop</span></div><p class="pend">Not run yet. The gate runs against Claude once the agent is deployed with an API key; its row goes here.</p></div>
     <div class="legend"><span><i class="pass"></i>Passed</span><span><i class="fail"></i>Failed</span><span><i class="crit"></i>Critical error</span><span>Each square is one thread. Select one to find it below.</span></div>
   </div>
-  <p class="note">Both rows are scripted, not Claude. The stand-in proves the tools, the facility simulator, the eval endpoint and the gate work end to end. The always-book row shows what the gate stops: a wrong appointment written or a missed hand-off is critical, and one blocks go-live.</p>
+  <p class="note" id="gatenote"></p>
 </section>
 
 <section id="cases-sec">
   <h2>Every thread</h2>
   <div class="seg" role="radiogroup" aria-label="Filter threads" id="seg"></div>
-  <div class="scroll"><table class="t" id="cases"><thead><tr><th>#</th><th>The email</th><th>Scripted stand-in</th><th>Always book</th></tr></thead><tbody></tbody></table></div>
+  <div class="scroll"><table class="t" id="cases"><thead><tr><th>#</th><th>The email</th><th>Claude</th><th>Always book</th></tr></thead><tbody></tbody></table></div>
 </section>
 
 <section id="how">
@@ -225,7 +225,7 @@
 <section id="limits">
   <h2>Limits</h2>
   <ul class="lim">
-    <li>Claude has not been run against the 25 threads yet. The page will show its row and its own replies once it is deployed.</li>
+    <li>The 25 threads were written together with the agent's instructions, so a perfect score shows the agent follows the rules it was given, not how it handles email it has never seen. A held-out set written separately is the next test.</li>
     <li>The facilities, loads and their answers are simulated; there is no real TMS or dock scheduler behind it.</li>
     <li>Loads are set in December 2026, and visitors share one copy of the data, so a slot another visitor booked stays taken.</li>
   </ul>
@@ -347,10 +347,12 @@ $("#vrows").innerHTML = D.gate.map((g) => `<div class="vrow"><div class="vwho"><
 <div class="strip" role="group" aria-label="${esc(g.name)}: every thread">${g.cases.map((c, i) => `<a class="cell ${c.failed.length ? (c.critical ? "crit" : "fail") : "pass"}" href="#case-${c.id}" data-case="${c.id}" aria-label="${esc(g.name)} thread ${i + 1} ${c.failed.length ? (c.critical ? "failed with a critical error" : "failed") : "passed"}"></a>`).join("")}</div>
 <div class="vscore"><b>${g.passed}</b><span>of 25 passed<br>${g.critical} critical</span></div><span class="gate ${g.decision === "go" ? "go" : "nogo"}">${g.decision === "go" ? "GO" : "NO-GO"}</span></div>`).join("");
 
+const cl = D.gate[0];
+$("#gatenote").textContent = `Claude ran each of the 25 threads 3 times against the deployed agent: ${cl.passed} of 25 on every run, ${cl.critical} critical, about $${cl.cost.toFixed(2)} in model calls for all ${cl.runs * 25} runs (${cl.latency.toFixed(0)} seconds per thread on average). The scripted stand-in follows the rules exactly and checks the plumbing. Always book shows what the gate stops: a wrong appointment written or a missed hand-off is critical, and one blocks go-live.`;
 // every thread
 const byId = (g, id) => g.cases.find((c) => c.id === id);
 const res = (c) => !c.failed.length ? `<td class="v ok">Pass</td>` : `<td class="v bad ${c.critical ? "crit" : ""}">Fail<div class="why">${esc(c.failed.join(", "))}</div></td>`;
-$("#cases tbody").innerHTML = D.cases.map((c, i) => `<tr id="case-${c.id}" data-tier="${c.group}"><td class="n">${i + 1}<br>${c.group}</td><td class="tx"><b>${esc(c.title)}</b><div>${esc(c.body.replace(/^(hi|hello|morning|team)[^\n]*\n+/i, ""))}</div></td>${res(byId(D.gate[0], c.id))}${res(byId(D.gate[1], c.id))}</tr>`).join("");
+$("#cases tbody").innerHTML = D.cases.map((c, i) => `<tr id="case-${c.id}" data-tier="${c.group}"><td class="n">${i + 1}<br>${c.group}</td><td class="tx"><b>${esc(c.title)}</b><div>${esc(c.body.replace(/^(hi|hello|morning|team)[^\n]*\n+/i, ""))}</div></td>${res(byId(D.gate[0], c.id))}${res(byId(D.gate[2], c.id))}</tr>`).join("");
 const TIERS = [["all", "All"], ["T1", "Clean"], ["T2", "Messy"], ["T3", "Judgment"], ["T4", "Out of scope"]];
 $("#seg").innerHTML = TIERS.map(([t, n]) => `<button type="button" role="radio" aria-checked="${t === "all"}" data-t="${t}">${n}&nbsp; <span>${t === "all" ? D.cases.length : D.cases.filter((c) => c.group === t).length}</span></button>`).join("");
 const seg = [...document.querySelectorAll(".seg button")];
