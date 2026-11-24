@@ -1,6 +1,9 @@
 name: Inspect live data
 # Read-only look at the live D1 tables and the last hour of Worker logs, for debugging. Run on demand.
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      from_ms: { description: 'Start of a 2-minute log window, epoch ms (blank for the last hour)', default: '' }
 jobs:
   inspect:
     runs-on: ubuntu-latest
@@ -21,11 +24,13 @@ jobs:
           q "SELECT id, created_at, sender, version, cost_usd FROM conversations ORDER BY created_at DESC LIMIT 5"
           q "SELECT conversation_id, turn, created_at, stopped, substr(reply,1,300) AS reply FROM turns ORDER BY created_at DESC LIMIT 5"
           q "SELECT key, day, n FROM hits ORDER BY day DESC LIMIT 10"
+          q "SELECT * FROM spend ORDER BY day DESC LIMIT 3"
       - name: Worker logs, last hour
         if: always()
         run: |
           now=$(date +%s000); from=$((now - 3600000))
+          if [ -n "${{ inputs.from_ms }}" ]; then from=${{ inputs.from_ms }}; now=$((from + 120000)); fi
           curl -s -X POST -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "content-type: application/json" \
             "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/observability/telemetry/query" \
             -d "{\"queryId\":\"inspect\",\"timeframe\":{\"from\":$from,\"to\":$now},\"view\":\"events\",\"limit\":50,\"parameters\":{\"filters\":[{\"key\":\"\$metadata.service\",\"operation\":\"eq\",\"type\":\"string\",\"value\":\"freight-appointment-agent\"}]}}" \
-            | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{const j=JSON.parse(s);const ev=j.result?.events?.events||[];if(!ev.length)console.log(s.slice(0,3000));for(const e of ev)console.log(JSON.stringify({t:e.timestamp,trigger:e.$workers?.event?.trigger||e.$workers?.eventType,outcome:e.$workers?.outcome,msg:e.$metadata?.message,err:e.$metadata?.error}).slice(0,600))}catch(x){console.log(s.slice(0,3000))}})'
+            | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{const j=JSON.parse(s);const ev=j.result?.events?.events||[];if(!ev.length)console.log(s.slice(0,3000));for(const e of ev)console.log(JSON.stringify({t:e.timestamp,trigger:e.$workers?.event?.trigger||e.$workers?.eventType,outcome:e.$workers?.outcome,msg:e.$metadata?.message,err:e.$metadata?.error,lvl:e.$metadata?.level}).slice(0,800))}catch(x){console.log(s.slice(0,3000))}})'
