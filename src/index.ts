@@ -52,6 +52,10 @@ export default {
       await handleEmail(message, env);
     } catch (e) {
       console.error("email failed", e);
+      await env.DB.prepare("INSERT INTO events (thread_id, created_at, kind, data) VALUES ('email', datetime('now'), 'email_error', ?)")
+        .bind(JSON.stringify({ from: message.from, error: String(e), stack: (e as Error)?.stack?.slice(0, 800) ?? null }))
+        .run()
+        .catch(() => {});
     }
   },
   async scheduled(_c: ScheduledController, env: Env) {
@@ -72,7 +76,7 @@ async function handleEval(req: Request, env: Env) {
   const makeModel = (w: World, b: FacilityBehavior): Model =>
     env.MODEL_MODE.startsWith("scripted") ? new ScriptedModel(input.facts as never, b, w, env.MODEL_MODE === "scripted-naive") : new ClaudeModel(requireKey(env));
   const { output, cost_usd } = await runCase(input, WORLD, makeModel);
-  if (cost_usd > 0) await addSpend(env.DB, cost_usd);
+  if (cost_usd > 0) await addSpend(env.DB, cost_usd, "eval:");
   return json({ output, cost_usd, version: env.VERSION });
 }
 
@@ -225,10 +229,11 @@ function requireKey(env: Env) {
 const today = () => new Date().toISOString().slice(0, 10);
 
 async function spentToday(db: D1Database) {
-  const row = await db.prepare("SELECT usd FROM spend WHERE day = ?").bind(today()).first<{ usd: number }>();
+  const row = await db.prepare("SELECT usd FROM spend WHERE day = ?").bind("live:" + today()).first<{ usd: number }>();
   return row?.usd ?? 0;
 }
 
-async function addSpend(db: D1Database, usd: number) {
-  await db.prepare("INSERT INTO spend (day, usd) VALUES (?, ?) ON CONFLICT(day) DO UPDATE SET usd = usd + excluded.usd").bind(today(), usd).run();
+/** Visitor spend ("live:<day>") counts against the daily budget; the gate's own runs ("eval:<day>") do not. */
+async function addSpend(db: D1Database, usd: number, prefix: "live:" | "eval:" = "live:") {
+  await db.prepare("INSERT INTO spend (day, usd) VALUES (?, ?) ON CONFLICT(day) DO UPDATE SET usd = usd + excluded.usd").bind(prefix + today(), usd).run();
 }

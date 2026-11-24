@@ -24,7 +24,8 @@ jobs:
           q "SELECT id, created_at, sender, version, cost_usd FROM conversations ORDER BY created_at DESC LIMIT 5"
           q "SELECT conversation_id, turn, created_at, stopped, substr(reply,1,300) AS reply FROM turns ORDER BY created_at DESC LIMIT 5"
           q "SELECT key, day, n FROM hits ORDER BY day DESC LIMIT 10"
-          q "SELECT * FROM spend ORDER BY day DESC LIMIT 3"
+          q "SELECT * FROM spend ORDER BY day DESC LIMIT 4"
+          q "SELECT * FROM events WHERE kind = 'email_error' ORDER BY created_at DESC LIMIT 5"
       - name: Worker logs, last hour
         if: always()
         run: |
